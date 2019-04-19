@@ -301,7 +301,6 @@ class WaterSystem(object):
 
         # collect/evaluate source data
         print("[*] Collecting source data")
-        dataset_count = len(self.evaluator.resource_scenarios)
         cnt = 0
         for source_id in self.scenario.source_ids:
 
