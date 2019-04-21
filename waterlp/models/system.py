@@ -1,5 +1,4 @@
 import os
-import shutil
 import json
 from attrdict import AttrDict
 import pandas as pd
@@ -115,7 +114,6 @@ class WaterSystem(object):
         # self.block_params = ['Storage Demand', 'Demand', 'Priority']
         self.block_params = []
         self.blocks = {'node': {}, 'link': {}, 'network': {}}
-        self.store = {}
         self.res_scens = {}
 
         self.params = {}  # to be defined later
@@ -264,9 +262,6 @@ class WaterSystem(object):
 
         self.evaluator.block_params = self.block_params
 
-        self.evaluator.tsi = tsi
-        self.evaluator.tsf = tsf
-
         nsubblocks = 1
         self.default_subblocks = list(range(nsubblocks))
 
@@ -328,160 +323,106 @@ class WaterSystem(object):
 
                 # key = '{}/{}/{}'.format(resource_type, resource_id, rs.attr_id)
 
-                try:
+                res_tattr = self.res_tattrs.get(rs.resource_attr_id)
 
-                    res_tattr = self.res_tattrs.get(rs.resource_attr_id)
+                if not res_tattr:
+                    continue  # this is for a different resource type
 
-                    if not res_tattr:
-                        continue  # this is for a different resource type
+                # get attr name
+                attr_id = res_tattr['attr_id']
+                tattr = self.conn.tattrs[(resource_type, resource_id, attr_id)]
+                if not tattr:
+                    continue
 
-                    # get attr name
-                    attr_id = res_tattr['attr_id']
-                    tattr = self.conn.tattrs[(resource_type, resource_id, attr_id)]
-                    if not tattr:
-                        continue
+                # if tattr['properties'].get('observed') or 'observed' in tattr['attr_name'].lower():
+                #     continue
 
-                    # if tattr['properties'].get('observed') or 'observed' in tattr['attr_name'].lower():
-                    #     continue
+                # store the resource scenario value for future lookup
+                # self.evaluator.resource_scenarios[key] = rs.value
 
-                    # store the resource scenario value for future lookup
-                    # self.evaluator.resource_scenarios[key] = rs.value
+                intermediary = tattr['properties'].get('intermediary', False)
+                # attr_name = tattr['att']
+                is_var = tattr['is_var'] == 'Y'
 
-                    intermediary = tattr['properties'].get('intermediary', False)
-                    # attr_name = tattr['att']
-                    is_var = tattr['is_var'] == 'Y'
+                # non-intermediary outputs should not be pre-processed at all
+                if is_var and not intermediary:
+                    continue
 
-                    # non-intermediary outputs should not be pre-processed at all
-                    if is_var and not intermediary:
-                        continue
+                # create a dictionary to lookup resourcescenario by resource attribute ID
+                self.res_scens[rs.resource_attr_id] = rs
 
-                    # create a dictionary to lookup resourcescenario by resource attribute ID
-                    self.res_scens[rs.resource_attr_id] = rs
+                # load the metadata
+                metadata = json.loads(rs.value.metadata)
 
-                    # load the metadata
-                    metadata = json.loads(rs.value.metadata)
+                # identify as function or not
+                is_function = metadata.get('use_function', 'N') == 'Y'
 
-                    # identify as function or not
-                    is_function = metadata.get('use_function', 'N') == 'Y'
+                # get data type
+                data_type = rs.value.type
 
-                    # get data type
-                    data_type = rs.value.type
+                # update data type
+                self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
 
-                    # update data type
-                    self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
+                # default blocks
 
-                    # default blocks
-                    # NB: self.block_params should be defined
-                    # TODO: update has_blocks from template, not metadata
-                    # has_blocks = attr_name in self.block_params or metadata.get('has_blocks', 'N') == 'Y'
-                    has_blocks = False
-                    blocks = [(0, 0)]
+                type_name = self.resources[(resource_type, resource_id)]['type']['name']
+                res_attr_idx = (resource_type, resource_id, attr_id)
 
-                    type_name = self.resources[(resource_type, resource_id)]['type']['name']
-                    tattr_idx = (resource_type, type_name, attr_id)
-                    res_attr_idx = (resource_type, resource_id, attr_id)
-
-                    parentkey = '{}/{}/{}'.format(resource_type, resource_id, attr_id)
-
-                    # TODO: get fill_value from dataset/ttype (this should be user-specified)
-                    self.evaluator.data_type = data_type
-                    value = None
-                    try:
-                        # Intermediary output functions are not evaluated at this stage, as they may depend on calculated values
-                        # if not (intermediary and is_var and is_function):
-                        if not (is_var and is_function):
-                            value = self.evaluator.eval_data(
-                                value=rs.value,
-                                fill_value=0,
-                                has_blocks=has_blocks,
-                                date_format=self.date_format,
-                                flavor='native',
-                                parentkey=parentkey,
-                                for_eval=True,
-                            )
-                    except:
-                        raise
-
-                    if not is_var and (value is None or (type(value) == str and not value)):
-                        continue
-
-                    # TODO: add generic unit conversion utility here
-                    dimension = rs.value.dimension
-
-                    if data_type == 'scalar':
-                        try:
-                            value = float(value)
-                        except:
-                            raise Exception("Could not convert scalar")
-
-                        if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
-                            self.initial_volumes[res_attr_idx] = value
-                        else:
-                            self.constants[res_attr_idx] = value
-
-                    elif type(value) in [int, float]:
-                        self.constants[res_attr_idx] = value
-
-                    elif data_type == 'descriptor':  # this could change later
-                        self.descriptors[res_attr_idx] = value
-
-                    elif data_type == 'timeseries':
-                        values = value
-                        function = None
-
-                        try:
-                            if is_function:
-                                function = metadata.get('function')
-                                if not function:
-                                    continue
-
-                            use_function = len(values) < N
-
-                            # routine to add blocks using quadratic values - this needs to be paired with a similar routine when updating boundary conditions
-                            # if has_blocks:
-                            #     values = add_subblocks(values, attr_name, self.default_subblocks)
-
-                            self.variables[res_attr_idx] = {
-                                'data_type': data_type,
-                                'values': values,
-                                'is_function': use_function and is_function,
-                                'function': use_function and function,
-                                'has_blocks': has_blocks,
-                                'is_ready': is_function and not use_function
-                            }
-                        except:
-                            raise
-
-                    self.store[parentkey] = value
-
-                    # update resource blocks to match max of this type block and previous type blocks
-                    type_blocks = self.blocks[resource_type]
-                    if res_idx in type_blocks:
-                        blocks = blocks if len(blocks) > len(type_blocks[res_idx]) else type_blocks[res_idx]
-                    self.blocks[resource_type][res_idx] = blocks
-
-                except Exception as err:
-                    if resource_type == 'network':
-                        resource_name = 'network'
-                    else:
-                        resource_name = self.resources.get((resource_type, resource_id), {}).get('name',
-                                                                                                 'unknown resource')
-
-                    msg = '{}\n\n{}'.format(
-                        err,
-                        'This error occurred when calculating {} for {}.'.format(rs['value']['name'], resource_name)
+                value = None
+                if not (is_var and is_function):
+                    value = self.evaluator.eval_data(
+                        value=rs.value,
+                        fill_value=0,
+                        date_format=self.date_format,
+                        flavor='native',
                     )
 
-                    raise Exception(msg)
+                if not is_var and (value is None or (type(value) == str and not value)):
+                    continue
+
+                # TODO: add generic unit conversion utility here
+                dimension = rs.value.dimension
+
+                if data_type == 'scalar':
+                    try:
+                        value = float(value)
+                    except:
+                        raise Exception("Could not convert scalar")
+
+                    if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
+                        self.initial_volumes[res_attr_idx] = value
+                    else:
+                        self.constants[res_attr_idx] = value
+
+                elif type(value) in [int, float]:
+                    self.constants[res_attr_idx] = value
+
+                elif data_type == 'descriptor':  # this could change later
+                    self.descriptors[res_attr_idx] = value
+
+                elif data_type == 'timeseries':
+                    values = value
+                    function = None
+
+                    if is_function:
+                        function = metadata.get('function')
+                        if not function:
+                            continue
+
+                    use_function = len(values) < N
+
+                    self.variables[res_attr_idx] = {
+                        'data_type': data_type,
+                        'values': values,
+                        'is_function': use_function and is_function,
+                        'function': use_function and function,
+                        'is_ready': is_function and not use_function
+                    }
 
         return
 
     def initialize(self, supersubscenario):
         """A wrapper for all initialization steps."""
-
-        # add a store
-        self.store = {}
-        self.evaluator.store = self.store
 
         # prepare parameters
         self.prepare_params()
@@ -489,7 +430,6 @@ class WaterSystem(object):
         # set up subscenario
         self.setup_subscenario(supersubscenario)
 
-        current_dates = self.dates[:self.foresight_periods]
         current_dates_as_string = self.dates_as_string[:self.foresight_periods]
         step = self.dates[0].day
 
@@ -574,7 +514,6 @@ class WaterSystem(object):
                         scale=param.get('scale', 1),
                         unit=param.get('unit'),
                         intermediary=param.get('intermediary', False),
-                        has_blocks=param.get('has_blocks', False),
                         resource_type=resource_type.lower()
                     )
                     del param['properties']
@@ -646,114 +585,6 @@ class WaterSystem(object):
                             'dimension': tattr['dimension']
                         }
 
-    def update_boundary_condition(self, res_attr_idx, dates_as_string, is_function=False, func=None, values=None,
-                                  step='main', scope='store'):
-
-        try:
-            resource_type, resource_id, attr_id = res_attr_idx
-            # TODO: get tattr_idx
-            type_name = self.resources[(resource_type, resource_id)]['type']['name']
-            tattr_idx = (resource_type, type_name, attr_id)
-            param = self.params[tattr_idx]
-            if scope == 'store' \
-                    and (step == 'main' and param.intermediary
-                         or step in ['pre-process', 'post-process'] and not param.intermediary):
-                return
-
-            if scope == 'model' and param.intermediary:
-                return
-
-            if param.is_var == 'Y' and step != 'post-process':
-                return
-
-            dimension = param.dimension
-            data_type = param.data_type
-            unit = param.unit
-            startup_date = self.constants.get('Startup Date', '')
-
-            # for updating Pywr
-            type_name_lower = type_name.lower()
-            attr_name_lower = param['attr_name'].lower()
-
-            parentkey = '{}/{}/{}'.format(resource_type, resource_id, attr_id)
-
-            if is_function:
-                if scope == 'store':
-                    self.evaluator.data_type = data_type
-                    try:
-                        # full_key = (resource_type, resource_id, attr_id, dates_as_string)
-                        values = self.evaluator.eval_function(
-                            func,
-                            has_blocks=param.has_blocks,
-                            flatten=not param.has_blocks,
-                            data_type=data_type,
-                            parentkey=parentkey,
-                            flavor='native'
-                        )
-                    except Exception as err:
-                        raise self.create_exception(parentkey, str(err))
-
-                else:
-                    values = self.get_value(resource_type, resource_id, attr_id, has_blocks=param.has_blocks)
-
-                # update missing blocks, if any
-                # routine to add blocks using quadratic values - this needs to be paired with a similar routine when updating boundary conditions
-                # if has_blocks:
-                #     values = add_subblocks(values, attr_name, self.default_subblocks)
-
-            if param.has_blocks:
-                cols = values.keys()
-            else:
-                cols = [0]
-            for j, c in enumerate(cols):
-
-                if param.has_blocks:
-                    vals = values[c]
-                else:
-                    vals = values.get(c, values)
-
-                # update values variable
-                for i, datetime in enumerate(dates_as_string):
-
-                    if datetime not in vals:
-                        continue
-
-                    # set value of anything with a start date to zero
-                    # note that this works to compare ISO-formatted strings, so no pendulum date needed
-                    # TODO: make this more sophisticated
-                    if datetime < startup_date:
-                        val = 0
-
-                    else:
-                        val = vals[datetime]
-
-                    if scope == 'store':
-                        # send the result to the data store
-                        self.store_value(resource_type, resource_id, attr_id, datetime, val,
-                                         has_blocks=param.has_blocks)
-                        continue
-
-                    # if step != 'main':
-                    #     continue
-
-                    if val is not None:
-                        scale = param.scale
-                        # only convert if updating the LP model
-                        if dimension == 'Volumetric flow rate':
-                            val = convert(val * scale, dimension, unit, 'hm^3 day^-1')
-                        elif dimension == 'Volume':
-                            val = convert(val * scale, dimension, unit, 'hm^3')
-
-                    try:
-                        self.model.update_param(resource_type, resource_id, type_name_lower, attr_name_lower, val)
-
-                    except Exception as err:
-                        print(err)
-                        raise
-        except Exception as err:
-            print(err)
-            raise
-
     def step(self):
         self.model.model.step()
 
@@ -763,156 +594,6 @@ class WaterSystem(object):
     def finish(self):
         self.save_results()
         self.model.model.finish()
-
-    def update_boundary_conditions(self, tsi, tsf, step='main', initialize=False):
-        """
-        Update boundary conditions.
-        """
-        dates_as_string = self.dates_as_string[tsi:tsf]
-        self.evaluator.tsi = tsi
-        self.evaluator.tsf = tsf
-
-        # 1. Update values in memory store
-        for res_attr_idx in self.variables:
-            param = self.variables[res_attr_idx]
-            self.update_boundary_condition(
-                res_attr_idx,
-                dates_as_string,
-                values=param.get('values'),
-                is_function=param.get('is_function'),
-                func=param.get('function'),
-                step=step,
-                scope='store'
-            )
-
-        # 2. update Pywr model
-        if step == 'main':
-            # for attr_name in self.valueParams + self.demandParams:
-            self.model.updated = {}
-            for res_attr_idx in self.variables:
-                param = self.variables[res_attr_idx]
-                self.update_boundary_condition(
-                    res_attr_idx,
-                    dates_as_string,
-                    values=param.get('values'),
-                    is_function=param.get('is_function'),
-                    func=param.get('function'),
-                    step=step,
-                    scope='model'
-                )
-
-    def collect_results(self, timesteps, tsidx=None, include_all=False, suppress_input=False):
-
-        for (resource_type, resource_id, attr_id) in self.attrs_to_save:
-            res_idx = (resource_type, resource_id)
-            storage = self.model.storage.get(resource_id)
-            non_storage = not storage and self.model.non_storage.get(res_idx)
-
-            if storage or non_storage:
-
-                resource_class = 'storage' if storage else 'non_storage'
-                tattr = self.conn.tattrs[(resource_type, resource_id, attr_id)]
-                attr_name = tattr['attr_name'].lower()
-
-                idx = (resource_class, attr_name)
-
-                value = None
-                if idx == ('non_storage', 'outflow'):
-                    value = non_storage.flow[0]
-                elif idx == ('storage', 'outflow'):
-                    value = sum([i.flow[0] for i in storage.inputs])
-                elif idx == ('storage', 'inflow'):
-                    value = sum([o.flow[0] for o in storage.outputs])
-                elif idx == ('storage', 'storage'):
-                    value = storage.volume[0]
-
-                if value is None:
-                    continue # The attribute isn't obtainable yet?
-
-                self.store_results(
-                    resource_type=resource_type,
-                    resource_id=resource_id,
-                    attr_id=attr_id,
-                    timestamp=timesteps[0],
-                    value=value
-                )
-
-    def store_results(self, resource_type=None, resource_id=None, attr_id=None, timestamp=None, value=None):
-
-        type_name = self.resources[(resource_type, resource_id)]['type']['name']
-        if not attr_id:
-            return  # this is not an actual attribute in the model
-        tattr_idx = (resource_type, type_name, attr_id)
-        param = self.params.get(tattr_idx, {})
-
-        has_blocks = param.has_blocks
-        dimension = param.dimension
-        unit = param.unit
-        scale = param.scale
-
-        # collect to results
-
-        # the purpose of this addition is to aggregate blocks, if any, thus eliminating the need for Pandas
-        # on the other hand, it should be checked which is faster: Pandas group_by or simple addition here
-
-        if dimension == 'Volume':
-            value = convert(value, dimension, 'hm^3', unit) / scale
-        elif dimension == 'Volumetric flow rate':
-            value = convert(value, dimension, 'hm^3 day^-1', unit) / scale
-
-        # store in evaluator store
-        self.store_value(resource_type, resource_id, attr_id, timestamp, value, has_blocks=has_blocks)
-
-    def get_value(self, resource_type, resource_id, attr_id, timestamp=None, has_blocks=False):
-
-        key_string = '{resource_type}/{resource_id}/{attr_id}'.format(resource_type=resource_type,
-                                                                      resource_id=resource_id, attr_id=attr_id)
-        if has_blocks:
-            val = self.store[key_string]  # TODO: get specific block
-        else:
-            val = self.store[key_string]
-        if timestamp:
-            return val[timestamp]
-        else:
-            return val
-
-    def store_value(self, resource_type, resource_id, attr_id, timestamp, val, has_blocks=False):
-
-        # add new resource scenario if it doesn't exist
-        # key = (resource_type, resource_id, attr_id)
-        key = '{}/{}/{}'.format(resource_type, resource_id, attr_id)
-        try:
-            if key not in self.evaluator.resource_scenarios:
-                tattr = self.conn.tattrs.get((resource_type, resource_id, attr_id))
-                if not tattr:
-                    # This is because the model assigns all resource attribute possibilities to all resources of like type
-                    # In practice this shouldn't make a difference, but may result in a model larger than desired
-                    # TODO: correct this
-                    return
-                self.evaluator.resource_scenarios[key] = {
-                    'type': tattr['data_type'],
-                    'unit': tattr['unit'],
-                    'dimension': tattr['dimension'],
-                    'value': None
-                }
-        except:
-            raise
-
-        # store value
-        key_string = '{resource_type}/{resource_id}/{attr_id}'.format(resource_type=resource_type,
-                                                                      resource_id=resource_id, attr_id=attr_id)
-        if key_string not in self.store:
-            if has_blocks:
-                self.store[key_string] = {0: {}}
-            else:
-                self.store[key_string] = {}
-        elif has_blocks and 0 not in self.store[key_string]:
-            self.store[key_string][0] = {}
-        if has_blocks:
-            # val += self.store[key_string][0].get(timestamp, 0)
-            self.store[key_string][0][timestamp] = val
-        else:
-            self.store[key_string][timestamp] = val
 
     def save_logs(self):
 
@@ -961,7 +642,6 @@ class WaterSystem(object):
         try:
             n = 0
             N = len(self.store)
-            # for key, value in self.store.items():
             for key in tqdm(self.store, leave=False, ncols=80, disable=not self.args.verbose):
 
                 value = self.store[key]
@@ -1180,7 +860,7 @@ class WaterSystem(object):
                             resource_id=resource_id,
                         )
 
-                    filename = '{attr_id}.csv'.format(attr_id = attr_name if human_readable else attr_id)
+                    filename = '{attr_id}.csv'.format(attr_id=attr_name if human_readable else attr_id)
                     if dest == 's3':
                         key = os.path.join(key, filename)
                         s3.put_object(Body=content.encode(), Bucket=self.bucket_name, Key=key)

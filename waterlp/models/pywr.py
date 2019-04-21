@@ -75,13 +75,12 @@ class PywrModel(object):
             pywr_param = None
             constant = constants.pop(res_attr_idx, None)
             if constant:
-                # pywr_param = ConstantParameter(model, constant)
-                pywr_param = constant
-            # elif variables:
-            #     variable = variables.pop(res_attr_idx, None)
-            #     if variable:
-            #         values = list(variable['values'].values())
-            #         pywr_param = ArrayIndexedParameter(model, values)
+                pywr_param = ConstantParameter(model, constant)
+            elif variables:
+                variable = variables.pop(res_attr_idx, None)
+                if variable:
+                    values = list(variable['values'].values())
+                    pywr_param = ArrayIndexedParameter(model, values)
 
             if pywr_param is not None:
                 type_name = type_name.lower()
@@ -188,13 +187,12 @@ class PywrModel(object):
             connect_in = node.get('connect_in', 0)
             connect_out = node.get('connect_out', 0)
             if (type_name in storage_types or connect_out > 1) and type_name not in non_storage_types:
-                initial_volume = initial_volumes.get(node_id, 0.0) if initial_volumes is not None else 0.0
                 self.storage[node_id] = Storage(
                     model,
                     name=name,
                     num_outputs=connect_in,
                     num_inputs=connect_out,
-                    initial_volume=initial_volume
+                    initial_volume=initial_volumes.get(node_id, 0.0) if initial_volumes is not None else 0.0
                 )
                 if type_name not in storage_types:
                     self.storage[node_id].max_volume = 0.0
@@ -316,43 +314,3 @@ class PywrModel(object):
             raise Exception(msg)
 
         return
-
-    # def init_params(self, params, variables, block_params):
-    #
-    #     for param_name, param in params.items():
-    #
-    #         data_type = param['data_type']
-    #         resource_type = param['resource_type']
-    #         attr_name = param['attr_name']
-    #         unit = param['unit']
-    #         intermediary = param['intermediary']
-    #
-    #         if intermediary or resource_type == 'network':
-    #             continue
-    #
-    #         param_definition = None
-    #
-    #         initial_values = variables.get(param_name, None)
-    #
-    #         if param['is_var'] == 'N':
-    #
-    #             mutable = True  # assume all variables are mutable
-    #             default = 0  # TODO: define in template rather than here
-    #
-    #             if data_type == 'scalar':
-    #                 _param = ConstantParameter(self.model, initial_values)
-    #
-    #             elif data_type == 'timeseries':
-    #                 if initial_values:
-    #                     if attr_name in block_params:
-    #                         _param = DataframeParameter(self.model, initial_values)
-    #                     else:
-    #                         _param = ArrayIndexedParameter(self.model, initial_values)
-    #
-    #             elif data_type == 'array':
-    #                 continue  # placeholder
-    #
-    #             else:
-    #                 # this includes descriptors, which have no place in the LP model yet
-    #                 continue
-    #     return
