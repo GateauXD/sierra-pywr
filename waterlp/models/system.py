@@ -108,10 +108,10 @@ class WaterSystem(object):
         self.res_tattrs = {}
 
         self.initial_volumes = {}
-        self.constants = {}  # fixed (scalars, arrays, etc.)
+        self.constants = {}
         self.descriptors = {}
-        self.variables = {}  # variable (time series)
-        # self.block_params = ['Storage Demand', 'Demand', 'Priority']
+        self.variables = {}
+        self.policies = {}
         self.block_params = []
         self.blocks = {'node': {}, 'link': {}, 'network': {}}
         self.res_scens = {}
@@ -321,6 +321,9 @@ class WaterSystem(object):
                     resource_id = self.network.id
                 res_idx = (resource_type, resource_id)
 
+                resource = self.resources.get(res_idx)
+                resource_name = resource['name']
+
                 # key = '{}/{}/{}'.format(resource_type, resource_id, rs.attr_id)
 
                 res_tattr = self.res_tattrs.get(rs.resource_attr_id)
@@ -383,7 +386,7 @@ class WaterSystem(object):
                 # TODO: add generic unit conversion utility here
                 dimension = rs.value.dimension
 
-                if data_type == 'scalar':
+                if data_type == 'scalar' or type(value) in [int, float]:
                     try:
                         value = float(value)
                     except:
@@ -394,8 +397,11 @@ class WaterSystem(object):
                     else:
                         self.constants[res_attr_idx] = value
 
-                elif type(value) in [int, float]:
-                    self.constants[res_attr_idx] = value
+                elif is_function:
+                    self.policies[res_attr_idx] = {
+                        'name': '{} {}'.format(resource_name, tattr['attr_name']),
+                        'code': value
+                    }
 
                 elif data_type == 'descriptor':  # this could change later
                     self.descriptors[res_attr_idx] = value
@@ -404,19 +410,9 @@ class WaterSystem(object):
                     values = value
                     function = None
 
-                    if is_function:
-                        function = metadata.get('function')
-                        if not function:
-                            continue
-
-                    use_function = len(values) < N
-
                     self.variables[res_attr_idx] = {
                         'data_type': data_type,
                         'values': values,
-                        'is_function': use_function and is_function,
-                        'function': use_function and function,
-                        'is_ready': is_function and not use_function
                     }
 
         return
@@ -447,6 +443,7 @@ class WaterSystem(object):
         initial_volumes = {}
         constants = {}
         variables = {}
+        policies = {}
 
         def convert_values(source, dest, dest_key='res_attr_idx'):
             for res_attr_idx in list(source):
@@ -478,12 +475,14 @@ class WaterSystem(object):
         self.model = PywrModel(
             network=self.network,
             template=self.template,
+            tattrs=self.conn.tattrs,
             start=start,
             end=end,
             step=step,
             initial_volumes=initial_volumes,
             constants=constants,
-            variables=variables
+            variables=variables,
+            policies=self.policies,
         )
 
     def prepare_params(self):
@@ -809,22 +808,21 @@ class WaterSystem(object):
 
             count = 1
             pcount = 1
-            nparams = len(self.store)
+            df = self.model.model.to_dataframe()
+            nparams = len(df.columns)
             path = base_path + '/{resource_type}/{resource_subtype}/{resource_id}'
-            for res_attr_idx in tqdm(self.store, ncols=80, leave=False, disable=not self.args.verbose):
+            cols = df.columns
+            for col in tqdm(cols, ncols=80, leave=False, disable=not self.args.verbose):
+                res_attr_idx = col[0]
                 resource_type, resource_id, attr_id = res_attr_idx.split('/')
                 resource_id = int(resource_id)
                 attr_id = int(attr_id)
 
                 tattr = self.conn.tattrs.get((resource_type, resource_id, attr_id))
-                if not tattr or not tattr['properties'].get('save'):
-                    continue
-
                 res_attr_id = self.conn.res_attr_lookup.get((resource_type, resource_id, attr_id))
                 if not res_attr_id:
                     continue
 
-                value = self.store[res_attr_idx]
                 pcount += 1
 
                 # define the dataset value
@@ -832,14 +830,9 @@ class WaterSystem(object):
                 attr_name = tattr['attr_name']
                 try:
                     if 'timeseries' in data_type:
-                        if tattr['properties'].get('has_blocks') and type(list(value.values())[0]) == dict:
-                            df = pd.DataFrame(value)
-                        else:
-                            df = pd.DataFrame({0: value})
-                        value = df.to_csv()
+                        content = df[res_attr_idx].to_csv()
                     else:
-                        value = str(value)
-                    content = value
+                        content = str(df[res_attr_idx].value())
                 except:
                     print('Failed to prepare: {}'.format(attr_name))
                     continue

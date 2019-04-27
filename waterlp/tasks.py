@@ -15,7 +15,6 @@ from waterlp.reporters.redis import local_redis
 from waterlp.reporters.post import Reporter as PostReporter
 from waterlp.reporters.ably import AblyReporter
 from waterlp.reporters.pubnub import PubNubReporter
-from waterlp.reporters.screen import ScreenReporter
 from waterlp.logger import RunLogger
 from waterlp.parser import commandline_parser
 from waterlp.connection import connection
@@ -202,7 +201,7 @@ def run_scenarios(args, networklog):
                 system.dates = system.dates[:system.nruns]
                 system.dates_as_string = system.dates_as_string[:system.nruns]
 
-                subscenario_count = min(subscenario_count, args.debug_s)
+                subscenario_count = min(subscenario_count, args.debug_s) if args.debug_s else subscenario_count
 
             system.scenario.subscenario_count = subscenario_count
             system.scenario.total_steps = subscenario_count * len(system.timesteps)
@@ -353,11 +352,7 @@ def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, 
 
             # 2. UPDATE BOUNDARY CONDITIONS
 
-            system.update_boundary_conditions(ts, ts + system.foresight_periods, step='pre-process')
-            system.update_boundary_conditions(ts, ts + system.foresight_periods, step='main')
-
             # 3. RUN THE MODEL ONE TIME STEP
-
             results = system.step()
 
             if i == 0 and args.debug and results:
@@ -366,10 +361,8 @@ def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, 
                 system.save_to_file('stats.csv', content)
 
             # 4. COLLECT RESULTS
-            system.collect_results(current_dates_as_string, tsidx=i, suppress_input=args.suppress_input)
 
             # 5. CALCULATE POST-PROCESSED RESULTS
-            system.update_boundary_conditions(ts, ts + system.foresight_periods, step='post-process')
 
             # 6. REPORT PROGRESS
             system.scenario.finished += 1

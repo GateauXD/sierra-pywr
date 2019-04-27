@@ -104,6 +104,16 @@ def parse_function(user_code, name, argnames, modules=()):
     return func
 
 
+def eval_function(function):
+    if function is None or type(function) != str:
+        return ''
+
+    try:
+        return eval(function)
+    except:
+        return function
+
+
 class Timestep(object):
     index = -1
     periodic_timestep = 1
@@ -277,23 +287,11 @@ class Evaluator:
         metadata = json.loads(value.metadata)
         if func is None:
             func = metadata.get('function')
-        usefn = metadata.get('use_function', 'N') == 'Y'
+        use_function = metadata.get('use_function', 'N') == 'Y'
         data_type = data_type or value.type
 
-        if usefn:
-            func = func if type(func) == str else ''
-            try:
-                result = self.eval_function(
-                    func,
-                    flavor=flavor,
-                    depth=depth,
-                    data_type=data_type,
-                    tsidx=tsidx,
-                    flatten=flatten,
-                    date_format=date_format,
-                )
-            except Exception as err:
-                raise
+        if use_function:
+            return eval_function(func)
 
         elif data_type == 'scalar':
             try:

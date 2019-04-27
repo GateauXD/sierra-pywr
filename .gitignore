@@ -4,6 +4,7 @@ build/
 waterlp/__pycache__/
 waterlp/logs/*
 waterlp/logs
+waterlp/models/policies
 logs/*
 *.wpr
 *.wpu
