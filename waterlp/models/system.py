@@ -639,50 +639,68 @@ class WaterSystem(object):
         res_names = {}
 
         try:
-            n = 0
-            N = len(self.store)
-            for key in tqdm(self.store, leave=False, ncols=80, disable=not self.args.verbose):
 
-                value = self.store[key]
+            # =============
+            # write results
+            # =============
+
+            df = self.model.model.to_dataframe()
+            cols = df.columns
+            ncols = len(cols)
+
+            if not ncols:
+                self.scenario.reporter.report(
+                    action='error',
+                    message="ERROR: No results have been reported. The model might not have run."
+                )
+
+            def dump_results(res_scens):
+                result_scenario['resourcescenarios'] = res_scens
+                result_scenario['layout'].update({
+                    'modified_date': dt.now().isoformat(' '),
+                    'modified_by': self.args.user_id
+                })
+                resp = self.conn.dump_results(result_scenario)
+
+                if 'id' not in resp:
+                    raise Exception('Error saving data')
+
+            n = 0
+
+            for col in tqdm(cols, ncols=80, leave=False, disable=not self.args.verbose):
+
                 n += 1
-                resource_type, resource_id, attr_id = key.split('/')
+                res_attr_idx = col[0]
+                resource_type, resource_id, attr_id = res_attr_idx.split('/')
                 resource_id = int(resource_id)
                 attr_id = int(attr_id)
+                idx = (resource_type, resource_id, attr_id)
 
-                tattr = self.conn.tattrs.get((resource_type, resource_id, attr_id))
-                if not tattr or not tattr['properties'].get('save'):
+                tattr = self.conn.tattrs.get(idx)
+                res_attr_id = self.conn.res_attr_lookup.get(idx)
+
+                if not (res_attr_id and tattr and tattr['properties'].get('save')):
                     continue
 
-                type_name = self.resources[(resource_type, resource_id)]['type']['name']
-                param_idx = (resource_type, type_name, attr_id)
-                param = self.params.get(param_idx)
-                if not param:
-                    continue  # it's probably an internal variable/parameter
+                # type_name = self.resources[(resource_type, resource_id)]['type']['name']
+                # param = self.params.get((resource_type, type_name, attr_id))
+                # if not param:
+                #     continue  # it's probably an internal variable/parameter
 
-                # create the resource scenario (dataset attached to a specific resource attribute)
-                res_attr_idx = (resource_type, resource_id, attr_id)
-                res_attr_id = self.conn.res_attr_lookup.get(res_attr_idx)
-                if not res_attr_id:
-                    continue
                 resource_name = self.conn.raid_to_res_name[res_attr_id]
                 attr_name = tattr['attr_name']
 
                 # define the dataset value
                 data_type = tattr['data_type']
                 try:
-                    if 'timeseries' in data_type:
-                        if param.has_blocks and type(list(value.values())[0]) == dict:
-                            value = pd.DataFrame(value).to_json()
-                        else:
-                            value = pd.DataFrame({0: value}).to_json()
-                    else:
-                        value = str(value)
-                except:
-                    # print('Failed to prepare: {}'.format(attr_name))
-                    continue
 
-                # if self.args.debug:
-                #     print('Saving: {} for {}'.format(attr_name, resource_name))
+                    if 'timeseries' in data_type:
+                        content = df[res_attr_idx].to_json(date_format='iso')
+                    else:
+                        content = str(df[res_attr_idx])
+                except:
+                    print('Failed to prepare: {}'.format(attr_name))
+                    continue
 
                 if resource_type == 'network':
                     res_scen_name = '{} - {} [{}]'.format(self.network.name, tattr['attr_name'], self.scenario.name)
@@ -702,47 +720,26 @@ class WaterSystem(object):
                         'name': res_scen_name,
                         'unit': tattr['unit'],
                         'dimension': tattr['dimension'],
-                        'value': value
+                        'value': content
                     }
                 }
                 res_scens.append(rs)
-                mb += len(value.encode()) * 1.1 / 1e6  # large factor of safety
+                mb += len(content.encode()) * 1.1 / 1e6  # large factor of safety
 
                 if mb > 10 or n % 100 == 0:
-                    result_scenario['resourcescenarios'] = res_scens[:-1]
-                    result_scenario['layout'].update({
-                        'modified_date': dt.now().isoformat(' '),
-                        'modified_by': self.args.user_id
-                    })
-                    resp = self.conn.dump_results(result_scenario)
-                    if 'id' not in resp:
-                        raise Exception('Error saving data')
-                    if self.scenario.reporter:
-                        self.scenario.reporter.report(
-                            action='save',
-                            saved=round(n / N * 100)
-                        )
+                    dump_results(res_scens[:-1])
 
                     # purge just-uploaded scenarios
                     res_scens = res_scens[-1:]
                     mb = 0
 
+                    self.scenario.reporter.report(action='save', saved=round(n / ncols * 100))
+
             # upload the last remaining resource scenarios
-            result_scenario['resourcescenarios'] = res_scens
-            result_scenario['layout'].update({
-                'modified_date': dt.now().isoformat(' '),
-                'modified_by': self.args.user_id
-            })
-            resp = self.conn.dump_results(result_scenario)
+            dump_results(res_scens)
+            self.scenario.reporter.report(action='save', force=True, saved=round(n / ncols * 100))
 
-            self.scenario.result_scenario_id = result_scenario['id']
-
-            if self.scenario.reporter:
-                if N:
-                    self.scenario.reporter.report(action='save', saved=round(n / N * 100))
-                else:
-                    self.scenario.reporter.report(action='error',
-                                                  message="ERROR: No results have been reported. The model might not have run.")
+            # self.scenario.result_scenario_id = result_scenario['id']
 
         except:
             msg = 'ERROR: Results could not be saved.'
@@ -790,40 +787,49 @@ class WaterSystem(object):
             if not os.path.exists(base_path):
                 os.makedirs(base_path)
 
-        # save variable data to database
-        res_scens = []
-        res_names = {}
-
         try:
 
+            # ==============
             # write metadata
-            content = json.dumps(self.metadata, sort_keys=True, indent=4, separators=(',', ': '))
+            # ==============
+
+            metadata = json.dumps(self.metadata, sort_keys=True, indent=4, separators=(',', ': '))
 
             if dest == 's3':
-                s3.put_object(Body=content.encode(), Bucket=self.bucket_name, Key=base_path + '/metadata.json')
+                s3.put_object(Body=metadata.encode(), Bucket=self.bucket_name, Key=base_path + '/metadata.json')
             elif dest == 'local':
                 file_path = os.path.join(base_path, 'metadata.json')
                 with open(file_path, 'w') as outfile:
                     json.dump(self.metadata, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
-            count = 1
-            pcount = 1
+            # =============
+            # write results
+            # =============
+
             df = self.model.model.to_dataframe()
-            nparams = len(df.columns)
+            n = 0
+            ncols = len(df.columns)
             path = base_path + '/{resource_type}/{resource_subtype}/{resource_id}'
             cols = df.columns
+
             for col in tqdm(cols, ncols=80, leave=False, disable=not self.args.verbose):
+
+                n += 1
+
                 res_attr_idx = col[0]
                 resource_type, resource_id, attr_id = res_attr_idx.split('/')
                 resource_id = int(resource_id)
                 attr_id = int(attr_id)
 
-                tattr = self.conn.tattrs.get((resource_type, resource_id, attr_id))
-                res_attr_id = self.conn.res_attr_lookup.get((resource_type, resource_id, attr_id))
-                if not res_attr_id:
+                idx = (resource_type, resource_id, attr_id)
+
+                tattr = self.conn.tattrs.get(idx)
+                res_attr_id = self.conn.res_attr_lookup.get(idx)
+
+                if not (res_attr_id and tattr and tattr['properties'].get('save')):
                     continue
 
-                pcount += 1
+                # prepare data
 
                 # define the dataset value
                 data_type = tattr['data_type']
@@ -864,11 +870,9 @@ class WaterSystem(object):
                         with open(os.path.join(file_path, filename), 'wb') as outfile:
                             outfile.write(content.encode())
 
-                if count % 10 == 0 or pcount == nparams:
+                if n % 10 == 0 or n == ncols:
                     if self.scenario.reporter:
-                        self.scenario.reporter.report(action='save',
-                                                      saved=round(count / (self.nparams + self.nvars) * 100))
-                count += 1
+                        self.scenario.reporter.report(action='save', saved=round(n / ncols * 100))
 
         except:
             msg = 'ERROR: Results could not be saved.'

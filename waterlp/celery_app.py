@@ -49,7 +49,7 @@ def start_listening(concurrency=4):
     pubnub.add_listener(PNSubscribeCallback())
 
     pubnub.subscribe().channels(queue_name).execute()
-    print(" [*] Subscribed to PubNub")
+    print(" [*] Subscribed to PubNub at {}".format(queue_name))
 
     app.start(['celery', 'worker', '-c', str(concurrency), '-l', 'INFO'])
 

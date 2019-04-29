@@ -3,6 +3,7 @@ import argparse
 import uuid
 from datetime import datetime
 
+
 def commandline_parser():
     """
         Parse the arguments passed in from the command line.
@@ -42,6 +43,8 @@ def commandline_parser():
                         help='''The format of a time step in Hydra Platform (found in hydra.ini).''')
     parser.add_argument('--ldir', dest='log_dir',
                         help='''The main log file directory.''')
+    parser.add_argument('--rid', dest='run_id',
+                        help='''ID of the run. This will be added to result scenarios and is used for reporting progress.''')
     parser.add_argument('--rname', dest='run_name', help='''Name of the run. This will be added to result scenarios.''')
     parser.add_argument('--sol', dest='solver', default='glpk',
                         help='''The solver to use (e.g., glpk, gurobi, etc.).''')
@@ -52,8 +55,10 @@ def commandline_parser():
                         help='''Message protocol to report progress back to client browser''')
     parser.add_argument('--guid', default=uuid.uuid4().hex, dest='unique_id',
                         help='''Unique identifier for this run.''')
-    parser.add_argument('--sm', dest='sync_mode', default='async', help='''Whether to run as sync or async. For async, Celery must be set up properly.''')
-    parser.add_argument('--v', dest='verbose', action='store_true', help='''Verbose output, generally paired with debug.''')
+    parser.add_argument('--sm', dest='sync_mode', default='async',
+                        help='''Whether to run as sync or async. For async, Celery must be set up properly.''')
+    parser.add_argument('--v', dest='verbose', action='store_true',
+                        help='''Verbose output, generally paired with debug.''')
     parser.add_argument('--debug', dest='debug', action='store_true', help='''Debug flag.''')
     parser.add_argument('--debug_ts', dest='debug_ts', type=int, default=10,
                         help='''The number of timesteps to run in debug mode.''')

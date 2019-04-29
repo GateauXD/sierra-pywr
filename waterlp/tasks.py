@@ -23,6 +23,7 @@ from waterlp.models.system import WaterSystem
 from waterlp.scenario_class import Scenario
 from waterlp.utils.application import ProcessState
 
+
 class Object(object):
     def __init__(self, values):
         for key in values:
@@ -31,7 +32,6 @@ class Object(object):
 
 @app.task(name='openagua.run')
 def run(**kwargs):
-
     print(' [x] Task initiated')
 
     """This is for starting the model with Celery"""
@@ -216,12 +216,12 @@ def run_scenarios(args, networklog):
                     'variation_sets': variation_sets,
                 })
 
-                scenario_key[i+1] = {}
+                scenario_key[i + 1] = {}
                 for variation_set in variation_sets:
                     variations = variation_set.get('variations')
                     for key in variations:
                         (t, r, a) = key
-                        scenario_key[i+1]['{}/{}/{}'.format(t, r, a)] = variations[key]['value']
+                        scenario_key[i + 1]['{}/{}/{}'.format(t, r, a)] = variations[key]['value']
 
             if scenario.destination != 'source':
                 # save scenario_key
@@ -288,7 +288,8 @@ def run_scenario(supersubscenario, args, verbose=False):
     elif args.message_protocol == 'ably':
         reporter = AblyReporter(args, post_reporter=post_reporter)
     elif args.message_protocol == 'pubnub':
-        reporter = PubNubReporter(args, publish_key=args.publish_key, post_reporter=post_reporter)
+        reporter = PubNubReporter(
+            args, publish_key=args.publish_key, post_reporter=post_reporter, run_id=args.run_id)
     if reporter:
         reporter.updater = system.scenario.update_payload
         system.scenario.reporter = reporter
@@ -312,7 +313,6 @@ def run_scenario(supersubscenario, args, verbose=False):
 
 
 def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, verbose=False):
-
     sid = supersubscenario.get('sid')
 
     # intialize
@@ -405,4 +405,3 @@ def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, 
     reporter and reporter.report(action='done')
 
     print('[*] Finished scenario')
-
