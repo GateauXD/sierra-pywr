@@ -1,12 +1,11 @@
 import os
 import json
 from attrdict import AttrDict
-import pandas as pd
 import boto3
 from datetime import datetime as dt
 from tqdm import tqdm
 
-from waterlp.models.pywr import PywrModel
+from waterlp.models.pywr2 import PywrModel
 from waterlp.models.evaluator import Evaluator
 from waterlp.utils.converter import convert
 
@@ -269,6 +268,7 @@ class WaterSystem(object):
 
         # collect source data
         # Importantly, this routine overwrites parent scenario data with child scenario data
+        resource_scenarios = {}
         for source_id in self.scenario.source_ids:
 
             self.evaluator.scenario_id = source_id
@@ -292,128 +292,119 @@ class WaterSystem(object):
                     resource_id = self.network.id
 
                 key = '{}/{}/{}'.format(resource_type, resource_id, rs.attr_id)
-                self.evaluator.resource_scenarios[key] = rs.value
+                resource_scenarios[key] = rs
 
         # collect/evaluate source data
         print("[*] Collecting source data")
         cnt = 0
-        for source_id in self.scenario.source_ids:
+        # for source_id in self.scenario.source_ids:
 
-            self.evaluator.scenario_id = source_id
+            # self.evaluator.scenario_id = source_id
 
-            source = self.scenario.source_scenarios[source_id]
+            # source = self.scenario.source_scenarios[source_id]
 
-            print("[*] Collecting data for {}".format(source['name']))
-            for rs in tqdm(source.resourcescenarios, ncols=80, disable=not self.args.verbose):
-                cnt += 1
-                if rs.resource_attr_id not in self.res_tattrs:
-                    continue  # this is for a different resource type
+        print("[*] Collecting data")
+        for res_attr_idx in tqdm(resource_scenarios, ncols=80, disable=not self.args.verbose):
+            rs = resource_scenarios[res_attr_idx]
+            cnt += 1
 
-                # get identifiers
-                if rs.resource_attr_id in self.ra_node:
-                    resource_type = 'node'
-                    resource_id = self.ra_node[rs.resource_attr_id]
-                elif rs.resource_attr_id in self.ra_link:
-                    resource_type = 'link'
-                    resource_id = self.ra_link[rs.resource_attr_id]
+            # get identifiers
+            if rs.resource_attr_id in self.ra_node:
+                resource_type = 'node'
+                resource_id = self.ra_node[rs.resource_attr_id]
+            elif rs.resource_attr_id in self.ra_link:
+                resource_type = 'link'
+                resource_id = self.ra_link[rs.resource_attr_id]
+            else:
+                resource_type = 'network'
+                resource_id = self.network.id
+            res_idx = (resource_type, resource_id)
+
+            resource = self.resources.get(res_idx)
+            resource_name = resource['name']
+
+            # key = '{}/{}/{}'.format(resource_type, resource_id, rs.attr_id)
+
+            # get attr name
+            attr_id = rs.attr_id
+            tattr = self.conn.tattrs[(resource_type, resource_id, attr_id)]
+            if not tattr:
+                continue
+
+            # store the resource scenario value for future lookup
+
+            intermediary = tattr['properties'].get('intermediary', False)
+            is_var = tattr['is_var'] == 'Y'
+
+            # non-intermediary outputs should not be pre-processed at all
+            if is_var and not intermediary:
+                continue
+
+            # load the metadata
+            metadata = json.loads(rs.value.metadata)
+
+            # identify as function or not
+            is_function = metadata.get('use_function', 'N') == 'Y'
+
+            # get data type
+            data_type = rs.value.type
+
+            # update data type
+            self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
+
+            # default blocks
+
+            type_name = self.resources[(resource_type, resource_id)]['type']['name']
+            idx = (resource_type, resource_id, attr_id)
+
+            value = None
+            if not (is_var and is_function):
+                value = self.evaluator.eval_data(
+                    value=rs.value,
+                    fill_value=0,
+                    date_format=self.date_format,
+                    flavor='native',
+                )
+
+            if not is_var and (value is None or (type(value) == str and not value)):
+                continue
+
+            # TODO: add generic unit conversion utility here
+            dimension = rs.value.dimension
+
+            if data_type == 'scalar' or type(value) in [int, float]:
+                try:
+                    value = float(value)
+                except:
+                    raise Exception("Could not convert scalar")
+
+                if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
+                    self.initial_volumes[idx] = value
                 else:
-                    resource_type = 'network'
-                    resource_id = self.network.id
-                res_idx = (resource_type, resource_id)
+                    # self.variables[idx] = {
+                    #     'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
+                    #     'data_type': 'scalar',
+                    #     'pywr_type': 'constant',
+                    #     'value': value,
+                    # }
+                    self.constants[idx] = value
 
-                resource = self.resources.get(res_idx)
-                resource_name = resource['name']
+            elif is_function:
+                self.policies[idx] = {
+                    'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
+                    'code': value
+                }
 
-                # key = '{}/{}/{}'.format(resource_type, resource_id, rs.attr_id)
+            elif data_type == 'descriptor':  # this could change later
+                self.descriptors[idx] = value
 
-                res_tattr = self.res_tattrs.get(rs.resource_attr_id)
-
-                if not res_tattr:
-                    continue  # this is for a different resource type
-
-                # get attr name
-                attr_id = res_tattr['attr_id']
-                tattr = self.conn.tattrs[(resource_type, resource_id, attr_id)]
-                if not tattr:
-                    continue
-
-                # if tattr['properties'].get('observed') or 'observed' in tattr['attr_name'].lower():
-                #     continue
-
-                # store the resource scenario value for future lookup
-                # self.evaluator.resource_scenarios[key] = rs.value
-
-                intermediary = tattr['properties'].get('intermediary', False)
-                # attr_name = tattr['att']
-                is_var = tattr['is_var'] == 'Y'
-
-                # non-intermediary outputs should not be pre-processed at all
-                if is_var and not intermediary:
-                    continue
-
-                # create a dictionary to lookup resourcescenario by resource attribute ID
-                self.res_scens[rs.resource_attr_id] = rs
-
-                # load the metadata
-                metadata = json.loads(rs.value.metadata)
-
-                # identify as function or not
-                is_function = metadata.get('use_function', 'N') == 'Y'
-
-                # get data type
-                data_type = rs.value.type
-
-                # update data type
-                self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
-
-                # default blocks
-
-                type_name = self.resources[(resource_type, resource_id)]['type']['name']
-                res_attr_idx = (resource_type, resource_id, attr_id)
-
-                value = None
-                if not (is_var and is_function):
-                    value = self.evaluator.eval_data(
-                        value=rs.value,
-                        fill_value=0,
-                        date_format=self.date_format,
-                        flavor='native',
-                    )
-
-                if not is_var and (value is None or (type(value) == str and not value)):
-                    continue
-
-                # TODO: add generic unit conversion utility here
-                dimension = rs.value.dimension
-
-                if data_type == 'scalar' or type(value) in [int, float]:
-                    try:
-                        value = float(value)
-                    except:
-                        raise Exception("Could not convert scalar")
-
-                    if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
-                        self.initial_volumes[res_attr_idx] = value
-                    else:
-                        self.constants[res_attr_idx] = value
-
-                elif is_function:
-                    self.policies[res_attr_idx] = {
-                        'name': '{} {}'.format(resource_name, tattr['attr_name']),
-                        'code': value
-                    }
-
-                elif data_type == 'descriptor':  # this could change later
-                    self.descriptors[res_attr_idx] = value
-
-                elif data_type == 'timeseries':
-                    values = value
-                    function = None
-
-                    self.variables[res_attr_idx] = {
-                        'data_type': data_type,
-                        'values': values,
-                    }
+            elif data_type == 'timeseries':
+                values = value
+                self.variables[idx] = {
+                    'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
+                    'data_type': data_type,
+                    'value': values,
+                }
 
         return
 
@@ -443,7 +434,6 @@ class WaterSystem(object):
         initial_volumes = {}
         constants = {}
         variables = {}
-        policies = {}
 
         def convert_values(source, dest, dest_key='res_attr_idx'):
             for res_attr_idx in list(source):
@@ -481,7 +471,7 @@ class WaterSystem(object):
             step=step,
             initial_volumes=initial_volumes,
             constants=constants,
-            variables=variables,
+            variables=self.variables,
             policies=self.policies,
         )
 
@@ -585,14 +575,14 @@ class WaterSystem(object):
                         }
 
     def step(self):
-        self.model.model.step()
+        self.model.step()
 
     def run(self):
-        self.model.model.run()
+        self.model.run()
 
     def finish(self):
         self.save_results()
-        self.model.model.finish()
+        self.model.finish()
 
     def save_logs(self):
 

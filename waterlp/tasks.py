@@ -15,6 +15,7 @@ from waterlp.reporters.redis import local_redis
 from waterlp.reporters.post import Reporter as PostReporter
 from waterlp.reporters.ably import AblyReporter
 from waterlp.reporters.pubnub import PubNubReporter
+from waterlp.reporters.socketio import SocketIOReporter
 from waterlp.logger import RunLogger
 from waterlp.parser import commandline_parser
 from waterlp.connection import connection
@@ -30,9 +31,9 @@ class Object(object):
             setattr(self, key, values[key])
 
 
-@app.task(name='openagua.run')
+@app.task(name='model.run')
 def run(**kwargs):
-    print(' [x] Task initiated')
+    print(' [*] Task initiated')
 
     """This is for starting the model with Celery"""
     env = kwargs.get('env', {})
@@ -63,6 +64,15 @@ def run(**kwargs):
         RunLog.log_finish()
     except:
         pass
+
+
+@app.task(name='model.stop')
+def run(**kwargs):
+    print('xxxxxxxxxxxxxx')
+    sid = kwargs.get('sid')
+    if local_redis and sid:
+        print(' [*] Stopping {}'.format(sid))
+        local_redis.set(sid, ProcessState.CANCELED)
 
 
 def run_model(args, logs_dir, **kwargs):
@@ -264,7 +274,7 @@ def run_scenarios(args, networklog):
     return
 
 
-@app.task
+@app.task()
 def run_scenario(supersubscenario, args, verbose=False):
     print("[*] Running scenario {}".format(supersubscenario['id']))
 
@@ -288,8 +298,9 @@ def run_scenario(supersubscenario, args, verbose=False):
     elif args.message_protocol == 'ably':
         reporter = AblyReporter(args, post_reporter=post_reporter)
     elif args.message_protocol == 'pubnub':
-        reporter = PubNubReporter(
-            args, publish_key=args.publish_key, post_reporter=post_reporter, run_id=args.run_id)
+        reporter = PubNubReporter(args, publish_key=args.publish_key, post_reporter=post_reporter, run_id=args.run_id)
+    elif args.message_protocol == 'socketio':
+        reporter = SocketIOReporter(args, publish_key=args.publish_key, post_reporter=post_reporter, run_id=args.run_id)
     if reporter:
         reporter.updater = system.scenario.update_payload
         system.scenario.reporter = reporter
@@ -368,14 +379,8 @@ def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, 
             system.scenario.finished += 1
             system.scenario.current_date = current_dates_as_string[0]
 
-            new_now = datetime.now()
-            should_report_progress = ts == 0 or ts == total_steps or (new_now - now).seconds >= 2
-            # system.dates[ts].month != system.dates[ts - 1].month and (new_now - now).seconds >= 1
-
-            if system.scenario.reporter and should_report_progress:
-                system.scenario.reporter.report(action='step')
-
-                now = new_now
+            if system.scenario.reporter:
+                system.scenario.reporter.report(action='step', force=ts == 0 or ts == total_steps)
 
         except Exception as err:
             saved = system.save_logs()

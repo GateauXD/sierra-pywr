@@ -54,8 +54,29 @@ def parse_code(policy_name, user_code, description=''):
     return policy_str
 
 
-def create_register_policy(policy, policies_folder):
+def create_register_variable(variable):
+    variable_name = clean(variable['name'])
 
+    pywr_type = variable.get('pywr_type', 'ArrayIndexed')
+
+    parameter = {
+        'type': pywr_type,
+    }
+
+    if pywr_type == 'constant':
+        parameter['value'] = variable['value']
+    else:
+        parameter['values'] = list(variable['value'][0].values())
+
+    return {
+        'name': variable_name,
+        'value': {
+            variable_name: parameter
+        }
+    }
+
+
+def create_register_policy(policy, policies_folder):
     policy_name = clean(policy['name'])
     policy_code = parse_code(policy_name, policy['code'], policy.get('description', ''))
     policy_path = '{}/{}.py'.format(policies_folder, policy_name)
@@ -69,7 +90,11 @@ def create_register_policy(policy, policies_folder):
 
     return {
         'name': policy_name,
-        'value': {policy_name: {'type': policy_name}}
+        'value': {
+            policy_name: {
+                'type': policy_name
+            }
+        }
     }
 
 

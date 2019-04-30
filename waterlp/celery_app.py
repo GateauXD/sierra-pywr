@@ -10,18 +10,17 @@ if run_key:
     queue_name += '-{}'.format(run_key)
 
 # librabbitmq does not handle pickle content; pyamqp makes sure that librabbitmq isn't used if installed
-broker_url = 'pyamqp://{username}:{password}@{hostname}:5672/{vhost}'.format(
+broker_url = 'pyamqp://{username}:{password}@{hostname}:5672/model-run'.format(
     username=model_key,
     password=environ.get('RABBITMQ_PASSWORD', 'password'),
     hostname=environ.get('RABBITMQ_HOST', 'localhost'),
-    vhost=environ.get('RABBITMQ_VHOST', 'model-run'),
 )
 
 app = Celery('openagua', broker=broker_url, include=['waterlp.tasks'])
 
 app.conf.update(
     task_default_queue=queue_name,
-    task_default_exchange='openagua.run',
+    task_default_exchange='model.tasks',
     broker_heartbeat=10,
     accept_content=['json', 'pickle'],
     result_expires=3600,
@@ -32,9 +31,6 @@ app.conf.update(
 def start_listening(concurrency=4):
     from waterlp.utils.application import PNSubscribeCallback
 
-    from pubnub.pnconfiguration import PNConfiguration
-    from pubnub.pubnub import PubNub
-
     # app.config_from_object('waterlp.celeryconfig')
     app_dir = '/home/{}/.waterlp'.format(getpass.getuser())
     logs_dir = '{}/logs'.format(app_dir)
@@ -42,14 +38,25 @@ def start_listening(concurrency=4):
         rmtree(app_dir)
     makedirs(logs_dir)
 
-    pnconfig = PNConfiguration()
-    pnconfig.subscribe_key = environ.get('PUBNUB_SUBSCRIBE_KEY')
-    pnconfig.ssl = False
-    pubnub = PubNub(pnconfig)
-    pubnub.add_listener(PNSubscribeCallback())
+    pubnub_subscribe_key = environ.get('PUBNUB_SUBSCRIBE_KEY')
+    openagua_subscribe_key = environ.get('OPENAGUA_SUBSCRIBE_KEY')
 
-    pubnub.subscribe().channels(queue_name).execute()
-    print(" [*] Subscribed to PubNub at {}".format(queue_name))
+    # if pubnub_subscribe_key:
+    #     from pubnub.pnconfiguration import PNConfiguration
+    #     from pubnub.pubnub import PubNub
+    #
+    #     pnconfig = PNConfiguration()
+    #     pnconfig.subscribe_key = pubnub_subscribe_key
+    #     pnconfig.ssl = False
+    #     pubnub = PubNub(pnconfig)
+    #     pubnub.add_listener(PNSubscribeCallback())
+    #
+    #     pubnub.subscribe().channels(queue_name).execute()
+    #     print(" [*] Subscribed to PubNub at {}".format(queue_name))
+    #
+    # elif openagua_subscribe_key:
+    #     from waterlp.models.listeners.socketio import init_socketio_listener
+    #     init_socketio_listener(room_name=queue_name)
 
     app.start(['celery', 'worker', '-c', str(concurrency), '-l', 'INFO'])
 
