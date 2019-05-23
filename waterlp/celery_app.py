@@ -3,6 +3,9 @@ from os import path, environ, makedirs
 from shutil import rmtree
 from celery import Celery
 
+from pathlib import Path
+home = str(Path.home())
+
 run_key = environ.get('RUN_KEY')
 model_key = environ.get('MODEL_KEY')
 queue_name = 'model-{}'.format(model_key)
@@ -32,7 +35,7 @@ def start_listening(concurrency=4):
     from waterlp.utils.application import PNSubscribeCallback
 
     # app.config_from_object('waterlp.celeryconfig')
-    app_dir = '/home/{}/.waterlp'.format(getpass.getuser())
+    app_dir = '{}/.waterlp'.format(home)
     logs_dir = '{}/logs'.format(app_dir)
     if path.exists(app_dir):
         rmtree(app_dir)

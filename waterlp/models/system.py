@@ -111,6 +111,8 @@ class WaterSystem(object):
         self.descriptors = {}
         self.variables = {}
         self.policies = {}
+        self.modules = {}
+        self.urls = {}
         self.block_params = []
         self.blocks = {'node': {}, 'link': {}, 'network': {}}
         self.res_scens = {}
@@ -344,7 +346,8 @@ class WaterSystem(object):
             metadata = json.loads(rs.value.metadata)
 
             # identify as function or not
-            is_function = metadata.get('use_function', 'N') == 'Y'
+            input_method = metadata.get('input_method', 'native')
+            is_function = metadata.get('use_function', 'N') == 'Y' or input_method == 'function'
 
             # get data type
             data_type = rs.value.type
@@ -359,12 +362,15 @@ class WaterSystem(object):
 
             value = None
             if not (is_var and is_function):
-                value = self.evaluator.eval_data(
-                    value=rs.value,
-                    fill_value=0,
-                    date_format=self.date_format,
-                    flavor='native',
-                )
+                if input_method == 'module':
+                    value = metadata.get('module')
+                else:
+                    value = self.evaluator.eval_data(
+                        value=rs.value,
+                        fill_value=0,
+                        date_format=self.date_format,
+                        flavor='native',
+                    )
 
             if not is_var and (value is None or (type(value) == str and not value)):
                 continue
@@ -394,6 +400,9 @@ class WaterSystem(object):
                     'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
                     'code': value
                 }
+
+            elif input_method == 'module':
+                self.modules[idx] = value
 
             elif data_type == 'descriptor':  # this could change later
                 self.descriptors[idx] = value
@@ -473,6 +482,7 @@ class WaterSystem(object):
             constants=constants,
             variables=self.variables,
             policies=self.policies,
+            modules=self.modules
         )
 
     def prepare_params(self):

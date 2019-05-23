@@ -1,7 +1,10 @@
 import os
+import sys
 import json
+import importlib
+import boto3
 from tempfile import mkdtemp
-from shutil import rmtree
+from shutil import rmtree, copytree
 import pandas
 
 from pywr.core import Model
@@ -9,7 +12,7 @@ from pywr.core import Model
 # needed when loading JSON file
 from .domains import Hydropower, InstreamFlowRequirement
 
-from .utils import resource_name, create_register_policy, create_register_variable
+from .utils import resource_name, create_register_policy, create_register_variable, create_module
 
 oa_attr_to_pywr = {
     'Water Demand': 'base_flow',
@@ -63,10 +66,39 @@ def negative(value):
     return -abs(value) if type(value) in [int, float] else value
 
 
+def load_modules(folder):
+    for filename in os.listdir(folder):
+        if '__init__' in filename:
+            continue
+        policy_name = os.path.splitext(filename)[0]
+        policy_module = '.{policy_name}'.format(policy_name=policy_name)
+        importlib.import_module(policy_module, '.{}'.format(folder))
+
+
+def load_from_s3(bucket, network_key, path, dest_root):
+    s3 = boto3.client('s3')
+
+    if path:
+        prefix = '{}/{}'.format(network_key, path)
+        response = s3.list_objects(
+            Bucket=bucket,
+            Prefix=prefix
+        )
+        for file in response['Contents']:
+            name = file['Key'].rsplit('/', 1)
+            if name[1]:
+                src = file['Key']
+                dest = '{}/{}/{}'.format(dest_root, path, name[1])
+                dest_folder = '/'.join(os.path.split(dest)[:-1])
+                if not os.path.exists(dest_folder):
+                    os.makedirs(dest_folder)
+                s3.download_file(bucket, src, dest)
+
+
 # create the model
 class PywrModel(object):
     def __init__(self, network, template, start=None, end=None, step=None, tattrs=None,
-                 constants=None, variables=None, policies=None, initial_volumes=None,
+                 constants=None, variables=None, policies=None, urls=None, modules=None, initial_volumes=None,
                  check_graph=False):
 
         self.model = None
@@ -75,9 +107,12 @@ class PywrModel(object):
         self.updated = {}  # dictionary for debugging whether or not a param has been updated
 
         self.here = os.path.dirname(os.path.abspath(__file__))
-        self.root_dir = mkdtemp()
+        tmp_dir = os.path.join(self.here, 'tmp')
+        if not os.path.exists(tmp_dir):
+            os.makedirs(tmp_dir)
+        self.root_dir = mkdtemp(dir=tmp_dir)
 
-        self.policies_folder = os.path.join(self.root_dir, 'policies')
+        self.policies_folder = os.path.join(self.root_dir, '_policies')
 
         if not os.path.exists(self.policies_folder):
             os.mkdir(self.policies_folder)
@@ -95,11 +130,41 @@ class PywrModel(object):
         self.create_model(
             network, template, filename=self.model_filename, start=start, end=end, step=step,
             constants=constants, variables=variables,
-            policies=policies, initial_volumes=initial_volumes,
+            policies=policies,
+            modules=modules,
+            urls=urls,
+            initial_volumes=initial_volumes,
             metadata=metadata, tattrs=tattrs
         )
 
-        self.model = Model.load(self.model_filename)
+        # Copy domains and parameters into temp folder
+        for folder in ['domains', 'parameters']:
+            copytree(os.path.join(self.here, folder), os.path.join(self.root_dir, folder))
+
+        # Copy policy folders from S3
+        network_key = network.layout.get('storage', {}).get('folder')
+        bucket = 'openagua-networks'
+        policy_folders = ['policies']
+        for folder in policy_folders:
+            load_from_s3(bucket, network_key, folder, self.root_dir)
+            # load_modules(folder)
+
+        self.load_model(self.root_dir)
+
+    def load_model(self, root_dir, check_graph=True):
+
+        os.chdir(root_dir)
+
+        # needed when loading JSON file
+        from .domains import Hydropower, InstreamFlowRequirement
+
+        # Step 1: Load and register policies
+        sys.path.insert(0, os.getcwd())
+        load_modules('_policies')
+        importlib.import_module('.IFRs', 'policies')
+
+        # Step 2: Load and run model
+        self.model = Model.load('pywr_model.json')
 
         # check network graph
         if check_graph:
@@ -110,12 +175,17 @@ class PywrModel(object):
 
         self.setup()
 
-    def create_model(self, network, template, start=None, end=None, step=None, constants=None, variables=None,
-                     policies=None, initial_volumes=None, filename=None, metadata=None, tattrs=None):
+    def create_model(self, network, template, start=None, end=None, step=None, initial_volumes=None, filename=None,
+                     metadata=None, tattrs=None, **kwargs):
+
+        constants = kwargs.get('constants', {})
+        variables = kwargs.get('variables', {})
+        policies = kwargs.get('policies', {})
+        modules = kwargs.get('modules', {})
 
         # Create folders
-        if not os.path.exists('policies'):
-            os.mkdir('policies')
+        if not os.path.exists('_policies'):
+            os.mkdir('_policies')
 
         timestepper = {
             'start': pandas.Timestamp(start).strftime('%Y-%m-%d'),
@@ -146,16 +216,26 @@ class PywrModel(object):
                 return constant
 
             # variables
-            elif variables:
-                variable = variables.pop(res_attr_idx, None)
-                if variable:
-                    pywr_param = create_register_variable(variable)
+            variable = variables.pop(res_attr_idx, None)
+            policy = policies.pop(res_attr_idx, None)
+            module = modules.pop(res_attr_idx, None)
 
-            # policies
-            elif policies:
-                policy = policies.pop(res_attr_idx, None)
-                if policy:
-                    pywr_param = create_register_policy(policy, self.policies_folder)
+            if variable:
+                pywr_param = create_register_variable(variable)
+            elif policy:
+                pywr_param = create_register_policy(policy, self.policies_folder)
+            elif module:
+                # pywr_param = create_module(module)
+                module = json.loads(module)
+                param_name = module['path']
+                pywr_param = {
+                    'name': param_name,
+                    'value': {
+                        param_name: {
+                            'type': param_name
+                        }
+                    }
+                }
 
             # update the Pywr parameters object
             if pywr_param:
@@ -241,11 +321,11 @@ class PywrModel(object):
 
             if node_1_id in output_ids:
                 node = node_lookup[node_1_id]
-                msg = 'Topology error: Output {} appears to be upstream of {}'.format(node['name'], pywr_name)
+                msg = 'Topology error: Output {} appears to be upstream of {}'.format(node['param_name'], pywr_name)
                 raise Exception(msg)
             elif node_2_id in input_ids:
                 node = node_lookup[node_2_id]
-                msg = 'Topology error: Input {} appears to be downstream of {}'.format(node['name'], pywr_name)
+                msg = 'Topology error: Input {} appears to be downstream of {}'.format(node['param_name'], pywr_name)
                 raise Exception(msg)
 
             pywr_type = oa_type_to_pywr.get(type_name, 'Link')

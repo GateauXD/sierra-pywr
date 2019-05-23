@@ -26,6 +26,9 @@ class {policy_name}(WaterLPParameter):
     @classmethod
     def load(cls, model, data):
         return cls(model, **data)
+        
+{policy_name}.register()
+print(' [*] {policy_name} registered')
 """
 
 
@@ -84,9 +87,31 @@ def create_register_policy(policy, policies_folder):
     with open(policy_path, 'w') as f:
         f.writelines(policy_code)
 
-    exec('from .policies.{p} import {p}'.format(p=policy_name))
-    policy = eval(policy_name)
-    policy.register()
+    # exec('from ._policies.{p} import {p}'.format(p=policy_name))
+    # policy = eval(policy_name)
+    # policy.register()
+
+    return {
+        'name': policy_name,
+        'value': {
+            policy_name: {
+                'type': policy_name
+            }
+        }
+    }
+
+
+def create_module(policy, policies_folder):
+    policy_name = clean(policy['name'])
+    policy_code = parse_code(policy_name, policy['code'], policy.get('description', ''))
+    policy_path = '{}/{}.py'.format(policies_folder, policy_name)
+
+    with open(policy_path, 'w') as f:
+        f.writelines(policy_code)
+
+    # exec('from ._policies.{p} import {p}'.format(p=policy_name))
+    # policy = eval(policy_name)
+    # policy.register()
 
     return {
         'name': policy_name,

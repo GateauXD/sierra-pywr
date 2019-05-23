@@ -43,7 +43,7 @@ def eval_timeseries(timeseries, dates, fill_value=None, fill_method=None, flatte
         if flavor == 'pandas':
             result = df
         elif flavor == 'native':
-            df.index = df.index.strftime(date_format=date_format)
+            df.index = pandas.DatetimeIndex(dates).strftime(date_format=date_format)
             result = df.to_dict()
         elif flavor == 'json':
             result = df.to_json(date_format='iso')
@@ -287,7 +287,7 @@ class Evaluator:
         metadata = json.loads(value.metadata)
         if func is None:
             func = metadata.get('function')
-        use_function = metadata.get('use_function', 'N') == 'Y'
+        use_function = metadata.get('use_function', 'N') == 'Y' or metadata.get('input_method') == 'function'
         data_type = data_type or value.type
 
         if use_function:
