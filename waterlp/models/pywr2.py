@@ -149,14 +149,17 @@ class PywrModel(object):
             load_from_s3(bucket, network_key, folder, self.root_dir)
             # load_modules(folder)
 
-        self.load_model(self.root_dir)
+        self.load_model(self.root_dir, bucket=bucket, network_key=network_key)
 
-    def load_model(self, root_dir, check_graph=True):
+    def load_model(self, root_dir, bucket=None, network_key=None, check_graph=True):
 
         os.chdir(root_dir)
 
         # needed when loading JSON file
         from .domains import Hydropower, InstreamFlowRequirement
+
+        root_path = 's3://{}/{}/'.format(bucket, network_key)
+        os.environ['WATERLP_ROOT_PATH'] = root_path
 
         # Step 1: Load and register policies
         sys.path.insert(0, os.getcwd())
