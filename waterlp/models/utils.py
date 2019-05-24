@@ -1,4 +1,3 @@
-import os
 import re
 
 
@@ -13,16 +12,6 @@ def clean(s):
 
 
 spaces = '\n' + ' ' * 8
-
-init_code_template = """from waterlp.model.parameters import WaterLPParameter
-
-WaterLPParameter.root_path = "{root_path}"
-
-"""
-
-
-def parse_init(root_path=''):
-    return init_code_template.format(root_path=root_path)
 
 
 policy_code_template = """from parameters import WaterLPParameter

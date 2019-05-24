@@ -9,10 +9,7 @@ import pandas
 
 from pywr.core import Model
 
-# needed when loading JSON file
-from .domains import Hydropower, InstreamFlowRequirement
-
-from .utils import resource_name, create_register_policy, create_register_variable, create_module
+from .utils import resource_name, create_register_policy, create_register_variable
 
 oa_attr_to_pywr = {
     'water demand': 'base_flow',
@@ -153,9 +150,9 @@ class PywrModel(object):
             load_from_s3(bucket, network_key, folder, self.root_dir)
             # load_modules(folder)
 
-        self.load_model(self.root_dir, bucket=bucket, network_key=network_key)
+        self.load_model(self.root_dir, self.model_filename, bucket=bucket, network_key=network_key)
 
-    def load_model(self, root_dir, bucket=None, network_key=None, check_graph=True):
+    def load_model(self, root_dir, model_path, bucket=None, network_key=None, check_graph=True):
 
         os.chdir(root_dir)
 
@@ -179,8 +176,7 @@ class PywrModel(object):
         import_module('.IFRs', 'policies')
 
         # Step 2: Load and run model
-        model_filename = 'pywr_model.json'
-        self.model = Model.load(model_filename, path=model_filename)
+        self.model = Model.load(model_path, path=model_path)
 
         # check network graph
         if check_graph:
