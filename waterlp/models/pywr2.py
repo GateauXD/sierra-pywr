@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-import importlib
+from importlib import import_module
 import boto3
 from tempfile import mkdtemp
 from shutil import rmtree, copytree
@@ -47,7 +47,9 @@ oa_type_to_pywr = {
     'Hydropower': 'Hydropower',
     'Flow Requirement': 'InstreamFlowRequirement',
     'River': 'River',
-    'Conveyance': 'Link'
+    'Conveyance': 'Link',
+    'Streamflow Gauge': 'Link',
+    'Junction': 'Link',
 }
 
 pywr_storage_types = ['Storage']
@@ -72,7 +74,8 @@ def load_modules(folder):
             continue
         policy_name = os.path.splitext(filename)[0]
         policy_module = '.{policy_name}'.format(policy_name=policy_name)
-        importlib.import_module(policy_module, '.{}'.format(folder))
+        package = '.{}'.format(folder)
+        import_module(policy_module, package)
 
 
 def load_from_s3(bucket, network_key, path, dest_root):
@@ -156,18 +159,27 @@ class PywrModel(object):
         os.chdir(root_dir)
 
         # needed when loading JSON file
-        from .domains import Hydropower, InstreamFlowRequirement
-
         root_path = 's3://{}/{}/'.format(bucket, network_key)
         os.environ['WATERLP_ROOT_PATH'] = root_path
 
         # Step 1: Load and register policies
         sys.path.insert(0, os.getcwd())
-        load_modules('_policies')
-        importlib.import_module('.IFRs', 'policies')
+        policy_folder = '_policies'
+        for filename in os.listdir(policy_folder):
+            if '__init__' in filename:
+                continue
+            policy_name = os.path.splitext(filename)[0]
+            policy_module = '.{policy_name}'.format(policy_name=policy_name)
+            # package = '.{}'.format(policy_folder)
+            import_module(policy_module, policy_folder)
+
+        from domains import Hydropower, InstreamFlowRequirement
+
+        import_module('.IFRs', 'policies')
 
         # Step 2: Load and run model
-        self.model = Model.load('pywr_model.json')
+        model_filename = 'pywr_model.json'
+        self.model = Model.load(model_filename, path=model_filename)
 
         # check network graph
         if check_graph:
@@ -283,11 +295,16 @@ class PywrModel(object):
             types = [t for t in node['types'] if t['template_id'] == template['id']]
             if not types:
                 continue
-            type_name = types[-1]['name']
-            pywr_type = oa_type_to_pywr.get(type_name)
-            if len(types) > 1:
+            elif len(types) > 1:
                 msg = "Type is ambiguous for {}. Please remove extra types.".format(type_name)
                 raise Exception(msg)
+
+            type_name = types[-1]['name']
+            pywr_type = oa_type_to_pywr.get(type_name)
+            if not pywr_type:
+                msg = "No default type found for {}. Please map a Pywr type to this template type".format(type_name)
+                raise Exception(msg)
+
             node_lookup[node["id"]] = {
                 'id': node['id'],
                 'pywr_name': pywr_name,
@@ -390,9 +407,10 @@ class PywrModel(object):
                     'initial_volume': initial_volumes.get(node_id, 0.0) if initial_volumes is not None else 0.0,
                     # 'num_outputs': connect_in,
                     # 'num_inputs': connect_out,
+                    'max_volume': 0.0
                 })
-                if pywr_type not in pywr_storage_types:
-                    pywr_node['max_volume'] = 0.0
+                # if pywr_type not in pywr_storage_types:
+                #     pywr_node['max_volume'] = 0.0
                 storage[node_id] = pywr_node
 
             else:

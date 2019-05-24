@@ -25,7 +25,9 @@ from waterlp.scenario_class import Scenario
 from waterlp.utils.application import ProcessState
 
 from pathlib import Path
+
 home = str(Path.home())
+
 
 class Object(object):
     def __init__(self, values):

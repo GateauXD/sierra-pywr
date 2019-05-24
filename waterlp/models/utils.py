@@ -13,7 +13,7 @@ def clean(s):
 
 spaces = '\n' + ' ' * 8
 
-policy_code_template = """from ..parameters import WaterLPParameter
+policy_code_template = """from parameters import WaterLPParameter
 
 
 class {policy_name}(WaterLPParameter):
