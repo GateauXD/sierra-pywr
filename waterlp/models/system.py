@@ -397,7 +397,7 @@ class WaterSystem(object):
 
             elif is_function:
                 self.policies[idx] = {
-                    'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
+                    'name': '{}_{}'.format(tattr['attr_name'], resource['name']),
                     'code': value
                 }
 
@@ -593,6 +593,9 @@ class WaterSystem(object):
     def finish(self):
         self.save_results()
         self.model.finish()
+
+    def cleanup(self):
+        self.model.cleanup()
 
     def save_logs(self):
 
