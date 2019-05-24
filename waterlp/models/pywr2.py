@@ -15,22 +15,23 @@ from .domains import Hydropower, InstreamFlowRequirement
 from .utils import resource_name, create_register_policy, create_register_variable, create_module
 
 oa_attr_to_pywr = {
-    'Water Demand': 'base_flow',
-    'Runoff': 'flow',
-    'Violation Cost': 'mrf_cost',
-    'Requirement': 'mrf',
-    'Value': 'cost',
-    'Turbine Capacity': 'turbine_capacity',
-    'Demand': 'max_flow',
-    'Base Value': 'base_cost',
-    'Excess Value': 'excess_cost',
-    'Storage Demand': 'max_volume',
-    'Storage Value': 'cost',
-    'Inactive Pool': 'min_volume',
-    'Flow Capacity': 'max_flow',
-    # 'Storage Capacity': 'max_volume'
-    'Storage': 'storage',
-    'Outflow': 'flow',
+    'water demand': 'base_flow',
+    'runoff': 'flow',
+    'violation cost': 'mrf_cost',
+    'requirement': 'mrf',
+    'value': 'cost',
+    'turbine capacity': 'turbine_capacity',
+    'demand': 'max_flow',
+    'base value': 'base_cost',
+    'excess value': 'excess_cost',
+    # 'Storage Demand': 'max_volume',
+    'storage value': 'cost',
+    'inactive pool': 'min_volume',
+    'flow capacity': 'max_flow',
+    'storage capacity': 'max_volume',
+    'storage': 'storage',
+    'outflow': 'flow',
+    'flow': 'flow'
 }
 
 oa_type_to_pywr = {
@@ -261,32 +262,49 @@ class PywrModel(object):
             else:
                 return pywr_param
 
-        def process_param(pywr_node, res_attr_idx):
-            tattr = tattrs.get(res_attr_idx)
-            if not tattr:
+        def process_param(pywr_node, resource_type, resource, ra):
+            try:
+                res_attr_idx = (resource_type, resource['id'], ra['attr_id'])
+                attr_name = ra['attr_name']
+                tattr = tattrs.get(res_attr_idx)
+                if not tattr:
+                    return pywr_node
+
+                pywr_attr_name = oa_attr_to_pywr.get(attr_name.lower())
+                if pywr_attr_name is None:
+                    return pywr_node
+
+                if tattr and tattr['properties'].get('save'):
+                    recorder_type = recorders.get(pywr_attr_name)
+                    if recorder_type:
+                        resource_class = res_attr_idx[0]
+                        # recorder_name = '%s/%s/%s' % res_attr_idx
+                        recorder_name = '{}/{}/{}'.format(
+                            resource_class,
+                            resource['name'],
+                            attr_name.lower()
+                        )
+                        pywr_recorders[recorder_name] = {
+                            'type': recorder_type,
+                            'node': pywr_name,
+                        }
+                if tattr['is_var'] == 'Y':
+                    return pywr_node
+
+                try:
+                    pywr_param = make_pywr_param(res_attr_idx)
+                except Exception as err:
+                    print(err)
+                    print('Failed to prepare {}'.format(pywr_attr_name))
+                    raise
+                if pywr_attr_name and pywr_param:
+                    pywr_node.update({
+                        pywr_attr_name: pywr_param
+                    })
+
                 return pywr_node
-
-            pywr_attr_name = oa_attr_to_pywr.get(ra['attr_name'])
-            if pywr_attr_name is None:
-                return pywr_node
-
-            if tattr and tattr['properties'].get('save'):
-                recorder_name = recorders.get(pywr_attr_name)
-                if recorder_name:
-                    pywr_recorders['%s/%s/%s' % res_attr_idx] = {
-                        'type': recorder_name,
-                        'node': pywr_name,
-                    }
-            if tattr['is_var'] == 'Y':
-                return pywr_node
-
-            pywr_param = make_pywr_param(res_attr_idx)
-            if pywr_attr_name and pywr_param:
-                pywr_node.update({
-                    pywr_attr_name: pywr_param
-                })
-
-            return pywr_node
+            except:
+                raise
 
         # create node dictionaries by name and id
         node_lookup = {}
@@ -307,6 +325,7 @@ class PywrModel(object):
 
             node_lookup[node["id"]] = {
                 'id': node['id'],
+                'name': node['name'],
                 'pywr_name': pywr_name,
                 'pywr_type': pywr_type,
                 'connect_in': 0,
@@ -321,47 +340,50 @@ class PywrModel(object):
         # create link lookups and pywr links
         link_lookup = {}
         for link in network['links']:
-            pywr_name = resource_name(link, 'Link')
-            types = [t for t in link['types'] if t['template_id'] == template['id']]
-            if not types:
-                continue
-            type_name = types[-1]['name']
-            link_id = link['id']
-            node_1_id = link['node_1_id']
-            node_2_id = link['node_2_id']
-            node_lookup[node_1_id]['connect_out'] += 1
-            node_lookup[node_2_id]['connect_in'] += 1
-            link_lookup[link_id] = {
-                'pywr_name': pywr_name,
-                'node_1_id': node_1_id,
-                'node_2_id': node_2_id,
-                'from_slot': node_lookup[node_1_id]['connect_out'],
-                'to_slot': node_lookup[node_2_id]['connect_in'],
-            }
+            try:
+                pywr_name = resource_name(link, 'link')
+                types = [t for t in link['types'] if t['template_id'] == template['id']]
+                if not types:
+                    continue
+                type_name = types[-1]['name']
+                link_id = link['id']
+                node_1_id = link['node_1_id']
+                node_2_id = link['node_2_id']
+                node_1 = node_lookup[node_1_id]
+                node_2 = node_lookup[node_2_id]
+                node_1['connect_out'] += 1
+                node_2['connect_in'] += 1
+                link_lookup[link_id] = {
+                    'pywr_name': pywr_name,
+                    'node_1_id': node_1_id,
+                    'node_2_id': node_2_id,
+                    'from_slot': node_1['connect_out'],
+                    'to_slot': node_2['connect_in'],
+                }
 
-            if node_1_id in output_ids:
-                node = node_lookup[node_1_id]
-                msg = 'Topology error: Output {} appears to be upstream of {}'.format(node['param_name'], pywr_name)
-                raise Exception(msg)
-            elif node_2_id in input_ids:
-                node = node_lookup[node_2_id]
-                msg = 'Topology error: Input {} appears to be downstream of {}'.format(node['param_name'], pywr_name)
-                raise Exception(msg)
+                if node_1_id in output_ids:
+                    msg = 'Topology error: Output {} appears to be upstream of {}'.format(node['pywr_name'], pywr_name)
+                    raise Exception(msg)
+                elif node_2_id in input_ids:
+                    msg = 'Topology error: Input {} appears to be downstream of {}'.format(node_2['pywr_name'],
+                                                                                           pywr_name)
+                    raise Exception(msg)
 
-            pywr_type = oa_type_to_pywr.get(type_name, 'Link')
+                pywr_type = oa_type_to_pywr.get(type_name, 'Link')
 
-            pywr_node = {
-                'name': pywr_name,
-                'type': pywr_type
-            }
-            non_storage[('link', link_id)] = pywr_node
+                pywr_node = {
+                    'name': pywr_name,
+                    'type': pywr_type
+                }
+                non_storage[('link', link_id)] = pywr_node
 
-            # Add data
-            for ra in link['attributes']:
-                res_attr_idx = ('link', link_id, ra['attr_id'])
-                pywr_node = process_param(pywr_node, res_attr_idx)
+                # Add data
+                for ra in link['attributes']:
+                    pywr_node = process_param(pywr_node, 'link', link, ra)
 
-            pywr_nodes.append(pywr_node)
+                pywr_nodes.append(pywr_node)
+            except:
+                raise
 
         # Q/C
 
@@ -419,8 +441,13 @@ class PywrModel(object):
                 non_storage[('node', node_id)] = pywr_node
 
             for ra in node['attributes']:
-                res_attr_idx = ('node', node_id, ra['attr_id'])
-                pywr_node = process_param(pywr_node, res_attr_idx)
+                pywr_node = process_param(pywr_node, 'node', node, ra)
+
+            if pywr_node['type'] == 'Storage':
+                pywr_node['max_volume'] = pywr_node.get('max_volume', 0.0)
+            if pywr_node['type'] == 'RiverGauge':
+                pywr_node['mrf'] = pywr_node.get('mrf', 0.0)
+                pywr_node['mrf_cost'] = pywr_node.get('mrf_cost', 0.0)
 
             pywr_nodes.append(pywr_node)
 
@@ -465,5 +492,9 @@ class PywrModel(object):
         self.model.step()
 
     def finish(self):
-        rmtree(self.root_dir)
         self.model.finish()
+        self.cleanup()
+
+    def cleanup(self):
+        if os.path.exists(self.root_dir):
+            rmtree(self.root_dir)
