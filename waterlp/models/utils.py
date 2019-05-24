@@ -1,17 +1,29 @@
+import os
 import re
 
 
 def clean(s):
     # Remove invalid characters
-    s = re.sub('[^0-9a-zA-Z_]', '', s)
+    s = re.sub('[^0-9a-zA-Z_]', '_', s)
 
     # Remove leading characters until we find a letter or underscore
-    s = re.sub('^[^a-zA-Z_]+', '', s)
+    s = re.sub('^[^a-zA-Z_]+', '_', s)
 
     return s
 
 
 spaces = '\n' + ' ' * 8
+
+init_code_template = """from waterlp.model.parameters import WaterLPParameter
+
+WaterLPParameter.root_path = "{root_path}"
+
+"""
+
+
+def parse_init(root_path=''):
+    return init_code_template.format(root_path=root_path)
+
 
 policy_code_template = """from parameters import WaterLPParameter
 
@@ -28,7 +40,7 @@ class {policy_name}(WaterLPParameter):
         return cls(model, **data)
         
 {policy_name}.register()
-print(' [*] {policy_name} registered')
+print(" [*] {policy_name} successfully registered")
 """
 
 
@@ -44,8 +56,20 @@ def parse_code(policy_name, user_code, description=''):
     # first, parse code
     s = user_code.rstrip()
     lines = s.split('\n')
-    if 'return ' not in lines[-1]:
-        lines[-1] = 'return ' + lines[-1]
+    stripped = ''
+    for line in reversed(lines):
+        stripped = line.strip()
+        if stripped and stripped[0] == '#':
+            stripped = ''
+            continue
+        if stripped and stripped[0] != '#':
+            break
+    if len(stripped) <= 7 or stripped[:7] != 'return ':
+        if not stripped:
+            lines.append('return 0')
+        else:
+            lines[-1] = 'return ' + lines[-1]
+
     new_code = spaces.join(lines)
 
     policy_str = policy_code_template.format(
@@ -87,29 +111,7 @@ def create_register_policy(policy, policies_folder):
     with open(policy_path, 'w') as f:
         f.writelines(policy_code)
 
-    # exec('from ._policies.{p} import {p}'.format(p=policy_name))
-    # policy = eval(policy_name)
-    # policy.register()
-
-    return {
-        'name': policy_name,
-        'value': {
-            policy_name: {
-                'type': policy_name
-            }
-        }
-    }
-
-
-def create_module(policy, policies_folder):
-    policy_name = clean(policy['name'])
-    policy_code = parse_code(policy_name, policy['code'], policy.get('description', ''))
-    policy_path = '{}/{}.py'.format(policies_folder, policy_name)
-
-    with open(policy_path, 'w') as f:
-        f.writelines(policy_code)
-
-    # exec('from ._policies.{p} import {p}'.format(p=policy_name))
+    # exec('from .policies.{p} import *'.format(p=policy_name))
     # policy = eval(policy_name)
     # policy.register()
 
