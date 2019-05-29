@@ -112,6 +112,7 @@ class PywrModel(object):
         if not os.path.exists(tmp_dir):
             os.makedirs(tmp_dir)
         self.root_dir = mkdtemp(dir=tmp_dir)
+        os.chdir(self.root_dir)
 
         self.policies_folder = os.path.join(self.root_dir, '_policies')
 
@@ -187,7 +188,7 @@ class PywrModel(object):
 
         self.setup()
 
-    def create_model(self, network, template, start=None, end=None, step=None, initial_volumes=None, filename=None,
+    def create_model(self, network, template, start=None, end=None, step=None, initial_volumes=None, filename=None, human_readable=False,
                      metadata=None, tattrs=None, **kwargs):
 
         constants = kwargs.get('constants', {})
@@ -274,12 +275,14 @@ class PywrModel(object):
                     recorder_type = recorders.get(pywr_attr_name)
                     if recorder_type:
                         resource_class = res_attr_idx[0]
-                        # recorder_name = '%s/%s/%s' % res_attr_idx
+                        # if human_readable:
                         recorder_name = '{}/{}/{}'.format(
                             resource_class,
                             resource['name'],
                             attr_name.lower()
                         )
+                        # else:
+                        #     recorder_name = '%s/%s/%s' % res_attr_idx
                         pywr_recorders[recorder_name] = {
                             'type': recorder_type,
                             'node': pywr_name,

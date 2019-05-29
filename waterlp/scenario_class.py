@@ -154,12 +154,16 @@ class Scenario(object):
 
         # update the result scenario
         versions = result_scenario['layout'].get('versions', [])
-        versions.append({
-            'number': len(versions) + 1,
+        version = {
+            'number': len(versions) + 1 if self.destination != 'source' else 1,
             'date': self.version_date,
             'variations': self.variation_count,
             'human_readable': args.human_readable
-        })
+        }
+        if self.destination == 'source':
+            versions = [version]
+        else:
+            versions += [version]
         result_scenario['layout'].update({
             'data_location': self.destination,
             'versions': versions,

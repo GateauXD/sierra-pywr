@@ -58,9 +58,9 @@ class connection(object):
         # dictionary to store resource attribute ids
         self.resource_attributes = {}
         self.res_attr_lookup = {}
-        self.attr_ids = {}
         self.raid_to_res_name = {}
         self.attr_id_lookup = {}
+        self.tattr_lookup = {}
         self.node_names = {}
         self.tattrs = {}
         self.types = {}
@@ -77,12 +77,16 @@ class connection(object):
             tattrs = {ta.attr_id: ta for ta in ttype.typeattrs}
             for ra in resource.attributes:
                 if ra.attr_id in tattrs:
+
                     key = (resource_type, resource.id, ra.attr_id)
                     self.tattrs[key] = tattrs[ra.attr_id]
+
                     # TODO: confirm the following doesn't overwrite attributes with a different dimension
-                    self.attr_id_lookup[(resource_type, resource.id, ra.attr_name.lower())] = ra.attr_id
-                    self.res_attr_lookup[key] = ra.id
-                    self.attr_ids[ra.id] = ra.attr_id
+                    human_readable_key = '%s/%s/%s' % (resource_type, resource.name, ra.attr_name.lower())
+                    self.tattr_lookup[human_readable_key] = tattrs[ra.attr_id]
+                    self.attr_id_lookup[resource_type, resource.id, ra.attr_name.lower()] = ra.attr_id
+                    # resource attribute lookup
+                    self.res_attr_lookup[human_readable_key] = ra.id
                     self.raid_to_res_name[ra.id] = resource.name
 
         process_resource('network', self.network)

@@ -482,7 +482,7 @@ class WaterSystem(object):
             constants=constants,
             variables=self.variables,
             policies=self.policies,
-            modules=self.modules
+            modules=self.modules,
         )
 
     def prepare_params(self):
@@ -674,13 +674,10 @@ class WaterSystem(object):
 
                 n += 1
                 res_attr_idx = col[0]
-                resource_type, resource_id, attr_id = res_attr_idx.split('/')
-                resource_id = int(resource_id)
-                attr_id = int(attr_id)
-                idx = (resource_type, resource_id, attr_id)
+                resource_type, resource_name, attr_name_lower = res_attr_idx.split('/')
 
-                tattr = self.conn.tattrs.get(idx)
-                res_attr_id = self.conn.res_attr_lookup.get(idx)
+                tattr = self.conn.tattr_lookup.get(res_attr_idx)
+                res_attr_id = self.conn.res_attr_lookup.get(res_attr_idx)
 
                 if not (res_attr_id and tattr and tattr['properties'].get('save')):
                     continue
@@ -690,7 +687,7 @@ class WaterSystem(object):
                 # if not param:
                 #     continue  # it's probably an internal variable/parameter
 
-                resource_name = self.conn.raid_to_res_name[res_attr_id]
+                # resource_name = self.conn.raid_to_res_name[res_attr_id]
                 attr_name = tattr['attr_name']
 
                 # define the dataset value
