@@ -99,7 +99,7 @@ def load_from_s3(bucket, network_key, path, dest_root):
 # create the model
 class PywrModel(object):
     def __init__(self, network, template, start=None, end=None, step=None, tattrs=None,
-                 constants=None, variables=None, policies=None, urls=None, modules=None, initial_volumes=None,
+                 constants=None, variables=None, parameters=None, urls=None, modules=None, initial_volumes=None,
                  check_graph=False):
 
         self.model = None
@@ -114,11 +114,11 @@ class PywrModel(object):
         self.root_dir = mkdtemp(dir=tmp_dir)
         os.chdir(self.root_dir)
 
-        self.policies_folder = os.path.join(self.root_dir, '_policies')
+        self.parameters_folder = os.path.join(self.root_dir, '_parameters')
 
-        if not os.path.exists(self.policies_folder):
-            os.mkdir(self.policies_folder)
-            with open(os.path.join(self.policies_folder, '__init__.py'), 'w') as f:
+        if not os.path.exists(self.parameters_folder):
+            os.mkdir(self.parameters_folder)
+            with open(os.path.join(self.parameters_folder, '__init__.py'), 'w') as f:
                 f.write('\n')
 
         self.model_filename = os.path.join(self.root_dir, 'pywr_model.json')
@@ -129,19 +129,19 @@ class PywrModel(object):
             'minimum_version': '1.0.0'
         }
 
+        # Copy domains and parameters into temp folder
+        for folder in ['domains', 'parameters']:
+            copytree(os.path.join(self.here, folder), os.path.join(self.root_dir, folder))
+
         self.create_model(
             network, template, filename=self.model_filename, start=start, end=end, step=step,
             constants=constants, variables=variables,
-            policies=policies,
+            parameters=parameters,
             modules=modules,
             urls=urls,
             initial_volumes=initial_volumes,
             metadata=metadata, tattrs=tattrs
         )
-
-        # Copy domains and parameters into temp folder
-        for folder in ['domains', 'parameters']:
-            copytree(os.path.join(self.here, folder), os.path.join(self.root_dir, folder))
 
         # Copy policy folders from S3
         network_key = network.layout.get('storage', {}).get('folder')
@@ -163,7 +163,7 @@ class PywrModel(object):
 
         # Step 1: Load and register policies
         sys.path.insert(0, os.getcwd())
-        policy_folder = '_policies'
+        policy_folder = '_parameters'
         for filename in os.listdir(policy_folder):
             if '__init__' in filename:
                 continue
@@ -172,9 +172,10 @@ class PywrModel(object):
             # package = '.{}'.format(policy_folder)
             import_module(policy_module, policy_folder)
 
-        from domains import Hydropower, InstreamFlowRequirement
+        # from domains import Hydropower, InstreamFlowRequirement
 
         import_module('.IFRs', 'policies')
+        import_module('.domains', 'domains')
 
         # Step 2: Load and run model
         self.model = Model.load(model_path, path=model_path)
@@ -188,17 +189,19 @@ class PywrModel(object):
 
         self.setup()
 
+        return
+
     def create_model(self, network, template, start=None, end=None, step=None, initial_volumes=None, filename=None, human_readable=False,
                      metadata=None, tattrs=None, **kwargs):
 
         constants = kwargs.get('constants', {})
         variables = kwargs.get('variables', {})
-        policies = kwargs.get('policies', {})
+        parameters = kwargs.get('parameters', {})
         modules = kwargs.get('modules', {})
 
         # Create folders
-        if not os.path.exists('_policies'):
-            os.mkdir('_policies')
+        if not os.path.exists('_parameters'):
+            os.mkdir('_parameters')
 
         timestepper = {
             'start': pandas.Timestamp(start).strftime('%Y-%m-%d'),
@@ -230,13 +233,13 @@ class PywrModel(object):
 
             # variables
             variable = variables.pop(res_attr_idx, None)
-            policy = policies.pop(res_attr_idx, None)
+            parameter = parameters.pop(res_attr_idx, None)
             module = modules.pop(res_attr_idx, None)
 
             if variable:
                 pywr_param = create_register_variable(variable)
-            elif policy:
-                pywr_param = create_register_policy(policy, self.policies_folder)
+            elif parameter:
+                pywr_param = create_register_policy(parameter, self.parameters_folder)
             elif module:
                 # pywr_param = create_module(module)
                 module = json.loads(module)
@@ -268,38 +271,43 @@ class PywrModel(object):
                     return pywr_node
 
                 pywr_attr_name = oa_attr_to_pywr.get(attr_name.lower())
-                if pywr_attr_name is None:
-                    return pywr_node
-
-                if tattr and tattr['properties'].get('save'):
-                    recorder_type = recorders.get(pywr_attr_name)
-                    if recorder_type:
-                        resource_class = res_attr_idx[0]
-                        # if human_readable:
-                        recorder_name = '{}/{}/{}'.format(
-                            resource_class,
-                            resource['name'],
-                            attr_name.lower()
-                        )
-                        # else:
-                        #     recorder_name = '%s/%s/%s' % res_attr_idx
-                        pywr_recorders[recorder_name] = {
-                            'type': recorder_type,
-                            'node': pywr_name,
-                        }
-                if tattr['is_var'] == 'Y':
-                    return pywr_node
 
                 try:
                     pywr_param = make_pywr_param(res_attr_idx)
                 except Exception as err:
                     print(err)
-                    print('Failed to prepare {}'.format(pywr_attr_name))
+                    print('Failed to prepare {}'.format(attr_name.lower()))
                     raise
                 if pywr_attr_name and pywr_param:
                     pywr_node.update({
                         pywr_attr_name: pywr_param
                     })
+
+                # create recorder for attribute
+                if tattr and tattr['properties'].get('save'):
+                    resource_class = res_attr_idx[0]
+                    recorder_name = '{}/{}/{}'.format(
+                        resource_class,
+                        resource['name'],
+                        attr_name.lower()
+                    )
+
+                    recorder = None
+                    recorder_type = recorders.get(pywr_attr_name, 'NumpyArrayParameterRecorder')
+                    if recorder_type == 'NumpyArrayParameterRecorder':
+                        if pywr_param and type(pywr_param) == str:
+                            recorder = {
+                                'type': recorder_type,
+                                'parameter': pywr_param
+                            }
+                    else:
+                        recorder = {
+                            'type': recorder_type,
+                            'node': pywr_name,
+                        }
+
+                    if recorder:
+                        pywr_recorders[recorder_name] = recorder
 
                 return pywr_node
             except:

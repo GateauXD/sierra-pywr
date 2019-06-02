@@ -110,7 +110,7 @@ class WaterSystem(object):
         self.constants = {}
         self.descriptors = {}
         self.variables = {}
-        self.policies = {}
+        self.parameters = {}
         self.modules = {}
         self.urls = {}
         self.block_params = []
@@ -396,7 +396,7 @@ class WaterSystem(object):
                     self.constants[idx] = value
 
             elif is_function:
-                self.policies[idx] = {
+                self.parameters[idx] = {
                     'name': '{}_{}'.format(tattr['attr_name'], resource['name']),
                     'code': value
                 }
@@ -481,9 +481,11 @@ class WaterSystem(object):
             initial_volumes=initial_volumes,
             constants=constants,
             variables=self.variables,
-            policies=self.policies,
+            parameters=self.parameters,
             modules=self.modules,
         )
+
+        return
 
     def prepare_params(self):
         """
@@ -647,7 +649,9 @@ class WaterSystem(object):
             # write results
             # =============
 
-            df = self.model.model.to_dataframe()
+            _df = self.model.model.to_dataframe()
+            dt = self.model.model.timestepper.current.datetime
+            df = _df[_df.index <= dt]
             cols = df.columns
             ncols = len(cols)
 

@@ -75,6 +75,9 @@ class InstreamFlowRequirement(RiverDomainMixin, PiecewiseLink):
         node = cls(model, mrf=mrf, mrf_cost=mrf_cost, unconstrained_cost=unconstrained_Cost, **data)
         return node
 
+InstreamFlowRequirement.register()
+print(' [*] InstreamFlowRequirement registered')
+
 
 class Hydropower(RiverDomainMixin, PiecewiseLink):
     """A river gauging station, with a minimum residual flow (MRF)
@@ -180,3 +183,6 @@ class Hydropower(RiverDomainMixin, PiecewiseLink):
         node = cls(model, base_flow=base_flow, base_cost=base_cost, excess_cost=excess_cost,
                    turbine_capacity=turbine_capacity, **data)
         return node
+
+Hydropower.register()
+print(' [*] Hydropower registered')

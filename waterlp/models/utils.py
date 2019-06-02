@@ -100,11 +100,7 @@ def create_register_policy(policy, policies_folder):
     with open(policy_path, 'w') as f:
         f.writelines(policy_code)
 
-    # exec('from .policies.{p} import *'.format(p=policy_name))
-    # policy = eval(policy_name)
-    # policy.register()
-
-    return {
+    ret = {
         'name': policy_name,
         'value': {
             policy_name: {
@@ -112,6 +108,8 @@ def create_register_policy(policy, policies_folder):
             }
         }
     }
+
+    return ret
 
 
 def resource_name(resource, resource_type):
