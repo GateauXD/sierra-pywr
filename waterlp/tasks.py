@@ -387,17 +387,17 @@ def _run_scenario(system=None, args=None, supersubscenario=None, reporter=None, 
                 system.scenario.reporter.report(action='step', force=ts == 0 or ts == total_steps)
 
         except Exception as err:
-            saved = system.save_logs()
-            system.save_results(error=True)
             msg = 'ERROR: Something went wrong at step {timestep} of {total} ({date}):\n\n{err}'.format(
                 timestep=timestep.timestep,
                 total=total_steps,
                 date=timestep.date_as_string,
                 err=err
             )
+            saved = system.save_logs()
             if saved:
                 msg += '\n\nSee log files in "{}"'.format(args.log_dir)
             print(msg)
+            system.save_results(error=True)
             if system.scenario.reporter:
                 system.scenario.reporter.report(action='error', message=msg)
 
