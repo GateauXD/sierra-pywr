@@ -121,9 +121,9 @@ def create_control_curve(name=None, data=None, node_lookup=None):
         reference_levels = []
         values = []
 
-        for c, v in _values:
+        for i, (c, v) in enumerate(_values):
 
-            if c is not None:
+            if 0 < i < len(_values) - 1:
                 try:
                     reference_levels.append(float(c))
                 except:
