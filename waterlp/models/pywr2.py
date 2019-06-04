@@ -9,7 +9,7 @@ import pandas
 
 from pywr.core import Model
 
-from .utils import resource_name, create_register_policy, create_register_variable
+from .utils import resource_name, create_policy, create_variable, create_control_curve
 
 oa_attr_to_pywr = {
     'water demand': 'base_flow',
@@ -17,6 +17,7 @@ oa_attr_to_pywr = {
     'violation cost': 'mrf_cost',
     'requirement': 'mrf',
     'value': 'cost',
+    'cost': 'cost',
     'turbine capacity': 'turbine_capacity',
     'demand': 'max_flow',
     'base value': 'base_cost',
@@ -46,7 +47,7 @@ oa_type_to_pywr = {
     'Flow Requirement': 'InstreamFlowRequirement',
     'River': 'River',
     'Conveyance': 'Link',
-    'Streamflow Gauge': 'Link',
+    'Streamflow Gauge': 'RiverGauge',
     'Junction': 'Link',
 }
 
@@ -135,10 +136,8 @@ class PywrModel(object):
 
         self.create_model(
             network, template, filename=self.model_filename, start=start, end=end, step=step,
-            constants=constants, variables=variables,
+            constants=constants,
             parameters=parameters,
-            modules=modules,
-            urls=urls,
             initial_volumes=initial_volumes,
             metadata=metadata, tattrs=tattrs
         )
@@ -195,9 +194,7 @@ class PywrModel(object):
                      metadata=None, tattrs=None, **kwargs):
 
         constants = kwargs.get('constants', {})
-        variables = kwargs.get('variables', {})
         parameters = kwargs.get('parameters', {})
-        modules = kwargs.get('modules', {})
 
         # Create folders
         if not os.path.exists('_parameters'):
@@ -218,6 +215,8 @@ class PywrModel(object):
         pywr_params = {}
         pywr_recorders = {}
 
+        node_lookup = {}
+
         storage = {}
         non_storage = {}
 
@@ -231,19 +230,26 @@ class PywrModel(object):
             if constant:
                 return constant
 
-            # variables
-            variable = variables.pop(res_attr_idx, None)
             parameter = parameters.pop(res_attr_idx, None)
-            module = modules.pop(res_attr_idx, None)
 
-            if variable:
-                pywr_param = create_register_variable(variable)
-            elif parameter:
-                pywr_param = create_register_policy(parameter, self.parameters_folder)
-            elif module:
+            if parameter is None:
+                return
+
+            ptype = parameter['type']
+            pvalue = parameter['value']
+            pywr_param = None
+            if ptype == 'variable':
+                pywr_param = create_variable(pvalue)
+            elif ptype == 'parameter':
+                pywr_param = create_policy(pvalue, self.parameters_folder)
+            elif ptype == 'controlcurve':
+                pywr_param = create_control_curve(node_lookup=node_lookup, **pvalue)
+            elif ptype == 'module':
                 # pywr_param = create_module(module)
-                module = json.loads(module)
-                param_name = module['path']
+                module = pvalue
+                param_name = module.get('path')
+                if not param_name:
+                    return None
                 pywr_param = {
                     'name': param_name,
                     'value': {
@@ -314,9 +320,8 @@ class PywrModel(object):
                 raise
 
         # create node dictionaries by name and id
-        node_lookup = {}
         for node in network['nodes']:
-            pywr_name = resource_name(node, 'node')
+            pywr_name = resource_name(node['name'], 'node')
             types = [t for t in node['types'] if t['template_id'] == template['id']]
             if not types:
                 continue
@@ -348,7 +353,7 @@ class PywrModel(object):
         link_lookup = {}
         for link in network['links']:
             try:
-                pywr_name = resource_name(link, 'link')
+                pywr_name = resource_name(link['name'], 'link')
                 types = [t for t in link['types'] if t['template_id'] == template['id']]
                 if not types:
                     continue

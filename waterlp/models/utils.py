@@ -13,7 +13,6 @@ def clean(s):
 
 spaces = '\n' + ' ' * 8
 
-
 policy_code_template = """from parameters import WaterLPParameter
 
 
@@ -70,7 +69,7 @@ def parse_code(policy_name, user_code, description=''):
     return policy_str
 
 
-def create_register_variable(variable):
+def create_variable(variable):
     variable_name = clean(variable['name'])
 
     pywr_type = variable.get('pywr_type', 'ArrayIndexed')
@@ -92,7 +91,69 @@ def create_register_variable(variable):
     }
 
 
-def create_register_policy(policy, policies_folder):
+def create_control_curve(name=None, data=None, node_lookup=None):
+    curve_type = data.get('type')
+    storage_node = data.get('storage_node')
+    node = node_lookup.get(int(storage_node))
+    storage_node_name = resource_name(node['name'], 'node')
+    _values = data.get('values')
+
+    if curve_type == 'simple':
+        c = _values[0]
+        values = []
+        try:
+            reference_level = float(c)
+        except:
+            reference_level = c
+        for v in _values[1:]:
+            try:
+                values.append(float(v))
+            except:
+                values.append(v)
+        control_curve = {
+            'type': 'controlcurve',
+            'storage_node': storage_node_name,
+            'control_curve': reference_level,
+            'values': values
+        }
+
+    elif curve_type == 'interpolated':
+        reference_levels = []
+        values = []
+
+        for c, v in _values:
+
+            if c is not None:
+                try:
+                    reference_levels.append(float(c))
+                except:
+                    reference_levels.append(c)
+
+            try:
+                values.append(float(v))
+            except:
+                values.append(v)
+
+        control_curve = {
+            'type': 'controlcurveinterpolated',
+            'storage_node': storage_node_name,
+            'control_curves': reference_levels,
+            'values': values
+        }
+
+    control_curve_name = clean(name)
+
+    ret = {
+        'name': control_curve_name,
+        'value': {
+            control_curve_name: control_curve
+        },
+    }
+
+    return ret
+
+
+def create_policy(policy, policies_folder):
     policy_name = clean(policy['name'])
     policy_code = parse_code(policy_name, policy['code'], policy.get('description', ''))
     policy_path = '{}/{}.py'.format(policies_folder, policy_name)
@@ -112,5 +173,5 @@ def create_register_policy(policy, policies_folder):
     return ret
 
 
-def resource_name(resource, resource_type):
-    return '{} [{}]'.format(resource['name'], resource_type)
+def resource_name(rname, rtype):
+    return '{} [{}]'.format(rname, rtype)

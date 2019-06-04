@@ -109,9 +109,7 @@ class WaterSystem(object):
         self.initial_volumes = {}
         self.constants = {}
         self.descriptors = {}
-        self.variables = {}
         self.parameters = {}
-        self.modules = {}
         self.urls = {}
         self.block_params = []
         self.blocks = {'node': {}, 'link': {}, 'network': {}}
@@ -301,9 +299,9 @@ class WaterSystem(object):
         cnt = 0
         # for source_id in self.scenario.source_ids:
 
-            # self.evaluator.scenario_id = source_id
+        # self.evaluator.scenario_id = source_id
 
-            # source = self.scenario.source_scenarios[source_id]
+        # source = self.scenario.source_scenarios[source_id]
 
         print("[*] Collecting data")
         for res_attr_idx in tqdm(resource_scenarios, ncols=80, disable=not self.args.verbose):
@@ -362,8 +360,11 @@ class WaterSystem(object):
 
             value = None
             if not (is_var and is_function):
-                if input_method == 'module':
-                    value = metadata.get('module')
+                if input_method in ['module', 'controlcurve']:
+                    data = metadata.get('data')
+                    if not data:
+                        continue
+                    value = json.loads(data)
                 else:
                     value = self.evaluator.eval_data(
                         value=rs.value,
@@ -377,6 +378,7 @@ class WaterSystem(object):
 
             # TODO: add generic unit conversion utility here
             dimension = rs.value.dimension
+            res_attr_name = '{}_{}'.format(tattr['attr_name'], resource['name'])
 
             if data_type == 'scalar' or type(value) in [int, float]:
                 try:
@@ -397,22 +399,40 @@ class WaterSystem(object):
 
             elif is_function:
                 self.parameters[idx] = {
-                    'name': '{}_{}'.format(tattr['attr_name'], resource['name']),
-                    'code': value
+                    'type': 'parameter',
+                    'value': {
+                        'name': res_attr_name,
+                        'code': value
+                    }
                 }
 
             elif input_method == 'module':
-                self.modules[idx] = value
+                self.parameters[idx] = {
+                    'type': 'module',
+                    'value': value
+                }
+
+            elif input_method == 'controlcurve':
+                self.parameters[idx] = {
+                    'type': 'controlcurve',
+                    'value': {
+                        'name': res_attr_name,
+                        'data': value
+                    }
+                }
 
             elif data_type == 'descriptor':  # this could change later
                 self.descriptors[idx] = value
 
             elif data_type == 'timeseries':
                 values = value
-                self.variables[idx] = {
-                    'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
-                    'data_type': data_type,
-                    'value': values,
+                self.parameters[idx] = {
+                    'type': 'variable',
+                    'value': {
+                        'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
+                        'data_type': data_type,
+                        'value': values,
+                    }
                 }
 
         return
@@ -480,9 +500,7 @@ class WaterSystem(object):
             step=step,
             initial_volumes=initial_volumes,
             constants=constants,
-            variables=self.variables,
             parameters=self.parameters,
-            modules=self.modules,
         )
 
         return
@@ -564,14 +582,16 @@ class WaterSystem(object):
                 # the order here shouldn't matter
                 res_attr_idx = (resource_type, resource_id, attr_id)
                 constant = self.constants.get(res_attr_idx)
-                timeseries = self.variables.get(res_attr_idx)
+                parameter = self.parameters.get(res_attr_idx)
+
                 if constant:
                     self.constants[res_attr_idx] = perturb(self.constants[res_attr_idx], variation)
 
-                elif timeseries:
-                    if not timeseries.get('function'):  # functions will be handled by the evaluator
-                        self.variables[res_attr_idx]['values'] = perturb(self.variables[res_attr_idx]['values'],
-                                                                         variation)
+                elif parameter and parameter['type'] == 'variable':
+
+                    if not parameter.get('function'):  # functions will be handled by the evaluator
+                        self.parameter[res_attr_idx]['value']['values'] \
+                            = perturb(self.variables[res_attr_idx]['value']['values'], variation)
 
                 else:  # we need to add the variable to account for the variation
                     data_type = tattr['data_type']
@@ -581,10 +601,12 @@ class WaterSystem(object):
                         self.descriptors[res_attr_idx] = perturb(0, variation)
                     elif data_type == 'timeseries':
 
-                        self.variables[res_attr_idx] = {
-                            'values': perturb(self.evaluator.default_timeseries.copy(), variation),
-                            'dimension': tattr['dimension']
-                        }
+                        self.parameters[res_attr_idx].update(
+                            value={
+                                'values': perturb(self.evaluator.default_timeseries.copy(), variation),
+                                'dimension': tattr['dimension']
+                            }
+                        )
 
     def step(self):
         self.model.step()
