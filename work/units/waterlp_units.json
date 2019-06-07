@@ -1,0 +1,2302 @@
+{
+    "Å": {
+        "lf": 1e-10,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "angström": {
+        "lf": 1e-10,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "AU": {
+        "lf": 149598550000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "astronomical unit": {
+        "lf": 149598550000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "cm": {
+        "lf": 0.01,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "centimetre": {
+        "lf": 0.01,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "dm": {
+        "lf": 0.1,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "decimetre": {
+        "lf": 0.1,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "fm": {
+        "lf": 1e-15,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "femtometre": {
+        "lf": 1e-15,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "ft": {
+        "lf": 0.3048,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "foot": {
+        "lf": 0.3048,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "hm": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "hectometre": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "in": {
+        "lf": 0.0254,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "inch": {
+        "lf": 0.0254,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "km": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "kilometre": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "ly": {
+        "lf": 9460528405000000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "light-year": {
+        "lf": 9460528405000000.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "m": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "µm": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "micrometre": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "mi": {
+        "lf": 1609.344,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "mile": {
+        "lf": 1609.344,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "nmi": {
+        "lf": 1852.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "mile(nautical)": {
+        "lf": 1852.0,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "mm": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "millimetre": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "nm": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "nanometre": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "pc": {
+        "lf": 3.0856776e+16,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "parsec": {
+        "lf": 3.0856776e+16,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "pm": {
+        "lf": 1e-12,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "picometre": {
+        "lf": 1e-12,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "yd": {
+        "lf": 0.9144,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "yard": {
+        "lf": 0.9144,
+        "cf": 0.0,
+        "dim": "Length"
+    },
+    "m^2": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "km^2": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square kilometre": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "a": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "are": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "ac": {
+        "lf": 4046.8564224,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "acre": {
+        "lf": 4046.8564224,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "ac (US)": {
+        "lf": 4046.87261,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "acre(US)": {
+        "lf": 4046.87261,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "ha": {
+        "lf": 10000.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "hectare": {
+        "lf": 10000.0,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "yd^2": {
+        "lf": 0.83612736,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square yard": {
+        "lf": 0.83612736,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "ft^2": {
+        "lf": 0.09290304,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square foot": {
+        "lf": 0.09290304,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "in^2": {
+        "lf": 0.00064516,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square inch": {
+        "lf": 0.00064516,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "mi^2": {
+        "lf": 2589988.110336,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "square mile": {
+        "lf": 2589988.110336,
+        "cf": 0.0,
+        "dim": "Area"
+    },
+    "bbl": {
+        "lf": 0.158987295,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "barrel(oil)": {
+        "lf": 0.158987295,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cl": {
+        "lf": 1e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "centilitre": {
+        "lf": 1e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cm^3": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic centimetre": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "dm^3": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic decimetre": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "hm^3": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic hectometre": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "ft^3": {
+        "lf": 0.028316846592,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic foot": {
+        "lf": 0.028316846592,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "in^3": {
+        "lf": 1.6387064e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic inch": {
+        "lf": 1.6387064e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "m^3": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "mm^3": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic millimetre": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "yd^3": {
+        "lf": 0.764554857984,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "cubic yard": {
+        "lf": 0.764554857984,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "fl oz": {
+        "lf": 2.9574e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "fluid ounce(US)": {
+        "lf": 2.9574e-05,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "gal": {
+        "lf": 0.003785411784,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "gallon, liquid(US)": {
+        "lf": 0.003785411784,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "Ml": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "megalitre": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "l": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "litre": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "dl": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "decilitre": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "ml": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "millilitre": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "pt": {
+        "lf": 0.000473176475,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "pint, liquid(US)": {
+        "lf": 0.000473176475,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "ac-ft": {
+        "lf": 1233.48184,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "acre-foot": {
+        "lf": 1233.48184,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "ac-in": {
+        "lf": 0.102790153,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "acre-inch": {
+        "lf": 0.102790153,
+        "cf": 0.0,
+        "dim": "Volume"
+    },
+    "°": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "degree": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "grd": {
+        "lf": 0.9,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "grad or gon": {
+        "lf": 0.9,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "rad": {
+        "lf": 57.29577951,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "radian": {
+        "lf": 57.29577951,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "'": {
+        "lf": 0.0166666666,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "minutes": {
+        "lf": 0.0166666666,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "''": {
+        "lf": 0.00027777777778,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "seconds": {
+        "lf": 0.00027777777778,
+        "cf": 0.0,
+        "dim": "Angle"
+    },
+    "m s^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "metre/second": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "fph": {
+        "lf": 8.4666666666e-05,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "foot/hour": {
+        "lf": 8.4666666666e-05,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "ipm": {
+        "lf": 0.00042333333333,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "inch/minute": {
+        "lf": 0.00042333333333,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "fpm": {
+        "lf": 0.00508,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "foot/minute": {
+        "lf": 0.00508,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "ips": {
+        "lf": 0.0254,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "inch/second": {
+        "lf": 0.0254,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "km h^-1": {
+        "lf": 0.27777777777778,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "kilometre/hour": {
+        "lf": 0.27777777777778,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "fps": {
+        "lf": 0.3048,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "foot/second": {
+        "lf": 0.3048,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mph": {
+        "lf": 0.44704,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mile/hour": {
+        "lf": 0.44704,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "kn": {
+        "lf": 0.514444,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "knot": {
+        "lf": 0.514444,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "kn(a)": {
+        "lf": 0.514773,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "knot(admiralty)": {
+        "lf": 0.514773,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mpm": {
+        "lf": 26.8224,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mile/minute": {
+        "lf": 26.8224,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mps": {
+        "lf": 1609.344,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "mile/second": {
+        "lf": 1609.344,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "c": {
+        "lf": 299792458.0,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "speed of light in vacuum": {
+        "lf": 299792458.0,
+        "cf": 0.0,
+        "dim": "Speed"
+    },
+    "day": {
+        "lf": 86400.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "h": {
+        "lf": 3600.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "hour": {
+        "lf": 3600.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "min": {
+        "lf": 60.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "minute": {
+        "lf": 60.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "mon": {
+        "lf": 2629743.8328,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "month": {
+        "lf": 2629743.8328,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "s": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "second": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "ms": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "millisecond": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "μs": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "microsecond": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "ns": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "nanosecond": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "ps": {
+        "lf": 1e-12,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "picosecond": {
+        "lf": 1e-12,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "yr": {
+        "lf": 31556925.9936,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "year": {
+        "lf": 31556925.9936,
+        "cf": 0.0,
+        "dim": "Time"
+    },
+    "BTU": {
+        "lf": 1055.056,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "BTU(IT)": {
+        "lf": 1055.056,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "cal": {
+        "lf": 4.1868,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "calorie(IT)": {
+        "lf": 4.1868,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "eV": {
+        "lf": 1.60217733e-19,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "electronvolt": {
+        "lf": 1.60217733e-19,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "erg": {
+        "lf": 1e-07,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "GJ": {
+        "lf": 1000000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "gigajoule": {
+        "lf": 1000000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "hph": {
+        "lf": 2684520.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "horsepower-hours": {
+        "lf": 2684520.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "J": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "joule": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kJ": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kilojoule": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kcal": {
+        "lf": 4184.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kilocalorie": {
+        "lf": 4184.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "Wh": {
+        "lf": 3600.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "watt-hour": {
+        "lf": 3600.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kWh": {
+        "lf": 3600000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "kilowatt-hour": {
+        "lf": 3600000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "MWh": {
+        "lf": 3600000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "Megawatt-hour": {
+        "lf": 3600000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "GWh": {
+        "lf": 3600000000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "Gigawatt-hour": {
+        "lf": 3600000000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "MJ": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "megajoule": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Energy"
+    },
+    "dyn": {
+        "lf": 1e-05,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "dyne": {
+        "lf": 1e-05,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "gf": {
+        "lf": 0.00980665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "gram-force": {
+        "lf": 0.00980665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "J m^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "joule/metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kg m s^-2": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kg·m/s^2": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kgf": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kilogram-force": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kp": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kilopond": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kipf": {
+        "lf": 4448.2216152548,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "kilopound-force": {
+        "lf": 4448.2216152548,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "lb ft s^-2": {
+        "lf": 0.138254954376,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "lb·ft/s^2": {
+        "lf": 0.138254954376,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "N": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "newton": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "ozf": {
+        "lf": 0.27801385095342,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "ounce-force": {
+        "lf": 0.27801385095342,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "p": {
+        "lf": 0.00980665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "pond": {
+        "lf": 0.00980665,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "lbf": {
+        "lf": 4.448222,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "pound-force": {
+        "lf": 4.448222,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "pdl": {
+        "lf": 0.138254954376,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "poundal": {
+        "lf": 0.138254954376,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "tf": {
+        "lf": 9806.65,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "tonne-force(metric)": {
+        "lf": 9806.65,
+        "cf": 0.0,
+        "dim": "Force"
+    },
+    "carat": {
+        "lf": 0.0002,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "g": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "gram": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "kg": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "kilogram": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "µg": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "microgram": {
+        "lf": 1e-09,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "mg": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "milligram": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "oz": {
+        "lf": 0.02835,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "ounce": {
+        "lf": 0.02835,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "lbm": {
+        "lf": 0.45359237,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "pound": {
+        "lf": 0.45359237,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "t": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "tonne": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Mass"
+    },
+    "BTU h^-1": {
+        "lf": 0.29301067,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "BTU/hour": {
+        "lf": 0.29301067,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "BTU min^-1": {
+        "lf": 17.56863,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "BTU/minutes": {
+        "lf": 17.56863,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "BTU s^-1": {
+        "lf": 1055.056,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "BTU/seconds": {
+        "lf": 1055.056,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "cal s^-1": {
+        "lf": 4.183076,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "calorie/seconds": {
+        "lf": 4.183076,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "GW": {
+        "lf": 1000000000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "gigawatt": {
+        "lf": 1000000000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "hp": {
+        "lf": 745.6998715822702,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "horsepower": {
+        "lf": 745.6998715822702,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "W": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "watt": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "kW": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "kilowatt": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "MW": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "megawatt": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "VA": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "volt-ampere": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Power"
+    },
+    "atm": {
+        "lf": 101325.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "atmosphere": {
+        "lf": 101325.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "Pa": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "pascal": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "bar": {
+        "lf": 100000.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "hPa": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "hectopascal": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "inH2O": {
+        "lf": 249.08891,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "iches of water": {
+        "lf": 249.08891,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "inHg": {
+        "lf": 3386.388,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "inches of mercury": {
+        "lf": 3386.388,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "kPa": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "kilopascal": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "mH2O": {
+        "lf": 9806.65,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "metre of water": {
+        "lf": 9806.65,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "µbar": {
+        "lf": 0.1,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "microbar": {
+        "lf": 0.1,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "mbar": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "milibar": {
+        "lf": 100.0,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "mmHg": {
+        "lf": 133.322,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "millimetre of mercury": {
+        "lf": 133.322,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "mmH2O": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "millimetre of water": {
+        "lf": 9.80665,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "psi": {
+        "lf": 6894.76,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "lbf/in^2": {
+        "lf": 6894.76,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "at": {
+        "lf": 98066.5,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "technical atmosphere": {
+        "lf": 98066.5,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "torr": {
+        "lf": 133.322,
+        "cf": 0.0,
+        "dim": "Pressure"
+    },
+    "°C": {
+        "lf": 1.0,
+        "cf": 273.15,
+        "dim": "Temperature"
+    },
+    "Celsius": {
+        "lf": 1.0,
+        "cf": 273.15,
+        "dim": "Temperature"
+    },
+    "°De": {
+        "lf": -0.6666666666666666,
+        "cf": 373.15,
+        "dim": "Temperature"
+    },
+    "Delisle": {
+        "lf": -0.6666666666666666,
+        "cf": 373.15,
+        "dim": "Temperature"
+    },
+    "°F": {
+        "lf": 0.5555555555555556,
+        "cf": 255.37222222222223,
+        "dim": "Temperature"
+    },
+    "Fahrenheit": {
+        "lf": 0.5555555555555556,
+        "cf": 255.37222222222223,
+        "dim": "Temperature"
+    },
+    "K": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Temperature"
+    },
+    "Kelvin": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Temperature"
+    },
+    "°Ra": {
+        "lf": 0.5555555555555556,
+        "cf": 0.0,
+        "dim": "Temperature"
+    },
+    "Rankine": {
+        "lf": 0.5555555555555556,
+        "cf": 0.0,
+        "dim": "Temperature"
+    },
+    "°Ré": {
+        "lf": 1.25,
+        "cf": 273.15,
+        "dim": "Temperature"
+    },
+    "Réaumur": {
+        "lf": 1.25,
+        "cf": 273.15,
+        "dim": "Temperature"
+    },
+    "°Rø": {
+        "lf": 1.9047619047619047,
+        "cf": 258.8642857142857,
+        "dim": "Temperature"
+    },
+    "Rømer": {
+        "lf": 1.9047619047619047,
+        "cf": 258.8642857142857,
+        "dim": "Temperature"
+    },
+    "m^3 s^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic metres per second": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "m^3 min^-1": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic metres per minute": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "m^3 h^-1": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic metres per hour": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "m^3 day^-1": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic metres per day": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "m^3 mon^-1": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic metres per month": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "hm^3 s^-1": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic hectometres per second": {
+        "lf": 1000000.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "hm^3 min^-1": {
+        "lf": 16666.6667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic hectometres per minute": {
+        "lf": 16666.6667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "hm^3 h^-1": {
+        "lf": 277.777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic hectometres per hour": {
+        "lf": 277.777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "hm^3 day^-1": {
+        "lf": 11.5740741,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic hectometres per day": {
+        "lf": 11.5740741,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "hm^3 mon^-1": {
+        "lf": 0.380265176,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic hectometres per month": {
+        "lf": 0.380265176,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ft^3 s^-1": {
+        "lf": 0.0283168466,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic foot per second": {
+        "lf": 0.0283168466,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ft^3 min^-1": {
+        "lf": 0.000471947443,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic foot per minute": {
+        "lf": 0.000471947443,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ft^3 h^-1": {
+        "lf": 7.86579072e-06,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic foot per hour": {
+        "lf": 7.86579072e-06,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ft^3 day^-1": {
+        "lf": 3.2774128e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic foot per day": {
+        "lf": 3.2774128e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ft^3 mon^-1": {
+        "lf": 1.07679106e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "cubic foot per month": {
+        "lf": 1.07679106e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gal s^-1": {
+        "lf": 0.00378541178,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gallons per second": {
+        "lf": 0.00378541178,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gal min^-1": {
+        "lf": 6.30901964e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gallons per minute": {
+        "lf": 6.30901964e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gal h^-1": {
+        "lf": 1.05150327e-06,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gallons per hour": {
+        "lf": 1.05150327e-06,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gal day^-1": {
+        "lf": 4.38126364e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gallons per day": {
+        "lf": 4.38126364e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gal mon^-1": {
+        "lf": 1.43946028e-09,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "gallons per month": {
+        "lf": 1.43946028e-09,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-ft s^-1": {
+        "lf": 1233.48184,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-foot per second": {
+        "lf": 1233.48184,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-ft min^-1": {
+        "lf": 20.5580306,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-foot per minute": {
+        "lf": 20.5580306,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-ft h^-1": {
+        "lf": 0.342633844,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-foot per hour": {
+        "lf": 0.342633844,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-ft day^-1": {
+        "lf": 0.0142764102,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-foot per day": {
+        "lf": 0.0142764102,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-ft mon^-1": {
+        "lf": 0.000469050188,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-foot per month": {
+        "lf": 0.000469050188,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-in s^-1": {
+        "lf": 102.790153,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-inch per second": {
+        "lf": 102.790153,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-in min^-1": {
+        "lf": 1.71316922,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-inch per minute": {
+        "lf": 1.71316922,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-in h^-1": {
+        "lf": 0.0285528203,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-inch per hour": {
+        "lf": 0.0285528203,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-in day^-1": {
+        "lf": 0.00118970085,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-inch per day": {
+        "lf": 0.00118970085,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "ac-in mon^-1": {
+        "lf": 3.90875157e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "acre-inch per month": {
+        "lf": 3.90875157e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "l s^-1": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "litre per second": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "l min^-1": {
+        "lf": 1.66666667e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "litre per minute": {
+        "lf": 1.66666667e-05,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "l h^-1": {
+        "lf": 2.77777778e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "litre per hour": {
+        "lf": 2.77777778e-07,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "l day^-1": {
+        "lf": 1.15740741e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "litre per day": {
+        "lf": 1.15740741e-08,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "l mon^-1": {
+        "lf": 3.80265176e-10,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "litre per month": {
+        "lf": 3.80265176e-10,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "Ml s^-1": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "megalitre per second": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "Ml min^-1": {
+        "lf": 1.66666667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "megalitre per minute": {
+        "lf": 1.66666667,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "Ml h^-1": {
+        "lf": 0.277777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "megalitre per hour": {
+        "lf": 0.277777778,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "Ml day^-1": {
+        "lf": 0.0115740741,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "megalitre per day": {
+        "lf": 0.0115740741,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "Ml mon^-1": {
+        "lf": 0.000380265176,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "megalitre per month": {
+        "lf": 0.000380265176,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "bbl day^-1": {
+        "lf": 0.158987295,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "barrel(oil) per day": {
+        "lf": 0.158987295,
+        "cf": 0.0,
+        "dim": "Volumetric flow rate"
+    },
+    "kg s^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per second": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg min^-1": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per minute": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg h^-1": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per hour": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg day^-1": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per day": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg mon^-1": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per month": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg yr^-1": {
+        "lf": 3.16887646e-08,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kilograms per year": {
+        "lf": 3.16887646e-08,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "g s^-1": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "grams per second": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t s^-1": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per second": {
+        "lf": 1000.0,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t min^-1": {
+        "lf": 16.66666666667,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per minute": {
+        "lf": 16.66666666667,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t h^-1": {
+        "lf": 0.277777777778,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per hour": {
+        "lf": 0.277777777778,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t day^-1": {
+        "lf": 0.0115740741,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per day": {
+        "lf": 0.0115740741,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t mon^-1": {
+        "lf": 0.000380265176,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per month": {
+        "lf": 0.000380265176,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "t yr^-1": {
+        "lf": 3.16887646e-05,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "tonnes per year": {
+        "lf": 3.16887646e-05,
+        "cf": 0.0,
+        "dim": "Mass flow rate"
+    },
+    "kg m^-3": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "kilograms per cubic-metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "kg Ml^-1": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "kilograms per megalitre": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "ppb": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "parts per billion": {
+        "lf": 1e-06,
+        "cf": 0.0,
+        "dim": "Density"
+    },
+    "USD": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Monetary value"
+    },
+    "US Dollar": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Monetary value"
+    },
+    "GBP": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Monetary value"
+    },
+    "Pound Sterling": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Monetary value"
+    },
+    "USD kWh^-1": {
+        "lf": 2.77777777e-07,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "US Dollars per kilowatt-hour": {
+        "lf": 2.77777777e-07,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "USD kJ^-1": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "US Dollars per kilojoule": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "USD J^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "US Dollars per joule": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "GBP kWh^-1": {
+        "lf": 1.8333333282e-07,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "Pound Sterling per kilowatt-hour": {
+        "lf": 1.8333333282e-07,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "GBP kJ^-1": {
+        "lf": 0.0066,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "Pound Sterling per kilojoule": {
+        "lf": 0.0066,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "GBP J^-1": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "Pound Sterling per joule": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Energy price"
+    },
+    "USD m^-3": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "US Dollar per cubic metre": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "USD Ml^-1": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "US Dollar per megalitre": {
+        "lf": 0.0001,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "USD ac-ft^-1": {
+        "lf": 0.000810713194,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "US Dollar per acre-foot": {
+        "lf": 0.000810713194,
+        "cf": 0.0,
+        "dim": "Unit price (volume)"
+    },
+    "GBP m^-3": {
+        "lf": 0.0,
+        "cf": 0.66,
+        "dim": "Unit price (volume)"
+    },
+    "Pound Sterling per cubic metre": {
+        "lf": 0.0,
+        "cf": 0.66,
+        "dim": "Unit price (volume)"
+    },
+    "GBP Ml^-1": {
+        "lf": 0.0,
+        "cf": 6.6e-05,
+        "dim": "Unit price (volume)"
+    },
+    "Pound Sterling per megalitre": {
+        "lf": 0.0,
+        "cf": 6.6e-05,
+        "dim": "Unit price (volume)"
+    },
+    "USD kg^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Unit price (mass)"
+    },
+    "US Dollar per kilogram": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Unit price (mass)"
+    },
+    "GBP kg^-1": {
+        "lf": 0.66,
+        "cf": 0.66,
+        "dim": "Unit price (mass)"
+    },
+    "Pounds Sterling per kilogram": {
+        "lf": 0.66,
+        "cf": 0.66,
+        "dim": "Unit price (mass)"
+    },
+    "USD t^-1": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Unit price (mass)"
+    },
+    "US Dollar per tonne": {
+        "lf": 0.001,
+        "cf": 0.0,
+        "dim": "Unit price (mass)"
+    },
+    "GBP t^-1": {
+        "lf": 0.00066,
+        "cf": 0.66,
+        "dim": "Unit price (mass)"
+    },
+    "Pounds Sterling per tonne": {
+        "lf": 0.00066,
+        "cf": 0.66,
+        "dim": "Unit price (mass)"
+    },
+    "USD s^-1": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per second": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "USD min^-1": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per minute": {
+        "lf": 0.0166666667,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "USD h^-1": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per hour": {
+        "lf": 0.000277777778,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "USD day^-1": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per day": {
+        "lf": 1.15740741e-05,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "USD mon^-1": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per month": {
+        "lf": 3.80265176e-07,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "USD yr^-1": {
+        "lf": 3.16887646e-08,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "US Dollar per year": {
+        "lf": 3.16887646e-08,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP s^-1": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per second": {
+        "lf": 0.66,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP min^-1": {
+        "lf": 0.011,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per minute": {
+        "lf": 0.011,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP h^-1": {
+        "lf": 0.000183333,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per hour": {
+        "lf": 0.000183333,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP day^-1": {
+        "lf": 7.639e-06,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per day": {
+        "lf": 7.639e-06,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP mon^-1": {
+        "lf": 2.50975e-07,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per month": {
+        "lf": 2.50975e-07,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "GBP yr^-1": {
+        "lf": 2.091458464e-08,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "Pound Sterling per year": {
+        "lf": 2.091458464e-08,
+        "cf": 0.0,
+        "dim": "Specific cost (time)"
+    },
+    "date": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "dimensionless"
+    },
+    "No unit": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "dimensionless"
+    },
+    "-": {
+        "lf": 1.0,
+        "cf": 0.0,
+        "dim": "dimensionless"
+    },
+    "%": {
+        "lf": 0.01,
+        "cf": 0.0,
+        "dim": "dimensionless"
+    },
+    "Percent": {
+        "lf": 0.01,
+        "cf": 0.0,
+        "dim": "dimensionless"
+    }
+}
