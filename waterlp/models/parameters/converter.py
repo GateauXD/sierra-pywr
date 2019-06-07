@@ -2321,6 +2321,6 @@ def convert(value, unit_in, unit_out, scale_in=1, scale_out=1):
             raise Exception("Input dimension {} is different than output dimension {}.".format(u1['dim'], u2['dim']))
         lf1 = float(u1['lf'])
         lf2 = float(u2['lf'])
-        return value * lf1 / lf2 * scale_in / scale_out
+        return value * scale_in * lf1 / lf2 / scale_out
 
     return

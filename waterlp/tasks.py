@@ -268,7 +268,7 @@ def run_scenarios(args, networklog):
     # run the scenario
     # ================
 
-    if args.debug:
+    if args.debug or not os.environ.get('RABBITMQ_HOST'):
         networklog.info("Running scenario in debug mode")
         for ss in all_supersubscenarios[:args.debug_s]:
             run_scenario(ss, args=args, verbose=verbose)

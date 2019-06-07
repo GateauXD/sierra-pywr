@@ -9,8 +9,8 @@ class WaterLPParameter(Parameter):
     store = {}  # TODO: create h5 store on disk (or redis?) to share between class instances
     root_path = os.environ.get('WATERLP_ROOT_PATH', '')
 
-    # def convert(self, *args, **kwargs):
-    #     return convert(*args, **kwargs)
+    def convert(self, *args, **kwargs):
+        return convert(*args, **kwargs)
 
     def read_csv(self, *args, **kwargs):
         hashval = hash(str(args) + str(kwargs))

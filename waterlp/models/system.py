@@ -80,10 +80,6 @@ class WaterSystem(object):
         self.storage = network.layout.get('storage')
         self.bucket_name = os.environ.get('AWS_S3_BUCKET')
 
-        # Both of these are now converted to cubic meters (per time step)
-        self.SECOND_TO_DAY = 60 * 60 * 24  # convert to million ft^3/day
-        self.TAF_TO_VOLUME = 1e3 * 43560 / 1e6  # convert to million ft^3
-
         self.conn = conn
         self.session = session
         self.name = name
@@ -474,9 +470,9 @@ class WaterSystem(object):
                 dimension = param['dimension']
                 value = source.pop(res_attr_idx)
                 if dimension == 'Volumetric flow rate':
-                    val = convert(value * scale, dimension, unit, 'hm^3 day^-1')
+                    val = convert(value, unit, 'hm^3 day^-1', scale_in=scale)
                 elif dimension == 'Volume':
-                    val = convert(value * scale, dimension, unit, 'hm^3')
+                    val = convert(value, unit, 'hm^3', scale_in=scale)
                 else:
                     val = value
                 if dest_key == 'res_attr_idx':

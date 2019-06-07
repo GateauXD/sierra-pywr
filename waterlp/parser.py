@@ -53,6 +53,8 @@ def commandline_parser():
                         help='''URL to ping indicating activity.''')
     parser.add_argument('--mp', dest='message_protocol', default=None,
                         help='''Message protocol to report progress back to client browser''')
+    parser.add_argument('--pk', dest='publish_key', default=None,
+                        help='''Key to publish message''')
     parser.add_argument('--guid', default=uuid.uuid4().hex, dest='unique_id',
                         help='''Unique identifier for this run.''')
     parser.add_argument('--sm', dest='sync_mode', default='async',
