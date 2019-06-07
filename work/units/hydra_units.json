@@ -1,4 +1,4 @@
-units = [
+[
     {
         "name": "Length",
         "unit": [
@@ -1661,26 +1661,3 @@ units = [
         ]
     }
 ]
-
-
-def convert(value, dimension, unit1, unit2):
-    if unit1 == unit2:
-        return value
-
-    dim_units = [dim for dim in units if dim['name'] == dimension]
-    converted = None
-
-    if dim_units:
-        du = dim_units[0]['unit']
-        u1 = list(filter(lambda x: x['abbr'] == unit1, du))
-        u2 = list(filter(lambda x: x['abbr'] == unit2, du))
-
-        if u1 and u2:
-            lf1 = float(u1[0]['lf'])
-            lf2 = float(u2[0]['lf'])
-            converted = value * lf1 / lf2
-
-    return converted
-
-
-
