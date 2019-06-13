@@ -12,3 +12,4 @@ logs/*
 *.lp
 *.mps
 *.env
+*.h5
