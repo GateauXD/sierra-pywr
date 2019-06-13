@@ -346,6 +346,9 @@ class WaterSystem(object):
             # get data type
             data_type = rs.value.type
 
+            if data_type == 'descriptor':
+                continue # TODO: resolve this somehow
+
             # update data type
             self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
 

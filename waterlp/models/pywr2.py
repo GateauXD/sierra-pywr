@@ -235,7 +235,11 @@ class PywrModel(object):
 
         non_storage_types = pywr_output_types + pywr_input_types + pywr_node_types
 
-        res_attr_lookup = {'%s/%s/%s' % idx: parameters[idx]['value']['name'] for idx in parameters}
+        res_attr_lookup = {}
+        for idx in parameters:
+            value = parameters[idx]['value']
+            if 'name' in value:
+                res_attr_lookup['%s/%s/%s' % idx] = value['name']
 
         def make_pywr_param(res_attr_idx, tattr):
             pywr_param = None

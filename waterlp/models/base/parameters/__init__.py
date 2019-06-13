@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from hashlib import md5
 
 from pywr.parameters import Parameter
 
@@ -18,15 +19,13 @@ class WaterLPParameter(Parameter):
         return self.model.parameters[param].value(timestep or self.model.timestep, scenario_index)
 
     def read_csv(self, *args, **kwargs):
-        hashval = hash(str(args) + str(kwargs))
 
-        # data = self.store.get(hashval)
+        # hashval = md5((str(args) + str(kwargs)).encode()).hexdigest()
+        hashval = str(hash(str(args) + str(kwargs)))
 
-        # if data is None:
-        try:
-            data = pd.read_hdf('store.h5', hashval)
+        data = self.store.get(hashval)
 
-        except:
+        if data is None:
 
             if not args:
                 raise Exception("No arguments passed to read_csv.")
@@ -48,7 +47,6 @@ class WaterLPParameter(Parameter):
 
             data = pd.read_csv(*args, **kwargs)
 
-            data.to_hdf('store.h5', hashval)
-            # self.store[hashval] = data
+            self.store[hashval] = data
 
         return data

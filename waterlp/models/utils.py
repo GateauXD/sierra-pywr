@@ -14,7 +14,7 @@ def clean_parameter_name(s):
 spaces = '\n' + ' ' * 8
 
 default_value_code = 'self._value(timestep, scenario_index)'
-value_code_template = 'convert({value}, {unit1}, {unit2}, scale_in={scale_in}, scale_out={scale_out})'
+value_code_template = 'convert({value}, "{unit1}", "{unit2}", scale_in={scale_in}, scale_out={scale_out})'
 
 policy_code_template = """from parameters import WaterLPParameter
 
