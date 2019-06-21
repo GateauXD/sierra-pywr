@@ -804,6 +804,11 @@ units = {
         "dim": "Volumetric flow rate",
         "lf": 0.0283168466
     },
+    "cfs": {
+        "cf": 0.0,
+        "dim": "Volumetric flow rate",
+        "lf": 0.0283168466
+    },
     "cubic hectometre": {
         "cf": 0.0,
         "dim": "Volume",
@@ -865,6 +870,11 @@ units = {
         "lf": 3.80265176e-07
     },
     "cubic metres per second": {
+        "cf": 0.0,
+        "dim": "Volumetric flow rate",
+        "lf": 1.0
+    },
+    "cms": {
         "cf": 0.0,
         "dim": "Volumetric flow rate",
         "lf": 1.0
@@ -2313,14 +2323,22 @@ def convert(value, unit_in, unit_out, scale_in=1, scale_out=1):
     :return: value
     """
 
-    u1 = units.get(unit_in)
-    u2 = units.get(unit_out)
+    try:
+        u1 = units[unit_in]
+        u2 = units[unit_out]
 
-    if u1 and u2:
         if u1['dim'] != u2['dim']:
             raise Exception("Input dimension {} is different than output dimension {}.".format(u1['dim'], u2['dim']))
-        lf1 = float(u1['lf'])
-        lf2 = float(u2['lf'])
-        return value * scale_in * lf1 / lf2 / scale_out
 
-    return
+        return value * scale_in * u1['lf'] / u2['lf'] / scale_out
+
+    except:
+        err_unit = None
+        if unit_in not in units:
+            err_unit = unit_in
+        elif unit_out not in units:
+            err_unit = unit_out
+        if err_unit:
+            raise Exception('Conversion error: {} is not a valid unit'.format(err_unit))
+        else:
+            raise

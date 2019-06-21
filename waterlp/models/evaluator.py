@@ -104,9 +104,12 @@ def parse_function(user_code, name, argnames, modules=()):
     return func
 
 
-def eval_function(function):
+def eval_function(function, data_type):
     if function is None or type(function) != str:
         return ''
+
+    if data_type == 'descriptor':
+        return function
 
     try:
         return eval(function)
@@ -291,7 +294,7 @@ class Evaluator:
         data_type = data_type or value.type
 
         if use_function:
-            return eval_function(func)
+            return eval_function(func, data_type)
 
         elif data_type == 'scalar':
             try:

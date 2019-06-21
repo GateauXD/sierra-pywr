@@ -9,7 +9,7 @@ import pandas
 
 from pywr.core import Model
 
-from .utils import resource_name, create_policy, create_variable, create_control_curve
+from .utils import resource_name, clean_parameter_name, create_policy, create_variable, create_control_curve
 
 oa_attr_to_pywr = {
     'water demand': 'base_flow',
@@ -86,7 +86,8 @@ def load_from_s3(bucket, network_key, path, dest_root):
             Bucket=bucket,
             Prefix=prefix
         )
-        for file in response['Contents']:
+
+        for file in response.get('Contents', []):
             name = file['Key'].rsplit('/', 1)
             if name[1]:
                 src = file['Key']
@@ -131,15 +132,20 @@ class PywrModel(object):
         }
 
         # Copy domains and parameters into temp folder
-        for folder in ['domains', 'parameters']:
-            copytree(os.path.join(self.here, folder), os.path.join(self.root_dir, folder))
+        for folder in os.listdir(os.path.join(self.here, 'base')):
+            copytree(os.path.join(self.here, 'base', folder), os.path.join(self.root_dir, folder))
 
         self.create_model(
-            network, template, filename=self.model_filename, start=start, end=end, step=step,
+            network, template,
+            filename=self.model_filename,
+            start=start,
+            end=end,
+            step=step,
             constants=constants,
             parameters=parameters,
             initial_volumes=initial_volumes,
-            metadata=metadata, tattrs=tattrs
+            metadata=metadata,
+            tattrs=tattrs
         )
 
         # Copy policy folders from S3
@@ -152,13 +158,13 @@ class PywrModel(object):
 
         self.load_model(self.root_dir, self.model_filename, bucket=bucket, network_key=network_key)
 
-    def load_model(self, root_dir, model_path, bucket=None, network_key=None, check_graph=True):
+    def load_model(self, root_dir, model_path, bucket=None, network_key=None, check_graph=False):
 
         os.chdir(root_dir)
 
         # needed when loading JSON file
         root_path = 's3://{}/{}/'.format(bucket, network_key)
-        os.environ['WATERLP_ROOT_PATH'] = root_path
+        os.environ['ROOT_S3_PATH'] = root_path
 
         # Step 1: Load and register policies
         sys.path.insert(0, os.getcwd())
@@ -173,8 +179,15 @@ class PywrModel(object):
 
         # from domains import Hydropower, InstreamFlowRequirement
 
-        import_module('.IFRs', 'policies')
-        import_module('.domains', 'domains')
+        modules = [
+            ('.IFRS', 'policies'),
+            ('.domains', 'domains')
+        ]
+        for name, package in modules:
+            try:
+                import_module(name, package)
+            except:
+                print(' [-] WARNING: {} could not be imported from {}'.format(name, package))
 
         # Step 2: Load and run model
         self.model = Model.load(model_path, path=model_path)
@@ -222,7 +235,13 @@ class PywrModel(object):
 
         non_storage_types = pywr_output_types + pywr_input_types + pywr_node_types
 
-        def make_pywr_param(res_attr_idx):
+        res_attr_lookup = {}
+        for idx in parameters:
+            value = parameters[idx]['value']
+            if 'name' in value:
+                res_attr_lookup['%s/%s/%s' % idx] = value['name']
+
+        def make_pywr_param(res_attr_idx, tattr):
             pywr_param = None
 
             # constants
@@ -237,12 +256,14 @@ class PywrModel(object):
 
             ptype = parameter['type']
             pvalue = parameter['value']
+            param_name = pvalue.get('name')
             pywr_param = None
             if ptype == 'variable':
                 pywr_param = create_variable(pvalue)
             elif ptype == 'parameter':
-                pywr_param = create_policy(pvalue, self.parameters_folder)
+                pywr_param = create_policy(pvalue, self.parameters_folder, res_attr_lookup, tattr)
             elif ptype == 'controlcurve':
+
                 pywr_param = create_control_curve(node_lookup=node_lookup, **pvalue)
             elif ptype == 'module':
                 # pywr_param = create_module(module)
@@ -250,20 +271,19 @@ class PywrModel(object):
                 param_name = module.get('path')
                 if not param_name:
                     return None
+                pywr_param = {'type': param_name}
+
+            elif ptype == 'descriptor':
                 pywr_param = {
-                    'name': param_name,
-                    'value': {
-                        param_name: {
-                            'type': param_name
-                        }
-                    }
+                    'type': 'constant',
+                    'value': pvalue['value']
                 }
 
             # update the Pywr parameters object
             if pywr_param:
-                pywr_params.update(pywr_param['value'])
+                pywr_params[param_name] = pywr_param
 
-                return pywr_param['name']
+                return param_name
 
             else:
                 return pywr_param
@@ -276,21 +296,23 @@ class PywrModel(object):
                 if not tattr:
                     return pywr_node
 
+                properties = tattr['properties']
+
                 pywr_attr_name = oa_attr_to_pywr.get(attr_name.lower())
 
                 try:
-                    pywr_param = make_pywr_param(res_attr_idx)
+                    pywr_param = make_pywr_param(res_attr_idx, tattr)
                 except Exception as err:
                     print(err)
                     print('Failed to prepare {}'.format(attr_name.lower()))
                     raise
-                if pywr_attr_name and pywr_param:
+                if pywr_node and pywr_attr_name and pywr_param and not properties.get('intermediary'):
                     pywr_node.update({
                         pywr_attr_name: pywr_param
                     })
 
                 # create recorder for attribute
-                if tattr and tattr['properties'].get('save'):
+                if properties.get('save'):
                     resource_class = res_attr_idx[0]
                     recorder_name = '{}/{}/{}'.format(
                         resource_class,
@@ -326,7 +348,7 @@ class PywrModel(object):
             if not types:
                 continue
             elif len(types) > 1:
-                msg = "Type is ambiguous for {}. Please remove extra types.".format(type_name)
+                msg = "Type is ambiguous for {}. Please remove extra types.".format(pywr_name)
                 raise Exception(msg)
 
             type_name = types[-1]['name']
@@ -374,11 +396,12 @@ class PywrModel(object):
                 }
 
                 if node_1_id in output_ids:
-                    msg = 'Topology error: Output {} appears to be upstream of {}'.format(node['pywr_name'], pywr_name)
+                    msg = 'Topology error: Output "{}" appears to be upstream of "{}"'\
+                        .format(node_1['pywr_name'], pywr_name)
                     raise Exception(msg)
                 elif node_2_id in input_ids:
-                    msg = 'Topology error: Input {} appears to be downstream of {}'.format(node_2['pywr_name'],
-                                                                                           pywr_name)
+                    msg = 'Topology error: Input "{}" appears to be downstream of "{}"'\
+                        .format(node_2['pywr_name'], pywr_name)
                     raise Exception(msg)
 
                 pywr_type = oa_type_to_pywr.get(type_name, 'Link')
@@ -478,6 +501,10 @@ class PywrModel(object):
             # if down_storage:
             #     down_edge.append(link['to_slot'])
             pywr_edges.extend([up_edge, down_edge])
+
+        # Finally, map network attributes to parameters
+        for ra in network['attributes']:
+            process_param({}, 'network', network, ra)
 
         pywr_model = {
             'metadata': metadata,

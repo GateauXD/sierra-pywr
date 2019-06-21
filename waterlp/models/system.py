@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from waterlp.models.pywr2 import PywrModel
 from waterlp.models.evaluator import Evaluator
-from waterlp.models.parameters.converter import convert
+from waterlp.models.base.utils.converter import convert
 
 INITIAL_STORAGE_ATTRS = [
     ('reservoir', 'Initial Storage'),
@@ -346,6 +346,9 @@ class WaterSystem(object):
             # get data type
             data_type = rs.value.type
 
+            if data_type == 'descriptor':
+                continue # TODO: resolve this somehow
+
             # update data type
             self.res_tattrs[rs.resource_attr_id]['data_type'] = data_type
 
@@ -374,24 +377,31 @@ class WaterSystem(object):
 
             # TODO: add generic unit conversion utility here
             dimension = rs.value.dimension
-            res_attr_name = '{}_{}'.format(tattr['attr_name'], resource['name'])
+            if resource_type == 'network':
+                res_attr_name = tattr['attr_name']
+            else:
+                res_attr_name = '{}/{}/{}'.format(resource_type, resource['name'], tattr['attr_name'])
 
-            if data_type == 'scalar' or type(value) in [int, float]:
+            is_scalar = data_type == 'scalar' or type(value) in [int, float]
+
+            if data_type == 'scalar':
                 try:
                     value = float(value)
                 except:
                     raise Exception("Could not convert scalar")
 
-                if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
-                    self.initial_volumes[idx] = value
-                else:
-                    # self.variables[idx] = {
-                    #     'name': '{}_{}'.format(tattr['attr_name'], rs['dataset_id']),
-                    #     'data_type': 'scalar',
-                    #     'pywr_type': 'constant',
-                    #     'value': value,
-                    # }
-                    self.constants[idx] = value
+            if (type_name.lower(), tattr['attr_name']) in INITIAL_STORAGE_ATTRS:
+                self.initial_volumes[idx] = value
+
+            elif is_scalar:
+                self.parameters[idx] = {
+                    'type': 'variable',
+                    'value': {
+                        'name': res_attr_name,
+                        'pywr_type': 'constant',
+                        'value': value
+                    }
+                }
 
             elif is_function:
                 self.parameters[idx] = {
@@ -416,9 +426,15 @@ class WaterSystem(object):
                         'data': value
                     }
                 }
-
-            elif data_type == 'descriptor':  # this could change later
-                self.descriptors[idx] = value
+            #
+            # elif data_type == 'descriptor':  # this could change later
+            #     self.parameters[idx] = {
+            #         'type': 'descriptor',
+            #         'value': {
+            #             'name': res_attr_name,
+            #             'value': value
+            #         }
+            #     }
 
             elif data_type == 'timeseries':
                 values = value

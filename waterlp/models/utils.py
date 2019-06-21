@@ -1,7 +1,7 @@
 import re
 
 
-def clean(s):
+def clean_parameter_name(s):
     # Remove invalid characters
     s = re.sub('[^0-9a-zA-Z_]', '_', s)
 
@@ -13,15 +13,22 @@ def clean(s):
 
 spaces = '\n' + ' ' * 8
 
+default_value_code = 'self._value(timestep, scenario_index)'
+value_code_template = 'convert({value}, "{unit1}", "{unit2}", scale_in={scale_in}, scale_out={scale_out})'
+
 policy_code_template = """from parameters import WaterLPParameter
 
+from utils.converter import convert
 
 class {policy_name}(WaterLPParameter):
     \"\"\"{policy_description}\"\"\"
 
+    def _value(self, timestep, scenario_index):
+        {kwargs}
+        {policy_code}
+        
     def value(self, timestep, scenario_index):
-
-        {policy_code} 
+        return {value_code}
 
     @classmethod
     def load(cls, model, data):
@@ -32,7 +39,7 @@ print(" [*] {policy_name} successfully registered")
 """
 
 
-def parse_code(policy_name, user_code, description=''):
+def parse_code(policy_name, user_code, res_attr_lookup, tattr, description=''):
     """
     Parse a code snippet into a Pywr policy
     :param policy_name: The name of the policy
@@ -40,6 +47,9 @@ def parse_code(policy_name, user_code, description=''):
     :param description: Description of the policy
     :return:
     """
+
+    pattern1 = r'"([A-Za-z0-9_\./\\-]*)"'
+    pattern2 = r"'([A-Za-z0-9_\./\\-]*)'"
 
     # first, parse code
     s = user_code.rstrip()
@@ -58,20 +68,52 @@ def parse_code(policy_name, user_code, description=''):
         else:
             lines[-1] = 'return ' + lines[-1]
 
+    for i in range(len(lines)):
+        line = lines[i]
+        for pattern in [pattern1, pattern2]:
+            m = re.search(pattern, line)
+            if m:
+                for g in m.groups():
+                    r = res_attr_lookup.get(g)
+                    if r:
+                        lines[i] = line.replace(g, r)
+
     new_code = spaces.join(lines)
+
+    # value code
+    dim = tattr.get('dimension')
+    unit1 = tattr.get('unit')
+    scale_in = tattr.get('properties').get('scale', 1)
+    unit2 = None
+    if dim == 'Volume':
+        unit2 = 'm^3'
+    elif dim == 'Volumetric flow rate':
+        unit2 = 'm^3 day^-1'
+    scale_out = 1e6
+
+    if unit2 and (unit1 != unit2 or scale_in != scale_out):
+        value_code = value_code_template.format(
+            value=default_value_code,
+            unit1=unit1,
+            unit2=unit2,
+            scale_in=scale_in,
+            scale_out=scale_out
+        )
+    else:
+        value_code = default_value_code
 
     policy_str = policy_code_template.format(
         policy_name=policy_name,
         policy_description=description,
-        policy_code=new_code
+        policy_code=new_code,
+        value_code = value_code,
+        kwargs='kwargs = dict(timestep=timestep, scenario_index=scenario_index)' if '**kwargs' in user_code else ''
     )
 
     return policy_str
 
 
 def create_variable(variable):
-    variable_name = clean(variable['name'])
-
     pywr_type = variable.get('pywr_type', 'ArrayIndexed')
 
     parameter = {
@@ -83,12 +125,7 @@ def create_variable(variable):
     else:
         parameter['values'] = list(variable['value'][0].values())
 
-    return {
-        'name': variable_name,
-        'value': {
-            variable_name: parameter
-        }
-    }
+    return parameter
 
 
 def create_control_curve(name=None, data=None, node_lookup=None):
@@ -97,6 +134,8 @@ def create_control_curve(name=None, data=None, node_lookup=None):
     node = node_lookup.get(int(storage_node))
     storage_node_name = resource_name(node['name'], 'node')
     _values = data.get('values')
+
+    control_curve = {}
 
     if curve_type == 'simple':
         c = _values[0]
@@ -141,34 +180,18 @@ def create_control_curve(name=None, data=None, node_lookup=None):
             'values': values
         }
 
-    control_curve_name = clean(name)
-
-    ret = {
-        'name': control_curve_name,
-        'value': {
-            control_curve_name: control_curve
-        },
-    }
-
-    return ret
+    return control_curve
 
 
-def create_policy(policy, policies_folder):
-    policy_name = clean(policy['name'])
-    policy_code = parse_code(policy_name, policy['code'], policy.get('description', ''))
+def create_policy(policy, policies_folder, res_attr_lookup, tattr):
+    policy_name = clean_parameter_name(policy['name'])
+    policy_code = parse_code(policy_name, policy['code'], res_attr_lookup, tattr, policy.get('description', ''))
     policy_path = '{}/{}.py'.format(policies_folder, policy_name)
 
     with open(policy_path, 'w') as f:
         f.writelines(policy_code)
 
-    ret = {
-        'name': policy_name,
-        'value': {
-            policy_name: {
-                'type': policy_name
-            }
-        }
-    }
+    ret = {'type': policy_name}
 
     return ret
 
