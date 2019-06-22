@@ -18,7 +18,7 @@ value_code_template = 'convert({value}, "{unit1}", "{unit2}", scale_in={scale_in
 
 policy_code_template = """from parameters import WaterLPParameter
 
-from utils.converter import convert
+from utilities.converter import convert
 
 class {policy_name}(WaterLPParameter):
     \"\"\"{policy_description}\"\"\"

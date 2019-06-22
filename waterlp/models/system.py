@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from waterlp.models.pywr2 import PywrModel
 from waterlp.models.evaluator import Evaluator
-from waterlp.models.base.utils.converter import convert
+from waterlp.models.base.utilities.converter import convert
 
 INITIAL_STORAGE_ATTRS = [
     ('reservoir', 'Initial Storage'),
