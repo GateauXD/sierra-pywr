@@ -1,5 +1,5 @@
 import os
-import getpass
+# import getpass
 from datetime import datetime
 from itertools import product
 from copy import copy, deepcopy
@@ -13,7 +13,7 @@ from celery.exceptions import Ignore
 
 from waterlp.reporters.redis import local_redis
 from waterlp.reporters.post import Reporter as PostReporter
-from waterlp.reporters.ably import AblyReporter
+# from waterlp.reporters.ably import AblyReporter
 from waterlp.reporters.pubnub import PubNubReporter
 from waterlp.reporters.socketio import SocketIOReporter
 from waterlp.logger import RunLogger
@@ -299,8 +299,8 @@ def run_scenario(supersubscenario, args, verbose=False):
     elif args.message_protocol == 'post':
         post_reporter.is_main_reporter = True
         reporter = post_reporter
-    elif args.message_protocol == 'ably':
-        reporter = AblyReporter(args, post_reporter=post_reporter)
+    # elif args.message_protocol == 'ably':
+    #     reporter = AblyReporter(args, post_reporter=post_reporter)
     elif args.message_protocol == 'pubnub':
         reporter = PubNubReporter(args, publish_key=args.publish_key, post_reporter=post_reporter, run_id=args.run_id)
     elif args.message_protocol == 'socketio':
