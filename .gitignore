@@ -13,3 +13,4 @@ logs/*
 *.mps
 *.env
 *.h5
+*.pyc
