@@ -46,13 +46,13 @@ class WaterLPParameter(Parameter):
             kwargs['index_col'] = kwargs.get('index_col', 0)
 
             # Import data from local files
-            data = pd.read_csv(args[0].split('/').pop(), **kwargs)
+            data = pd.read_csv("s3_imports/" + args[0].split('/').pop(), **kwargs)
 
             # Import files from the S3 Bucket
             # data = pd.read_csv(*args, **kwargs)
 
             # Saving Data from S3 to a local directory
-            # data.to_csv((args[0].split('/').pop()))
+            # data.to_csv("s3_imports/" + args[0].split('/').pop())
 
             self.store[hashval] = data
 
