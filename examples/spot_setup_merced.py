@@ -18,7 +18,7 @@ class SpotSetup(object):
 
     def __init__(self, used_algorithm='default'):
         self.used_algorithm = used_algorithm
-        self.params = [spotpy.parameter.Uniform('storage_cost', -1000000, -20, 100)]
+        self.params = [spotpy.parameter.Uniform('storage_cost', -1000000, -20, 100000)]
         self.evaulation_data = np.loadtxt("merced/s3_imports/Modifed_mcm_MERR.csv", skiprows=1, delimiter=',', usecols=[1])
 
     def parameters(self):
@@ -26,6 +26,7 @@ class SpotSetup(object):
 
     def simulation(self, vector):
 
+        print("Trying Parameter Value: {}".format(vector[0]))
         # Changes the parameter.
         with open(model_path, "r") as f:
             data = json.load(f)
@@ -37,6 +38,8 @@ class SpotSetup(object):
 
         #Create the model with a modified JSON
         model = load_model(root_dir, model_path, bucket=bucket, network_key=network_key)
+
+        # initialize model
         model.setup()
 
         timesteps = range(len(model.timestepper))
@@ -54,8 +57,13 @@ class SpotSetup(object):
         results = model.to_dataframe()
         results.to_csv('results.csv')
 
+        del model
+
         results = results["node/Lake McClure/storage"]
-        return results.to_numpy()
+        results = results.to_numpy()
+
+        print("First Output {}".format(results[0]))
+        return results
 
     def evaluation(self):
         return self.evaulation_data
