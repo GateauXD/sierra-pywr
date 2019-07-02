@@ -52,11 +52,16 @@ def evaluate_model(model_path, root_dir, bucket, network_key, parameters):
     results = model.to_dataframe()
     results.to_csv('results.csv')
 
-    results = results["node/Lake McClure/storage"]
-    results = results.to_numpy()
+    # TODO Automate this part aswell
+    output = np.array(results["node/Lake McClure/storage"])
+    output = np.append(output, results["node/Below Merced Falls Dam/flow"])
+    output = np.append(output, results["node/MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500/flow"])
+    output = np.append(output, results["node/Near Shaffer Bridge_11271290/flow"])
+    output = np.append(output, results["node/Near Stevinson_11272500/flow"])
+    output = np.append(output, results["node/USGS_11264500 MERCED R A HAPPY ISLES/flow"])
 
     # Save time series data to a local file
-    np.save("model_output.npy", results)
+    np.save("model_output.npy", output)
 
 if __name__ == "__main__":
     # Saves passed in arguments as local variables

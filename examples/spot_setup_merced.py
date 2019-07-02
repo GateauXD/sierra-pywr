@@ -33,7 +33,7 @@ class SpotSetup(object):
                        spotpy.parameter.Uniform('exchequer_PH_cost', -200, 100, 20),
                        ]
         self.evaluation_data = np.loadtxt("merced/s3_imports/Modifed_mcm_MERR.csv",
-                                          skiprows=1, delimiter=',', usecols=[1])
+                                          skiprows=1, delimiter=',', usecols=[0])
 
     def parameters(self):
         # Generates a random param value based on the self.params
@@ -58,6 +58,15 @@ class SpotSetup(object):
         return self.evaluation_data
 
     def objectivefunction(self, simulation, evaluation):
+        evaluation_input = np.array([])
+        # Get rid of the impact of NULL values in the evaluation data
+        for index in range(0, len(simulation)):
+            if not evaluation[index]:
+                evaluation_input = np.append(evaluation_input, simulation[index])
+            else:
+                evaluation_input = np.append(evaluation_input, evaluation[index])
         # Generates a minimum objective value of the output
-        objective_function = -rmse(evaluation=evaluation, simulation=simulation)
+        objective_function = -rmse(evaluation=evaluation_input, simulation=simulation)
+
+        print("Objective Value: {}".format(objective_function))
         return objective_function

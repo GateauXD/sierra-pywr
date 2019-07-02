@@ -723,7 +723,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": 52.14484892476382
+      "value": -72.1251636230138
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -745,7 +745,7 @@
     },
     "node/Lake McClure/Storage Value": {
       "type": "constant",
-      "value": -174.61701925311087
+      "value": -34.87953785259491
     },
     "node/Lake McSwain/Storage Capacity": {
       "type": "constant",
@@ -773,7 +773,7 @@
     },
     "node/McSwain PH/Base Value": {
       "type": "constant",
-      "value": -119.98802392629277
+      "value": -116.95364583333355
     },
     "node/Merced Falls PH/Fixed Head": {
       "type": "constant",
@@ -789,7 +789,7 @@
     },
     "node/Merced Falls PH/Base Value": {
       "type": "constant",
-      "value": 59.96034714648876
+      "value": 22.946413815604956
     },
     "node/Merced Falls PH/Unconstrained Cost": {
       "type": "constant",
@@ -808,7 +808,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": 64.88450898278617
+      "value": -191.1526214731224
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -871,7 +871,7 @@
     },
     "node/New Exchequer PH/Base Value": {
       "type": "constant",
-      "value": 72.31678572491799
+      "value": 33.76438155149786
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
