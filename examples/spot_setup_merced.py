@@ -20,17 +20,37 @@ class SpotSetup(object):
 
     def __init__(self, used_algorithm='default'):
         self.used_algorithm = used_algorithm
-        self.params = [spotpy.parameter.Uniform('storage_cost', -500, 500, 100)]
-        self.evaluation_data = np.loadtxt("merced/s3_imports/Modifed_mcm_MERR.csv", skiprows=1, delimiter=',', usecols=[1])
+        # Parameters = Storage Values
+        #              Violation Cost
+        #              Hydrological Cost
+        self.params = [spotpy.parameter.Uniform('mcClure_storage_value', -200, 100, 20),
+                       spotpy.parameter.Uniform('mcSwain_storage_value', -200, 100, 20),
+                       spotpy.parameter.Uniform('falls_storage_value', -200, 100, 20),
+                       spotpy.parameter.Uniform('exchequer_violation_cost', -200, 100, 20),
+                       spotpy.parameter.Uniform('below_crocker_inflow_violation_cost', -200, 100, 20),
+                       spotpy.parameter.Uniform('mcSwain_PH_cost', -200, 100, 20),
+                       spotpy.parameter.Uniform('falls_PH_cost', -200, 100, 20),
+                       spotpy.parameter.Uniform('exchequer_PH_cost', -200, 100, 20),
+                       ]
+        self.evaluation_data = np.loadtxt("merced/s3_imports/Modifed_mcm_MERR.csv",
+                                          skiprows=1, delimiter=',', usecols=[1])
 
     def parameters(self):
         # Generates a random param value based on the self.params
         return spotpy.parameter.generate(self.params)
 
     def simulation(self, vector):
+
+        print("Trying parametre: {}".format(vector))
+
+        # Create an array of parameters to pass to the model
+        parameters = []
+        for parameter in vector:
+            parameters.append(parameter)
+
         # Simulate the model in another file simulation_run.py
-        proc = subprocess.run(['python', 'simulation_run.py', model_path, root_dir, bucket, network_key, str(vector[0])]
-                                , stdout=subprocess.PIPE)
+        proc = subprocess.run(['python', 'simulation_run.py',
+                               model_path, root_dir, bucket, network_key, str(parameters)], stdout=subprocess.PIPE)
         return np.load("merced/model_output.npy")
 
     def evaluation(self):
@@ -39,5 +59,5 @@ class SpotSetup(object):
 
     def objectivefunction(self, simulation, evaluation):
         # Generates a minimum objective value of the output
-        objectivefunction = -rmse(evaluation=evaluation, simulation=simulation)
-        return objectivefunction
+        objective_function = -rmse(evaluation=evaluation, simulation=simulation)
+        return objective_function

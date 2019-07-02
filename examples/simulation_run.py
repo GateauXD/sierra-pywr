@@ -7,12 +7,25 @@ from subprocess import Popen, PIPE
 from tqdm import tqdm
 from load_model import load_model
 
-def evaluate_model(model_path, root_dir, bucket, network_key, parameter):
+
+def evaluate_model(model_path, root_dir, bucket, network_key, parameters):
     # Changes JSON parameter to another value
     with open(model_path, "r") as f:
         data = json.load(f)
 
-    data['parameters']['node/Lake McClure/Storage Value']['value'] = parameter
+    # TODO Automate this process via JSON parser maybe?
+
+    # Reservoirs
+    data['parameters']['node/Lake McClure/Storage Value']['value'] = parameters[0]
+    # data['parameters']['node/Lake McClure/Storage Value']['value'] = parameters[1]
+    # data['parameters']['node/Lake McClure/Storage Value']['value'] = parameters[2]
+    # Instream Flows
+    data['parameters']['node/blwNewExchequerPH/Violation Cost']['value'] = parameters[3]
+    data['parameters']['node/Merced R below Crocker-Huffman Dam/Violation Cost']['value'] = parameters[4]
+    # Hydropower
+    data['parameters']['node/McSwain PH/Base Value']['value'] = parameters[5]
+    data['parameters']['node/Merced Falls PH/Base Value']['value'] = parameters[6]
+    data['parameters']['node/New Exchequer PH/Base Value']['value'] = parameters[7]
 
     with open(model_path, 'w') as f:
         json.dump(data, f, indent=2)
@@ -51,6 +64,15 @@ if __name__ == "__main__":
     root_dir = sys.argv[2]
     bucket = sys.argv[3]
     network_key = sys.argv[4]
-    parameter = float(sys.argv[5])
 
-    evaluate_model(model_path, root_dir, bucket, network_key, parameter)
+    # Converts the string representation of the array to a float array
+    # Ex: "[123, 234ll 3453]" ->  ["[123", "23411", "3453]"] -> [123, 23411, 34553]
+    parameters = sys.argv[5].split(",")
+    for index in range(0, len(parameters)):
+        if index == 0:
+            parameters[index] = parameters[index][1:]
+        elif index == len(parameters)-1:
+            parameters[index] = parameters[index][0:len(parameters[index])-1]
+        parameters[index] = float(parameters[index])
+
+    evaluate_model(model_path, root_dir, bucket, network_key, parameters)
