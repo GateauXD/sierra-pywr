@@ -1,5 +1,6 @@
 import os
 import spotpy
+import pandas as pd
 import numpy as np
 import json
 import subprocess
@@ -18,26 +19,29 @@ network_key = os.environ.get('NETWORK_KEY')
 
 class SpotSetup(object):
 
-    def __init__(self, used_algorithm='default'):
-        self.used_algorithm = used_algorithm
-        # Parameters = Storage Values
-        #              Violation Cost
-        #              Hydrological Cost
-        self.params = [spotpy.parameter.Uniform('mcClure_storage_value', -200, 100, 20),
-                       spotpy.parameter.Uniform('mcSwain_storage_value', -200, 100, 20),
-                       spotpy.parameter.Uniform('falls_storage_value', -200, 100, 20),
-                       spotpy.parameter.Uniform('exchequer_violation_cost', -200, 100, 20),
-                       spotpy.parameter.Uniform('below_crocker_inflow_violation_cost', -200, 100, 20),
-                       spotpy.parameter.Uniform('mcSwain_PH_cost', -200, 100, 20),
-                       spotpy.parameter.Uniform('falls_PH_cost', -200, 100, 20),
-                       spotpy.parameter.Uniform('exchequer_PH_cost', -200, 100, 20),
-                       ]
-        self.evaluation_data = np.loadtxt("merced/s3_imports/Modifed_mcm_MERR.csv",
-                                          skiprows=1, delimiter=',', usecols=[0])
-
     def parameters(self):
         # Generates a random param value based on the self.params
         return spotpy.parameter.generate(self.params)
+
+    def __init__(self, used_algorithm='default'):
+        self.used_algorithm = used_algorithm
+        # Generating Parameter Values via CSV
+        parameters_csv = pd.read_csv("merced/input_csvs/parameters.csv")
+        self.params = []
+        for index in range(0, len(parameters_csv)):
+            self.params.append(spotpy.parameter.Uniform(parameters_csv.iloc[index, 0],
+                                                        parameters_csv.iloc[index, 1],
+                                                        parameters_csv.iloc[index, 2],
+                                                        parameters_csv.iloc[index, 3]))
+        del parameters_csv
+
+        # Generating Evaluation Data via CSV
+        self.evaluation_data = np.array([])
+        evaluation_csv = pd.read_csv("merced/input_csvs/evaluation.csv")
+        results = pd.read_csv("merced/results.csv")
+        for index in range(0, len(evaluation_csv)):
+            self.evaluation_data = np.append(self.evaluation_data, results[evaluation_csv.iloc[index]][1:])
+        del evaluation_csv, results
 
     def simulation(self, vector):
 
