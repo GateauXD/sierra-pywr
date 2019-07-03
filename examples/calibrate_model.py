@@ -6,7 +6,7 @@ from spot_setup_merced import SpotSetup
 dbname = "lake_mcclure_storage"
 dbformat = "csv"
 
-rep = 20
+rep = 100
 results = []
 spot_setup = SpotSetup()
 
