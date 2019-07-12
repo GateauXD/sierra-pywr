@@ -1,7 +1,8 @@
 Parameters, Num1, Num2, Num3
-node/Lake McClure/Storage Value, -200, 100, 20
-node/blwNewExchequerPH/Violation Cost, -200, 100, 20
-node/Merced R below Crocker-Huffman Dam/Violation Cost, -200, 100, 20
-node/McSwain PH/Base Value, -200, 100, 20
-node/Merced Falls PH/Base Value, -200, 100, 20
-node/New Exchequer PH/Base Value, -200, 100, 20
+node/Lake McClure/Storage Value, -200, 0, 20
+node/blwNewExchequerPH/Violation Cost, 200, 500, 20
+node/Merced R below Crocker-Huffman Dam/Violation Cost, 200, 500, 20
+node/McSwain PH/Base Value, -200, 0, 20
+node/Merced Falls PH/Base Value, -200, 0, 20
+node/New Exchequer PH/Base Value, -200, 0, 20
+node/MID Main/Cost, 200, 300, 20
