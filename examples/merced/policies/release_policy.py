@@ -18,6 +18,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         self.elevation_value = self.elevation_conversion["Elevation (m)"]
         self.storage_value = self.elevation_conversion["Storage (mcm)"]
         self.curr_volume = self.model.recorders["node/Lake McSwain/storage"].values()
+
     def get_elevation(self):
         return np.interp(self.curr_volume, self.storage_value, self.elevation_value)
 
@@ -61,8 +62,28 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         return None
 
     def min_release(self, timestep):
-        # Has two categories Dry and Normal Season with dates
-        pass
+        # Yearly_Types == Dry or Normal year
+        yearly_types = pd.read_csv("examples/merced/s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
+                                   squeeze=True)
+        type_value = yearly_types.loc[[str(timestep.year), "livneh_historical"]]
+        date = datetime(2000, timestep.month, timestep.day)
+        zones = {}
+
+        # Dry Year
+        if type_value == 1:
+            zones = {datetime(2000, 1, 1): 60.0, datetime(2000, 4, 1): 60.0, datetime(2000, 6, 1): 15.0,
+                     datetime(2000, 10, 16): 60.0, datetime(2000, 11, 1): 75.0}
+        # Normal Year
+        else:
+            zones = {datetime(2000, 1, 1): 75.0, datetime(2000, 4, 1): 75.0, datetime(2000, 6, 1): 25.0,
+                     datetime(2000, 10, 16): 75.0, datetime(2000, 11, 1): 100.0}
+
+        for index in range(1, len(zones.keys())):
+            list_zones = list(zones.keys())
+            if list_zones[index] < date:
+                return zones[list_zones[index - 1]]
+
+        raise LookupError("Invalid TimeStep")
 
     def conservation_release(self):
         pass
