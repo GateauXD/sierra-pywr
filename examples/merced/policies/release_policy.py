@@ -29,17 +29,15 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
         for index in range(1, len(zones.keys())):
             list_zones = list(zones.keys())
+            # Floor function for the entries in the dict. Looks for the first value that is greater than our given date
+            # Which means the dict value we are looking for is the one before.
             if list_zones[index] < date:
                 curr_elevation = self.get_elevation()
                 zone_value = zones[list_zones[index-1]]
                 if operation == "<":
-                    if curr_elevation < zone_value:
-                        return True
-                    break
+                    return curr_elevation < zone_value
                 elif operation == ">":
-                    if curr_elevation > zone_value:
-                        return True
-                    break
+                    return curr_elevation > zone_value
                 else:
                     raise TypeError("Invalid Operation Input")
         return False
@@ -59,7 +57,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         elif curr_elevation < 869.35 and curr_elevation < 884:
             return self.surcharge()
 
-        return None
+        raise ValueError("Elevation does not fit in the rages")
 
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
