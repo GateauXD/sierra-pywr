@@ -17,10 +17,10 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         self.elevation_conversion = pd.read_csv("examples/merced/policies/MERR_elev_vol_curve_unitsSI.csv")
         self.elevation_value = self.elevation_conversion["Elevation (m)"]
         self.storage_value = self.elevation_conversion["Storage (mcm)"]
-        self.curr_volume = self.model.recorders["node/Lake McSwain/storage"].values()
+        self.curr_volume = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         self.const_values = self.get_constant_values()
 
-    def get_elevation(self):
+    def get_elevation(self, timestep):
         return np.interp(self.curr_volume, self.storage_value, self.elevation_value)
 
     def is_conservation_zone(self, timestep, operation):
@@ -33,7 +33,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
             # Floor function for the entries in the dict. Looks for the first value that is greater than our given date
             # Which means the dict value we are looking for is the one before.
             if list_zones[index] < date:
-                curr_elevation = self.get_elevation()
+                curr_elevation = self.get_elevation(timestep)
                 zone_value = zones[list_zones[index-1]]
                 if operation == "<":
                     return curr_elevation < zone_value
@@ -44,7 +44,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         return False
 
     def value(self, timestep):
-        curr_elevation = self.get_elevation()
+        curr_elevation = self.get_elevation(timestep)
 
         if curr_elevation < 632:
             return self.min_release(timestep)
