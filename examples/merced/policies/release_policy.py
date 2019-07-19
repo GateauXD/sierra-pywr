@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 from pywr.recorders import Recorder
 from pywr.recorders.recorders import NodeRecorder
+from scipy import interpolate
 from parameters import WaterLPParameter
 from datetime import date
 
@@ -14,13 +15,21 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     # Get volume of the reservoir and convert the that to elevation
     def __init__(self):
-        self.elevation_conversion = pd.read_csv("examples/merced/policies/MERR_elev_vol_curve_unitsSI.csv")
-        self.elevation_value = self.elevation_conversion["Elevation (m)"]
-        self.storage_value = self.elevation_conversion["Storage (mcm)"]
         self.curr_volume = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         self.const_values = self.get_constant_values()
+        self.esrd_value = self.get_esrd()
+
+    def get_esrd(self):
+        esrd_table = pd.read_csv("examples/merced/policies/ESRD_unitsSI.csv")
+        esrd_infow = self.esrd_table.iloc[0, 1:]
+        esrd_elev = self.esrd_table.iloc[1:, 0]
+        esrd_vals = self.esrd_table.iloc[1:, 1:]
+        return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
 
     def get_elevation(self, timestep):
+        elevation_conversion = pd.read_csv("examples/merced/policies/MERR_elev_vol_curve_unitsSI.csv")
+        elevation_value = self.elevation_conversion["Elevation (m)"]
+        storage_value = self.elevation_conversion["Storage (mcm)"]
         return np.interp(self.curr_volume, self.storage_value, self.elevation_value)
 
     def is_conservation_zone(self, timestep, operation):
@@ -84,16 +93,13 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         raise LookupError("Invalid TimeStep")
 
     def conservation_release(self, timestep):
-        # TODO Add conditional for combined or 4500 cfs
-        return self.combined_release(timestep)
+        return max(self.combined_release(timestep), 4500)
 
     def flood_control(self, timestep):
-        # TODO Add conditional for combined or 6000 cfs or Maxed ESRD
-        return self.combined_release(timestep)
+        return max(self.combined_release(timestep), self.get_esrd(), 6000)
 
     def surcharge(self, timestep):
-        # TODO Add conditional for combined or Maxed ESRD
-        return self.combined_release(timestep)
+        return max(self.combined_release(timestep) ,self.get_esrd())
 
     def stevension_multiplier(self, timestep):
         date = datetime(2000, timestep.month, timestep.day)
