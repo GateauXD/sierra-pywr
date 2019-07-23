@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 from pywr.recorders import Recorder
 from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
 from parameters import WaterLPParameter
-from datetime import date
+from .IFRs import Requirement_Merced_R_below_Crocker_Huffman_Dam
+
 
 class Lake_Mclure_Release_Policy(WaterLPParameter):
     """
@@ -15,22 +16,27 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     # Get volume of the reservoir and convert the that to elevation
     def __init__(self):
-        self.curr_volume = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
+        self.storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         self.const_values = self.get_constant_values()
         self.esrd_value = self.get_esrd()
 
     def get_esrd(self):
-        esrd_table = pd.read_csv("examples/merced/policies/ESRD_unitsSI.csv")
-        esrd_infow = self.esrd_table.iloc[0, 1:]
-        esrd_elev = self.esrd_table.iloc[1:, 0]
-        esrd_vals = self.esrd_table.iloc[1:, 1:]
+        esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv")
+        esrd_infow = esrd_table.iloc[0, 1:]
+        esrd_elev = esrd_table.iloc[1:, 0]
+        esrd_vals = esrd_table.iloc[1:, 1:]
+        # TODO Check if this function is working correctly
         return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
 
     def get_elevation(self, timestep):
-        elevation_conversion = pd.read_csv("examples/merced/policies/MERR_elev_vol_curve_unitsSI.csv")
-        elevation_value = self.elevation_conversion["Elevation (m)"]
-        storage_value = self.elevation_conversion["Storage (mcm)"]
-        return np.interp(self.curr_volume, self.storage_value, self.elevation_value)
+        elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")
+        elevation_value = elevation_conversion["Elevation (m)"]
+        storage_value = elevation_conversion["Storage (mcm)"]
+
+        volume_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
+        curr_volume = self.storage_recorder.loc[volume_index].get_values()[0]
+
+        return np.interp(curr_volume, storage_value, elevation_value)
 
     def is_conservation_zone(self, timestep, operation):
         zones = {datetime(2000, 1, 1): 811.39, datetime(2000, 3, 15): 811.39, datetime(2000, 6, 15): 869.35, datetime(2000, 6, 30): 869.35, datetime(2000, 7, 31): 862.5, datetime(2000, 8, 31): 850.5,
@@ -52,28 +58,28 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
                     raise TypeError("Invalid Operation Input")
         return False
 
-    def value(self, timestep):
+    def value(self, timestep, scenario_index):
         curr_elevation = self.get_elevation(timestep)
 
         if curr_elevation < 632:
             return self.min_release(timestep)
 
         elif curr_elevation > 632 and self.is_conservation_zone(timestep):
-            return self.conservation_release(timestep)
+            return self.conservation_release(timestep, scenario_index)
 
         elif self.is_conservation_zone(timestep) and curr_elevation < 869.35:
-            return self.flood_control(timestep)
+            return self.flood_control(timestep, scenario_index)
 
         elif curr_elevation < 869.35 and curr_elevation < 884:
-            return self.surcharge(timestep)
+            return self.surcharge(timestep, scenario_index)
 
-        raise ValueError("Elevation does not fit in the rages")
+        raise ValueError("Elevation does not fit in the ranges")
 
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
         yearly_types = pd.read_csv("examples/merced/s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
                                    squeeze=True)
-        type_value = yearly_types.loc[[str(timestep.year), "livneh_historical"]]
+        type_value = yearly_types.loc[str(timestep.year)]
         date = datetime(2000, timestep.month, timestep.day)
 
         # Dry Year
@@ -92,126 +98,37 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
         raise LookupError("Invalid TimeStep")
 
-    def conservation_release(self, timestep):
-        return max(self.combined_release(timestep), 4500)
+    def conservation_release(self, timestep, scenario_index):
+        return max(self.combined_release(timestep, scenario_index), 4500)
 
-    def flood_control(self, timestep):
-        return max(self.combined_release(timestep), self.get_esrd(), 6000)
+    def flood_control(self, timestep, scenario_index):
+        return max(self.combined_release(timestep, scenario_index), self.get_esrd(), 6000)
 
-    def surcharge(self, timestep):
-        return max(self.combined_release(timestep) ,self.get_esrd())
+    def surcharge(self, timestep, scenario_index):
+        return max(self.combined_release(timestep, scenario_index) ,self.get_esrd())
 
-    def stevension_multiplier(self, timestep):
-        date = datetime(2000, timestep.month, timestep.day)
+    def combined_release(self, timestep, scenario_index):
+        # Const to convert CFS to CMS
+        cfs_to_cms = 0.028316847
 
-        if datetime == datetime(2000, 3, 1):
-            fall_fish = self.const_values["fallFisheryRelease"]
-            evaporation_volume = self.const_values["evaporation"]
-            storage_buffer = self.const_values["storageBuffer"]
-            min_pool_volume = self.const_values["minPool"]
-            infow = pd.read_csv()
-            loss_to_gw = pd.read_csv()
-            min_release = pd.read_csv()
-            cowell_diversion = pd.read_csv()
-            merced_nwr_demand = pd.read_csv()
-            stevinson_demand = pd.read_csv()
-            # TODO Get data from Feb28
-            storage_volume = self.curr_volume
-            storage_june_15th = self.curr_volume
+        # Loading Data from IFRS and CSV files
+        csv_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
+        below_crocker_class = Requirement_Merced_R_below_Crocker_Huffman_Dam()
+        mid_northside = pd.read_csv("policies/MID_Northside_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+                                  squeeze=True)
+        mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+                                  squeeze=True)
 
-            water_supply_forecast = storage_volume + infow - min_release - cowell_diversion - merced_nwr_demand \
-                                    - fall_fish - evaporation_volume - min_pool_volume - storage_buffer - loss_to_gw
+        # Obtain the CFS values
+        ifrs_value = below_crocker_class.value(timestep, scenario_index)
+        northside_value = mid_northside.loc[csv_index]
+        main_value = mid_main.loc[csv_index]
 
-            north_side_demand = pd.read_csv()
-            merced_id_demand = pd.read_csv()
-            elnido_id_demand = pd.read_csv()
+        # Convert the northside and main values from CFS to CMS
+        northside_value = northside_value * cfs_to_cms
+        main_value = main_value * cfs_to_cms
 
-            if storage_june_15th < 289000:
-                multiplier = max(min(water_supply_forecast
-                                                                    / (north_side_demand + merced_id_demand + stevinson_demand + 0.5 * elnido_id_demand), 1), 0)
-                self.const_values["stevinson_multiplier"] = multiplier
-                return self.const_values["stevinson_multiplier"], multiplier
-            else:
-                multiplier = max(min(((water_supply_forecast - stevinson_demand)/north_side_demand +
-                                      merced_id_demand + 0.5 * elnido_id_demand), 1), 0)
-                self.const_values["stevinson_multiplier"] = 1
-                return self.const_values["stevinson_multiplier"],
-        else:
-            if "stevinson_multiplier" in self.const_values.keys():
-                return self.const_values["stevinson_multiplier"], self.const_values["defaultMultiplier"]
-
-            else:
-                self.const_values["stevinson_multiplier"] = self.const_values["defaultMultiplier"]
-                return self.const_values["stevinson_multiplier"], self.const_values["stevinson_multiplier"]
-
-    def snow_release(self, timestep):
-        date = datetime(2000, timestep.month, timestep.year)
-
-        if date.month == datetime(2000, 3, 1).month or date.month == datetime(2000, 4, 1).month \
-                or date.month == datetime(2000, 5, 1).month or date.month == datetime(2000, 6, 1).month:
-            total_inflow = pd.read_csv()
-            min_release = {}
-            mercedid_demand = pd.read_csv("MercedID")
-            mercedwr_demand = pd.read_csv("MercedNWR")
-            stevinsonwd_demand = pd.read_csv("StevinsonWD")
-            elnidoid_demand = pd.read_csv("ElNidoID")
-            cads_demand = pd.read_csv("CADs")
-
-            # Add function to calculate all these values at the same time till JUNE
-
-            total_demand = mercedid_demand + mercedwr_demand + stevinsonwd_demand + elnidoid_demand + 0.5 * cads_demand
-
-            # Dry or Normal
-            yearly_types = pd.read_csv("examples/merced/s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
-                                       squeeze=True)
-            type_value = yearly_types.loc[[str(timestep.year), "livneh_historical"]]
-
-            if type_value == 1:
-                min_release = {3: 15174, 4: 10562, 5: 6099, 6: 1488}
-            else:
-                min_release = {3: 11841, 4: 8152, 5: 4582, 6: 892}
-
-            depletion_to_shaffer = pd.read_csv()
-
-            # Calculate Available Space S = FloodControl_StoreZone - PoolStore - snow storage buffer
-            available_space = 0
-
-            spill = total_inflow - total_demand - min_release - depletion_to_shaffer - available_space
-
-            days_till_june = (datetime(2000, 6, 30) - date).days
-            return spill/days_till_june
-
-        return 0
-
-    def combined_release(self, timestep):
-        date = datetime(2000, timestep.month, timestep.day)
-
-        if datetime(2000, 3, 1) < date < datetime(2000, 10, 31):
-            northside_demand = pd.read_csv()
-            merced_id_demand = pd.read_csv()
-            elnido_id_demand = pd.read_csv()
-        else:
-            northside_demand = 0
-            merced_id_demand = 0
-            elnido_id_demand = 0
-
-        mercedwr_demand = pd.read_csv("MercedNWR")
-        stevinsonwd_demand = pd.read_csv("StevinsonWD")
-        depletion_to_shaffer = pd.read_csv()
-        cads_demand = pd.read_csv("CADs")
-        mcclure_min_release = pd.read_csv()
-
-        if datetime(2000, 2, 1) < date < datetime(2000, 7, 1):
-            scaler_values = {datetime(2000, 3, 1).month: 0.5,datetime(2000, 4, 1).month: 1.0, datetime(2000, 5, 1).month: 1.0, datetime(2000, 6, 1).month: 1.0 }
-            scaler_value = scaler_values[date.month]
-        else:
-            scaler_value = 0
-
-        snowmelt_release = self.snow_release(timestep) * scaler_value
-        (mutiplier, stevinson_multiplier) = self.stevension_multiplier(timestep)
-        return mutiplier * (northside_demand + merced_id_demand + 0.5 * elnido_id_demand) + mercedwr_demand \
-               + stevinson_multiplier + stevinsonwd_demand + cads_demand + depletion_to_shaffer + mcclure_min_release \
-               + snowmelt_release
+        return ifrs_value + northside_value + main_value
 
     def get_constant_values(self):
         # Modified Function from initializationDataUsed_HECRes.py
@@ -258,5 +175,6 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
         return return_dict
 
-# Lake_Mclure_Release_Policy.register()
-# print(" [*] Lake_Mclure_Release_Policy successfully registered")
+
+Lake_Mclure_Release_Policy.register()
+print(" [*] Lake_Mclure_Release_Policy successfully registered")
