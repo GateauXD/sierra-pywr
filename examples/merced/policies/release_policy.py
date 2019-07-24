@@ -18,6 +18,14 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)
+        self.elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")
+        self.yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
+                            squeeze=True)
+        self.mid_northside = pd.read_csv("policies/MID_Northside_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+                                  squeeze=True)
+        self.mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+                                  squeeze=True)
         self.const_values = self.get_constant_values()
         self.esrd_value = self.get_esrd()
 
@@ -39,17 +47,15 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         raise ValueError("Elevation does not fit in the ranges")
 
     def get_esrd(self):
-        esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)
-        esrd_infow = esrd_table.iloc[0, 1:]
-        esrd_elev = esrd_table.iloc[1:, 0]
-        esrd_vals = esrd_table.iloc[1:, 1:]
+        esrd_infow = self.esrd_table.iloc[0, 1:]
+        esrd_elev = self.esrd_table.iloc[1:, 0]
+        esrd_vals = self.esrd_table.iloc[1:, 1:]
         return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
 
     def get_elevation(self, timestep):
         storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
-        elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")
-        elevation_value = elevation_conversion["Elevation (m)"]
-        storage_value = elevation_conversion["Storage (mcm)"]
+        elevation_value = self.elevation_conversion["Elevation (m)"]
+        storage_value = self.elevation_conversion["Storage (mcm)"]
 
         volume_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
         curr_volume = storage_recorder.loc[volume_index].get_values()[0]
@@ -78,9 +84,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
-        yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
-                                   squeeze=True)
-        type_value = yearly_types.loc[timestep.year]
+        type_value = self.yearly_types.loc[timestep.year]
         date = datetime(2000, timestep.month, timestep.day)
 
         # Dry Year
@@ -115,15 +119,11 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         # Loading Data from IFRS and CSV files
         csv_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
         below_crocker_class = Requirement_Merced_R_below_Crocker_Huffman_Dam()
-        mid_northside = pd.read_csv("policies/MID_Northside_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
-                                  squeeze=True)
-        mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
-                                  squeeze=True)
 
         # Obtain the CFS values
         ifrs_value = below_crocker_class.value(timestep, scenario_index)
-        northside_value = mid_northside.loc[csv_index]
-        main_value = mid_main.loc[csv_index]
+        northside_value = self.mid_northside.loc[csv_index]
+        main_value = self.mid_main.loc[csv_index]
 
         # Convert the northside and main values from CFS to CMS
         northside_value = northside_value * cfs_to_cms
