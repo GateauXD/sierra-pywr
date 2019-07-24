@@ -118,15 +118,11 @@
       "type": "Link"
     },
     {
-      "name": "MERCE-L-CON4 [link]",
-      "type": "Link"
-    },
-    {
       "name": "MERCE-L-CON5 [link]",
       "type": "Link"
     },
     {
-      "name": "MERCE-L-CON5 [link]",
+      "name": "MERCE-L-CON6 [link]",
       "type": "Link"
     },
     {
@@ -199,9 +195,7 @@
     },
     {
       "name": "Release from ExChequer [node]",
-      "type": "Release Requirement",
-      "mrf": 0.0,
-      "mrf_cost": 0.0
+      "type": "Link"
     },
     {
       "name": "Below Ex Chequer Dam [node]",
@@ -226,6 +220,11 @@
       "type": "Storage",
       "initial_volume": 0.0,
       "max_volume": 0.0
+    },
+    {
+      "name": "Lake McClure Flood Control [node]",
+      "type": "Link",
+      "max_flow": "node/Lake McClure Flood Control/Max Flow"
     },
     {
       "name": "Lake McClure [node]",
@@ -556,6 +555,14 @@
     ],
     [
       "MERCE-L-CON2 [link]",
+      "Release from ExChequer [node]"
+    ],
+    [
+      "Release from ExChequer [node]",
+      "MERCE-L-CON5 [link]"
+    ],
+    [
+      "MERCE-L-CON5 [link]",
       "New Exchequer PH [node]"
     ],
     [
@@ -563,7 +570,31 @@
       "MERCE-L-CON3 [link]"
     ],
     [
-      "MERCE-L-CON2 [link]",
+      "MERCE-L-CON5 [link]",
+      "Below Ex Chequer Dam [node]"
+    ],
+    [
+      "Release from ExChequer [node]",
+      "MERCE-L-RIV2"
+    ],
+    [
+      "MERCE-L-RIV2",
+      "Below Ex Chequer Dam [node]"
+    ],
+    [
+      "Lake McClure [node]",
+      "MERCE-L-CON6 [link]"
+    ],
+    [
+      "MERCE-L-CON6 [link]",
+      "Lake McClure Flood Control [node]"
+    ],
+    [
+      "Lake McClure Flood Control [node]",
+      "MERCE-L-CON4 [link]"
+    ],
+    [
+      "MERCE-L-CON6 [link]",
       "Below Ex Chequer Dam [node]"
     ],
     [
@@ -847,6 +878,9 @@
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
+    },
+    "node/Lake McClure Flood Control/Max Flow": {
+      "type": "Lake_Mclure_Release_Policy"
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
