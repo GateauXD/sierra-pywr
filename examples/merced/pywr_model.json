@@ -106,6 +106,34 @@
       "type": "Link"
     },
     {
+      "name": "MERCE-L-CON2 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON3 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON4 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON4 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON5 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON5 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-RIV2",
+      "type": "River"
+    },
+    {
       "name": "Merced River [link]",
       "type": "River"
     },
@@ -168,6 +196,12 @@
     {
       "name": "Valley_inflow [link]",
       "type": "Link"
+    },
+    {
+      "name": "Release from ExChequer [node]",
+      "type": "Release Requirement",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
     },
     {
       "name": "Below Ex Chequer Dam [node]",
@@ -518,18 +552,18 @@
     ],
     [
       "Lake McClure [node]",
-      "BlwMcClure.1 [link]"
+      "MERCE-L-CON2 [link]"
     ],
     [
-      "BlwMcClure.1 [link]",
+      "MERCE-L-CON2 [link]",
       "New Exchequer PH [node]"
     ],
     [
       "New Exchequer PH [node]",
-      "BlwMcClure.2.1.1 [link]"
+      "MERCE-L-CON3 [link]"
     ],
     [
-      "BlwMcClure.2.1.1 [link]",
+      "MERCE-L-CON2 [link]",
       "Below Ex Chequer Dam [node]"
     ],
     [
@@ -692,6 +726,7 @@
       "Valley_inflow [link]",
       "MERCE-N-JUN1 [node]"
     ]
+
   ],
   "parameters": {
     "node/Below Ex Chequer Dam/Violation Cost": {
