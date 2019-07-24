@@ -15,26 +15,44 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
     """
 
     # Get volume of the reservoir and convert the that to elevation
-    def __init__(self):
-        self.storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.const_values = self.get_constant_values()
         self.esrd_value = self.get_esrd()
 
+    def value(self, timestep, scenario_index):
+        curr_elevation = self.get_elevation(timestep)
+
+        if curr_elevation < 632:
+            return self.min_release(timestep)
+
+        elif curr_elevation > 632 and self.is_conservation_zone(timestep):
+            return self.conservation_release(timestep, scenario_index)
+
+        elif self.is_conservation_zone(timestep) and curr_elevation < 869.35:
+            return self.flood_control(timestep, scenario_index)
+
+        elif curr_elevation < 869.35 and curr_elevation < 884:
+            return self.surcharge(timestep, scenario_index)
+
+        raise ValueError("Elevation does not fit in the ranges")
+
     def get_esrd(self):
-        esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv")
+        esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)
         esrd_infow = esrd_table.iloc[0, 1:]
         esrd_elev = esrd_table.iloc[1:, 0]
         esrd_vals = esrd_table.iloc[1:, 1:]
-        # TODO Check if this function is working correctly
         return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
 
     def get_elevation(self, timestep):
+        storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")
         elevation_value = elevation_conversion["Elevation (m)"]
         storage_value = elevation_conversion["Storage (mcm)"]
 
         volume_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
-        curr_volume = self.storage_recorder.loc[volume_index].get_values()[0]
+        curr_volume = storage_recorder.loc[volume_index].get_values()[0]
 
         return np.interp(curr_volume, storage_value, elevation_value)
 
@@ -58,28 +76,11 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
                     raise TypeError("Invalid Operation Input")
         return False
 
-    def value(self, timestep, scenario_index):
-        curr_elevation = self.get_elevation(timestep)
-
-        if curr_elevation < 632:
-            return self.min_release(timestep)
-
-        elif curr_elevation > 632 and self.is_conservation_zone(timestep):
-            return self.conservation_release(timestep, scenario_index)
-
-        elif self.is_conservation_zone(timestep) and curr_elevation < 869.35:
-            return self.flood_control(timestep, scenario_index)
-
-        elif curr_elevation < 869.35 and curr_elevation < 884:
-            return self.surcharge(timestep, scenario_index)
-
-        raise ValueError("Elevation does not fit in the ranges")
-
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
-        yearly_types = pd.read_csv("examples/merced/s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
+        yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
                                    squeeze=True)
-        type_value = yearly_types.loc[str(timestep.year)]
+        type_value = yearly_types.loc[timestep.year]
         date = datetime(2000, timestep.month, timestep.day)
 
         # Dry Year
@@ -96,7 +97,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
             if list_zones[index] < date:
                 return zones[list_zones[index - 1]]
 
-        raise LookupError("Invalid TimeStep")
+        return zones[list_zones[-1]]
 
     def conservation_release(self, timestep, scenario_index):
         return max(self.combined_release(timestep, scenario_index), 4500)
@@ -175,6 +176,9 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
         return return_dict
 
+    @classmethod
+    def load(cls, model, data):
+        return cls(model, **data)
 
 Lake_Mclure_Release_Policy.register()
 print(" [*] Lake_Mclure_Release_Policy successfully registered")
