@@ -6,7 +6,7 @@ from spot_setup_merced import SpotSetup
 dbname = "lake_mcclure_storage"
 dbformat = "csv"
 
-rep = 1000
+rep = 4
 results = []
 spot_setup = SpotSetup()
 
@@ -16,6 +16,3 @@ sampler = spotpy.algorithms.mcmc(spot_setup, dbformat=dbformat, dbname=dbname)
 # Calibrate the model over "rep" iterations
 sampler.sample(rep)
 results.append(sampler.getdata())
-
-evaluation = spot_setup.evaluation()
-spotpy.analyser.plot_parametertrace_algorithms(results, "mcmc", spot_setup)

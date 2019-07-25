@@ -196,12 +196,12 @@
     {
       "name": "Release from ExChequer [node]",
       "type": "InstreamFlowRequirement",
-      "mrf":"node/Release from ExChequer [node]/Requirement",
+      "mrf": "node/Release from ExChequer [node]/Requirement",
       "mrf_cost": "node/Release from ExChequer [node]/Violation Cost"
     },
     {
-      "name":"MERCE-N-JUN3 [node]",
-      "type": "Node"
+      "name": "MERCE-N-JUN3 [node]",
+      "type": "Link"
     },
     {
       "name": "Below Merced Falls Dam [node]",
@@ -758,7 +758,6 @@
       "Valley_inflow [link]",
       "MERCE-N-JUN1 [node]"
     ]
-
   ],
   "parameters": {
     "node/Lake McClure Flood Control [node]/Violation Cost": {
@@ -785,12 +784,12 @@
         0.0
       ]
     },
-    "node/Lake McClure Flood Control [node]/Observed Flow": {
+    "node/Below Merced Falls Dam/Observed Flow": {
       "type": "node_Below_Merced_Falls_Dam_Observed_Flow"
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -1129.61
+      "value": -1020.5922774896839
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -812,7 +811,7 @@
     },
     "node/Lake McClure/Storage Value": {
       "type": "constant",
-      "value": -10
+      "value": -18.46698100901351
     },
     "node/Lake McSwain/Storage Capacity": {
       "type": "constant",
@@ -840,7 +839,7 @@
     },
     "node/McSwain PH/Base Value": {
       "type": "constant",
-      "value": -145.77
+      "value": -96.61492814023035
     },
     "node/Merced Falls PH/Fixed Head": {
       "type": "constant",
@@ -856,7 +855,7 @@
     },
     "node/Merced Falls PH/Base Value": {
       "type": "constant",
-      "value": -110.394
+      "value": 31.890684535912555
     },
     "node/Merced Falls PH/Unconstrained Cost": {
       "type": "constant",
@@ -875,7 +874,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -1124.27
+      "value": -951.1887085076254
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -885,7 +884,7 @@
     },
     "node/Release from ExChequer [node]/Violation Cost": {
       "type": "constant",
-      "value": -1000
+      "value": -918.0977077796251
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
@@ -913,7 +912,7 @@
     },
     "node/MID Main/Cost": {
       "type": "constant",
-      "value": -74.5648
+      "value": -953.2359490559053
     },
     "node/MID Northside/Demand": {
       "type": "node_MID_Northside_Demand"
@@ -945,7 +944,7 @@
     },
     "node/New Exchequer PH/Base Value": {
       "type": "constant",
-      "value": -142.169
+      "value": -78.43960464581897
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
@@ -953,7 +952,7 @@
     },
     "node/New Exchequer PH/Unconstrained Cost": {
       "type": "constant",
-      "value": 10
+      "value": 18.56650330112451
     },
     "node/USGS_11264500 MERCED R A HAPPY ISLES/Observed Flow": {
       "type": "node_USGS_11264500_MERCED_R_A_HAPPY_ISLES_Observed_Flow"
@@ -964,6 +963,14 @@
     }
   },
   "recorders": {
+    "node/Below Merced Falls Dam/observed flow": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Below Merced Falls Dam/Observed Flow"
+    },
+    "node/Below Merced Falls Dam/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Below Merced Falls Dam [node]"
+    },
     "node/blwNewExchequerPH/flow": {
       "type": "NumpyArrayNodeRecorder",
       "node": "blwNewExchequerPH [node]"

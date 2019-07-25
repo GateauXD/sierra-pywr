@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from pywr.recorders import Recorder
 from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
@@ -53,10 +53,16 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
 
     def get_elevation(self, timestep):
+        timestep = datetime(timestep.year, timestep.month, timestep.day)
+
+        if timestep == datetime(1980, 10, 1):
+            return 60
+
         storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         elevation_value = self.elevation_conversion["Elevation (m)"]
         storage_value = self.elevation_conversion["Storage (mcm)"]
 
+        timestep = timestep - timedelta(1)
         volume_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
         curr_volume = storage_recorder.loc[volume_index].get_values()[0]
 
