@@ -195,13 +195,13 @@
     },
     {
       "name": "Release from ExChequer [node]",
-      "type": "Link"
+      "type": "InstreamFlowRequirement",
+      "mrf":"node/Release from ExChequer [node]/Requirement",
+      "mrf_cost": "node/Release from ExChequer [node]/Violation Cost"
     },
     {
-      "name": "Below Ex Chequer Dam [node]",
-      "type": "RiverGauge",
-      "mrf_cost": "node/Below Ex Chequer Dam/Violation Cost",
-      "mrf": "node/Below Ex Chequer Dam/Requirement"
+      "name":"MERCE-N-JUN3 [node]",
+      "type": "Node"
     },
     {
       "name": "Below Merced Falls Dam [node]",
@@ -223,8 +223,9 @@
     },
     {
       "name": "Lake McClure Flood Control [node]",
-      "type": "Link",
-      "max_flow": "node/Lake McClure Flood Control/Max Flow"
+      "type": "InstreamFlowRequirement",
+      "mrf": "node/Lake McClure Flood Control [node]/Requirement",
+      "mrf_cost": "node/Lake McClure Flood Control [node]/Violation Cost"
     },
     {
       "name": "Lake McClure [node]",
@@ -559,19 +560,19 @@
     ],
     [
       "Release from ExChequer [node]",
-      "MERCE-L-CON5 [link]"
+      "MERCE-L-CON3 [link]"
     ],
     [
-      "MERCE-L-CON5 [link]",
+      "MERCE-L-CON3 [link]",
       "New Exchequer PH [node]"
     ],
     [
       "New Exchequer PH [node]",
-      "MERCE-L-CON3 [link]"
+      "MERCE-L-CON6 [link]"
     ],
     [
-      "MERCE-L-CON5 [link]",
-      "Below Ex Chequer Dam [node]"
+      "MERCE-L-CON6 [link]",
+      "MERCE-N-JUN3 [node]"
     ],
     [
       "Release from ExChequer [node]",
@@ -579,14 +580,14 @@
     ],
     [
       "MERCE-L-RIV2",
-      "Below Ex Chequer Dam [node]"
+      "MERCE-N-JUN3 [node]"
     ],
     [
       "Lake McClure [node]",
-      "MERCE-L-CON6 [link]"
+      "MERCE-L-CON5 [link]"
     ],
     [
-      "MERCE-L-CON6 [link]",
+      "MERCE-L-CON5 [link]",
       "Lake McClure Flood Control [node]"
     ],
     [
@@ -594,11 +595,11 @@
       "MERCE-L-CON4 [link]"
     ],
     [
-      "MERCE-L-CON6 [link]",
-      "Below Ex Chequer Dam [node]"
+      "MERCE-L-CON4 [link]",
+      "MERCE-N-JUN3 [node]"
     ],
     [
-      "Below Ex Chequer Dam [node]",
+      "MERCE-N-JUN3 [node]",
       "BlwMcClure.2.1.2 [link]"
     ],
     [
@@ -760,7 +761,7 @@
 
   ],
   "parameters": {
-    "node/Below Ex Chequer Dam/Violation Cost": {
+    "node/Lake McClure Flood Control [node]/Violation Cost": {
       "type": "controlcurveinterpolated",
       "storage_node": "Lake McClure [node]",
       "control_curves": [
@@ -772,19 +773,19 @@
         0.0
       ]
     },
-    "node/Below Ex Chequer Dam/Requirement": {
+    "node/Lake McClure Flood Control [node]/Requirement": {
       "type": "controlcurveinterpolated",
       "storage_node": "Lake McClure [node]",
       "control_curves": [
         "node/Lake McClure/Storage Demand"
       ],
       "values": [
-        2.5,
+        10000,
         0.0,
         0.0
       ]
     },
-    "node/Below Merced Falls Dam/Observed Flow": {
+    "node/Lake McClure Flood Control [node]/Observed Flow": {
       "type": "node_Below_Merced_Falls_Dam_Observed_Flow"
     },
     "node/blwNewExchequerPH/Violation Cost": {
@@ -879,8 +880,12 @@
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
     },
-    "node/Lake McClure Flood Control/Max Flow": {
+    "node/Release from ExChequer [node]/Requirement": {
       "type": "Lake_Mclure_Release_Policy"
+    },
+    "node/Release from ExChequer [node]/Violation Cost": {
+      "type": "constant",
+      "value": -1000
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
@@ -944,7 +949,7 @@
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
-      "value": 0
+      "value": 42.92
     },
     "node/New Exchequer PH/Unconstrained Cost": {
       "type": "constant",
@@ -956,57 +961,9 @@
     "node/Valley_Demand/Demand": {
       "type": "constant",
       "value": 0
-    },
-    "Temperature": {
-      "type": "constant",
-      "value": 4.0
-    },
-    "cfs2cms": {
-      "type": "constant",
-      "value": 0.028317
-    },
-    "AF2cm": {
-      "type": "constant",
-      "value": 1233.5
-    },
-    "ToFlow": {
-      "type": "constant",
-      "value": 604800.0
-    },
-    "Af2cms": {
-      "type": "constant",
-      "value": 0.0020395171957671957
-    },
-    "IsSolar": {
-      "type": "constant",
-      "value": 1.0
-    },
-    "PrecipFactor": {
-      "type": "constant",
-      "value": 1.0
     }
   },
   "recorders": {
-    "node/Below Ex Chequer Dam/flow": {
-      "type": "NumpyArrayNodeRecorder",
-      "node": "Below Ex Chequer Dam [node]"
-    },
-    "node/Below Ex Chequer Dam/violation cost": {
-      "type": "NumpyArrayParameterRecorder",
-      "parameter": "node/Below Ex Chequer Dam/Violation Cost"
-    },
-    "node/Below Ex Chequer Dam/requirement": {
-      "type": "NumpyArrayParameterRecorder",
-      "parameter": "node/Below Ex Chequer Dam/Requirement"
-    },
-    "node/Below Merced Falls Dam/observed flow": {
-      "type": "NumpyArrayParameterRecorder",
-      "parameter": "node/Below Merced Falls Dam/Observed Flow"
-    },
-    "node/Below Merced Falls Dam/flow": {
-      "type": "NumpyArrayNodeRecorder",
-      "node": "Below Merced Falls Dam [node]"
-    },
     "node/blwNewExchequerPH/flow": {
       "type": "NumpyArrayNodeRecorder",
       "node": "blwNewExchequerPH [node]"
@@ -1178,6 +1135,10 @@
     "node/Valley_Demand/flow": {
       "type": "NumpyArrayNodeRecorder",
       "node": "Valley_Demand [node]"
+    },
+    "Release Requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Release from ExChequer [node]/Requirement"
     }
   }
 }

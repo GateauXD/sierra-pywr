@@ -7,3 +7,4 @@ node/Merced Falls PH/Base Value, -100, 100, 20
 node/New Exchequer PH/Base Value, -100, 100, 20
 node/MID Main/Cost, -1000, -800, 20
 node/New Exchequer PH/Unconstrained Cost, -100, 100, 20
+node/Release from ExChequer [node]/Violation Cost, -1100, -900, 20

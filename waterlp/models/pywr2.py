@@ -33,22 +33,25 @@ oa_attr_to_pywr = {
 }
 
 oa_type_to_pywr = {
-    'Reservoir': 'Storage',
-    'Groundwater': 'Storage',
-    'Outflow Node': 'Output',
-    'Urban Demand': 'Output',
-    'General Demand': 'Output',
-    'Agricultural Demand': 'Output',
-    'Inflow Node': 'Catchment',
-    'Misc Source': 'Catchment',
-    'Catchment': 'Catchment',
-    'Diversion Reservoir': 'Link',
-    'Hydropower': 'Hydropower',
-    'Flow Requirement': 'InstreamFlowRequirement',
-    'River': 'River',
-    'Conveyance': 'Link',
-    'Streamflow Gauge': 'RiverGauge',
-    'Junction': 'Link',
+   'Reservoir': 'Storage',
+   'Groundwater': 'Storage',
+   'Outflow Node': 'Output',
+   'Urban Demand': 'Output',
+   'General Demand': 'Output',
+   'Agricultural Demand': 'Output',
+   'Inflow Node': 'Catchment',
+   'Misc Source': 'Catchment',
+   'Catchment': 'Catchment',
+   'Diversion Reservoir': 'Link',
+   'Hydropower': 'Hydropower',
+   'Hydropower (Piecewise)': 'PiecewiseLink',
+   'Instream Flow Requirement': 'InstreamFlowRequirement',
+   'Flood Control': 'InstreamFlowRequirement',
+   'River': 'River',
+   'Conveyance': 'Link',
+   'Streamflow Gauge': 'RiverGauge',
+   'Junction': 'Link',
+   'Release Requirement': 'InstreamFlowRequirement'
 }
 
 pywr_storage_types = ['Storage']
