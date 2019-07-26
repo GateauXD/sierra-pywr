@@ -14,34 +14,34 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
     and the flood control.
     """
 
-    # Get volume of the reservoir and convert the that to elevation
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)
-        self.elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")
+        self.args = args
+        self.kwargs = kwargs
+        self.esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)  # Units - meters and mcm
+        self.elevation_conversion = pd.read_csv("policies/MERR_elev_vol_curve_unitsSI.csv")  # Units - meters and mcm
         self.yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
                             squeeze=True)
         self.mid_northside = pd.read_csv("policies/MID_Northside_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
-                                  squeeze=True)
+                                  squeeze=True)  # Units - cfs
         self.mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
-                                  squeeze=True)
-        self.const_values = self.get_constant_values()
+                                  squeeze=True)  # Units - cfs
         self.esrd_value = self.get_esrd()
 
     def value(self, timestep, scenario_index):
         curr_elevation = self.get_elevation(timestep)
 
-        if curr_elevation < 632:
+        if curr_elevation < 192.6336:  # 632 ft
             return self.min_release(timestep)
 
-        elif curr_elevation > 632 and self.is_conservation_zone(timestep):
+        elif curr_elevation > 192.6336 and self.is_conservation_zone(timestep, "<"):  # Between 632 ft and conservation zone
             return self.conservation_release(timestep, scenario_index)
 
-        elif self.is_conservation_zone(timestep) and curr_elevation < 869.35:
+        elif self.is_conservation_zone(timestep, ">") and curr_elevation < 264.9779:  # Between conservation zone and 869.35 ft
             return self.flood_control(timestep, scenario_index)
 
-        elif curr_elevation < 869.35 and curr_elevation < 884:
+        elif curr_elevation < 264.9779 and curr_elevation < 269.4432:  # Between 869.35 ft and 884 ft
             return self.surcharge(timestep, scenario_index)
 
         raise ValueError("Elevation does not fit in the ranges")
@@ -50,17 +50,18 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         esrd_infow = self.esrd_table.iloc[0, 1:]
         esrd_elev = self.esrd_table.iloc[1:, 0]
         esrd_vals = self.esrd_table.iloc[1:, 1:]
-        return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1)
+        return interpolate.RectBivariateSpline(esrd_elev, esrd_infow, esrd_vals, kx=1, ky=1).fp
 
     def get_elevation(self, timestep):
         timestep = datetime(timestep.year, timestep.month, timestep.day)
 
-        if timestep == datetime(1980, 10, 1):
-            return 60
-
         storage_recorder = self.model.recorders["node/Lake McClure/storage"].to_dataframe()
         elevation_value = self.elevation_conversion["Elevation (m)"]
         storage_value = self.elevation_conversion["Storage (mcm)"]
+
+        if timestep == datetime(1980, 10, 1):
+            initial_volume = self.model.nodes["Lake McClure [node]"].initial_volume
+            return np.interp(initial_volume, storage_value, elevation_value)
 
         timestep = timestep - timedelta(1)
         volume_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
@@ -69,15 +70,16 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         return np.interp(curr_volume, storage_value, elevation_value)
 
     def is_conservation_zone(self, timestep, operation):
-        zones = {datetime(2000, 1, 1): 811.39, datetime(2000, 3, 15): 811.39, datetime(2000, 6, 15): 869.35, datetime(2000, 6, 30): 869.35, datetime(2000, 7, 31): 862.5, datetime(2000, 8, 31): 850.5,
-                 datetime(2000, 9, 30): 830.0, datetime(2000, 10, 31): 811.39}
+        zones = {datetime(2000, 1, 1): 247.311672, datetime(2000, 3, 15): 247.311672, datetime(2000, 6, 15): 264.97788,
+                 datetime(2000, 6, 30): 264.97788, datetime(2000, 7, 31): 262.89, datetime(2000, 8, 31): 259.2324,
+                 datetime(2000, 9, 30): 252.984, datetime(2000, 10, 31): 247.311672}  # Units - meters
         date = datetime(2000, timestep.month, timestep.day)
 
-        for index in range(1, len(zones.keys())):
+        for index in range(0, len(zones.keys())):
             list_zones = list(zones.keys())
             # Floor function for the entries in the dict. Looks for the first value that is greater than our given date
             # Which means the dict value we are looking for is the one before.
-            if list_zones[index] < date:
+            if date <= list_zones[index]:
                 curr_elevation = self.get_elevation(timestep)
                 zone_value = zones[list_zones[index-1]]
                 if operation == "<":
@@ -90,97 +92,60 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
+        cfs_to_cms = 0.028316847
         type_value = self.yearly_types.loc[timestep.year]
         date = datetime(2000, timestep.month, timestep.day)
 
         # Dry Year
         if type_value == 1:
             zones = {datetime(2000, 1, 1): 60.0, datetime(2000, 4, 1): 60.0, datetime(2000, 6, 1): 15.0,
-                     datetime(2000, 10, 16): 60.0, datetime(2000, 11, 1): 75.0}
+                     datetime(2000, 10, 16): 60.0, datetime(2000, 11, 1): 75.0}  # Units - cfs
         # Normal Year
         else:
             zones = {datetime(2000, 1, 1): 75.0, datetime(2000, 4, 1): 75.0, datetime(2000, 6, 1): 25.0,
-                     datetime(2000, 10, 16): 75.0, datetime(2000, 11, 1): 100.0}
+                     datetime(2000, 10, 16): 75.0, datetime(2000, 11, 1): 100.0}  # Units - cfs
 
-        for index in range(1, len(zones.keys())):
+        for index in range(0, len(zones.keys())):
             list_zones = list(zones.keys())
-            if list_zones[index] < date:
-                return zones[list_zones[index - 1]]
+            if date <= list_zones[index]:
+                return zones[list_zones[index - 1]] * cfs_to_cms
 
-        return zones[list_zones[-1]]
+        return zones[list_zones[-1]] * cfs_to_cms
 
     def conservation_release(self, timestep, scenario_index):
-        return max(self.combined_release(timestep, scenario_index), 4500)
+        return max(self.combined_release(timestep, scenario_index), 127.4258115)  # Max of combined release or 4500 cfs
 
     def flood_control(self, timestep, scenario_index):
-        return max(self.combined_release(timestep, scenario_index), self.get_esrd(), 6000)
+        return max(self.combined_release(timestep, scenario_index), self.get_esrd(), 169.901082)  # Max of combined release, ESRD release or 6500 cfs
 
     def surcharge(self, timestep, scenario_index):
-        return max(self.combined_release(timestep, scenario_index) ,self.get_esrd())
+        return max(self.combined_release(timestep, scenario_index), self.get_esrd())  # Max of combined release and ESRD release
 
     def combined_release(self, timestep, scenario_index):
         # Const to convert CFS to CMS
         cfs_to_cms = 0.028316847
 
         # Loading Data from IFRS and CSV files
-        csv_index = str(timestep.year) + "-" + str(timestep.month) + "-" + str(timestep.day)
-        below_crocker_class = Requirement_Merced_R_below_Crocker_Huffman_Dam()
-
+        csv_index = str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)
         # Obtain the CFS values
-        ifrs_value = below_crocker_class.value(timestep, scenario_index)
-        northside_value = self.mid_northside.loc[csv_index]
-        main_value = self.mid_main.loc[csv_index]
+        # ifrs_value = Requirement_Merced_R_below_Crocker_Huffman_Dam.value(timestep, scenario_index)
+        ifrs_value = self.model.recorders["node/Merced R below Crocker-Huffman Dam/requirement"].to_dataframe()
+        ifrs_date = datetime(timestep.year, timestep.month, timestep.day)
+
+        if ifrs_date == datetime(1980, 10, 1):
+            ifrs_value = 0.061344  # Units - cms
+        else:
+            ifrs_date = ifrs_date - timedelta(1)
+            ifrs_value = ifrs_value.loc[ifrs_date].get_values()[0]  # Units - cms
+
+        northside_value = self.mid_northside.loc[csv_index]  # Units - cfs
+        main_value = self.mid_main.loc[csv_index]  # Units - cfs
 
         # Convert the northside and main values from CFS to CMS
         northside_value = northside_value * cfs_to_cms
         main_value = main_value * cfs_to_cms
 
         return ifrs_value + northside_value + main_value
-
-    def get_constant_values(self):
-        # Modified Function from initializationDataUsed_HECRes.py
-        # :return: Dict with constant values
-        return_dict = {}
-
-        # pre-accumulated Mar-Oct min release volumes (acre-feet) by Year Type
-        marOctMinReleaseVolume = {1: 22711, 2: 16810}
-        return_dict["marOctMinReleaseVolume"] = marOctMinReleaseVolume
-
-        # Minimum downstream flow (cfs) from FERC License
-        FERCminFlowTable = {
-            1: {1: 75, 2: 75, 3: 75, 4: 75, 5: 75, 6: 25, 7: 25, 8: 25, 9: 25, 10: 25, 11: 100, 12: 100},
-            2: {1: 60, 2: 60, 3: 60, 4: 60, 5: 60, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 75, 12: 75},
-        }
-        return_dict["FERCminFlowTable"] = FERCminFlowTable
-
-        # cumulative from Mar 1, Apr 1, May 1, and Jun 1 through Jun 30 (acre-feet)
-        cumulativeMinReleaseTable = {
-            1: {3: 15174, 4: 10562, 5: 6099, 6: 1488},
-            2: {3: 11841, 4: 8152, 5: 4582, 6: 892},
-        }
-        return_dict["cumulativeMinReleaseTable"] = cumulativeMinReleaseTable
-
-        # Fall Fishery Release in cfs applied evenly from Oct 15 to Oct 31
-        return_dict["fallFisheryRelease"] = 371
-
-        # snowmelt scaler by month
-        SnowScaler = {3: 0.5, 4: 1.0, 5: 1.0, 6: 1.0}
-        return_dict["SnowScaler"] = SnowScaler
-
-        # constants
-        return_dict["cfsToAcFt"] = 3600.0 / 43560.0
-        return_dict["daysToJun30"] = {3: 122, 4: 91, 5: 61, 6: 30}
-        return_dict["daysInMonth"] = {3: 31, 4: 30, 5: 31, 6: 30}
-        return_dict["fallFisheryReleaseVolume"] = 12500.0
-        return_dict["minPool"] = 115000.0
-        return_dict["storageBuffer"] = 20000.0
-        return_dict["snowstorageBuffer"] = 20000.0
-        return_dict["evaporation"] = 20000.0
-
-        # set demand multiplier on first timestep of the run
-        return_dict["defaultMultiplier"] = 1.0
-
-        return return_dict
 
     @classmethod
     def load(cls, model, data):

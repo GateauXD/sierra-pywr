@@ -789,7 +789,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -1020.5922774896839
+      "value": -1042.36
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -811,7 +811,7 @@
     },
     "node/Lake McClure/Storage Value": {
       "type": "constant",
-      "value": -18.46698100901351
+      "value": -11.8397
     },
     "node/Lake McSwain/Storage Capacity": {
       "type": "constant",
@@ -839,7 +839,7 @@
     },
     "node/McSwain PH/Base Value": {
       "type": "constant",
-      "value": -96.61492814023035
+      "value": -3.30662
     },
     "node/Merced Falls PH/Fixed Head": {
       "type": "constant",
@@ -855,7 +855,7 @@
     },
     "node/Merced Falls PH/Base Value": {
       "type": "constant",
-      "value": 31.890684535912555
+      "value": 66.859
     },
     "node/Merced Falls PH/Unconstrained Cost": {
       "type": "constant",
@@ -874,7 +874,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -951.1887085076254
+      "value": -985.647
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -884,7 +884,7 @@
     },
     "node/Release from ExChequer [node]/Violation Cost": {
       "type": "constant",
-      "value": -918.0977077796251
+      "value": -1001.08
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
@@ -912,7 +912,7 @@
     },
     "node/MID Main/Cost": {
       "type": "constant",
-      "value": -953.2359490559053
+      "value": -990.205
     },
     "node/MID Northside/Demand": {
       "type": "node_MID_Northside_Demand"
@@ -944,7 +944,7 @@
     },
     "node/New Exchequer PH/Base Value": {
       "type": "constant",
-      "value": -78.43960464581897
+      "value": 35.5198
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
@@ -952,7 +952,7 @@
     },
     "node/New Exchequer PH/Unconstrained Cost": {
       "type": "constant",
-      "value": 18.56650330112451
+      "value": -60.1093
     },
     "node/USGS_11264500 MERCED R A HAPPY ISLES/Observed Flow": {
       "type": "node_USGS_11264500_MERCED_R_A_HAPPY_ISLES_Observed_Flow"
