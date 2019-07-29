@@ -246,7 +246,8 @@
       "type": "Storage",
       "initial_volume": 10.4,
       "max_volume": "node/Lake McSwain/Storage Capacity",
-      "min_volume": "node/Lake McSwain/Inactive Pool"
+      "min_volume": "node/Lake McSwain/Inactive Pool",
+      "cost": -20
     },
     {
       "name": "Maxwell Ck Headflow [node]",
@@ -282,7 +283,8 @@
       "type": "Storage",
       "initial_volume": 0.37,
       "max_volume": "node/Merced Falls Res/Storage Capacity",
-      "min_volume": "node/Merced Falls Res/Inactive Pool"
+      "min_volume": "node/Merced Falls Res/Inactive Pool",
+      "cost": -20
     },
     {
       "name": "MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500 [node]",
@@ -789,7 +791,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -1042.36
+      "value": -978.778
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -811,7 +813,7 @@
     },
     "node/Lake McClure/Storage Value": {
       "type": "constant",
-      "value": -11.8397
+      "value": -10
     },
     "node/Lake McSwain/Storage Capacity": {
       "type": "constant",
@@ -839,7 +841,7 @@
     },
     "node/McSwain PH/Base Value": {
       "type": "constant",
-      "value": -3.30662
+      "value": 10
     },
     "node/Merced Falls PH/Fixed Head": {
       "type": "constant",
@@ -855,7 +857,7 @@
     },
     "node/Merced Falls PH/Base Value": {
       "type": "constant",
-      "value": 66.859
+      "value": 10
     },
     "node/Merced Falls PH/Unconstrained Cost": {
       "type": "constant",
@@ -874,7 +876,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -985.647
+      "value": -500
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -884,7 +886,7 @@
     },
     "node/Release from ExChequer [node]/Violation Cost": {
       "type": "constant",
-      "value": -1001.08
+      "value": -1027.34
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
@@ -912,7 +914,7 @@
     },
     "node/MID Main/Cost": {
       "type": "constant",
-      "value": -990.205
+      "value": -50
     },
     "node/MID Northside/Demand": {
       "type": "node_MID_Northside_Demand"
@@ -922,7 +924,7 @@
     },
     "node/MID Northside/Cost": {
       "type": "constant",
-      "value": -900
+      "value": -50
     },
     "node/Near Shaffer Bridge_11271290/Observed Flow": {
       "type": "node_Near_Shaffer_Bridge_11271290_Observed_Flow"
@@ -944,7 +946,7 @@
     },
     "node/New Exchequer PH/Base Value": {
       "type": "constant",
-      "value": 35.5198
+      "value": 50
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
@@ -952,7 +954,7 @@
     },
     "node/New Exchequer PH/Unconstrained Cost": {
       "type": "constant",
-      "value": -60.1093
+      "value": -50
     },
     "node/USGS_11264500 MERCED R A HAPPY ISLES/Observed Flow": {
       "type": "node_USGS_11264500_MERCED_R_A_HAPPY_ISLES_Observed_Flow"

@@ -5,7 +5,7 @@ from pywr.recorders import Recorder
 from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
 from parameters import WaterLPParameter
-from .IFRs import Requirement_Merced_R_below_Crocker_Huffman_Dam
+from utilities.converter import convert
 
 
 class Lake_Mclure_Release_Policy(WaterLPParameter):
@@ -31,20 +31,21 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     def value(self, timestep, scenario_index):
         curr_elevation = self.get_elevation(timestep)
+        return_value = 0
 
         if curr_elevation < 192.6336:  # 632 ft
-            return self.min_release(timestep)
+            return_value = self.min_release(timestep)
 
         elif curr_elevation > 192.6336 and self.is_conservation_zone(timestep, "<"):  # Between 632 ft and conservation zone
-            return self.conservation_release(timestep, scenario_index)
+            return_value = self.conservation_release(timestep, scenario_index)
 
         elif self.is_conservation_zone(timestep, ">") and curr_elevation < 264.9779:  # Between conservation zone and 869.35 ft
-            return self.flood_control(timestep, scenario_index)
+            return_value = self.flood_control(timestep, scenario_index)
 
         elif curr_elevation < 264.9779 and curr_elevation < 269.4432:  # Between 869.35 ft and 884 ft
-            return self.surcharge(timestep, scenario_index)
+            return_value = self.surcharge(timestep, scenario_index)
 
-        raise ValueError("Elevation does not fit in the ranges")
+        return convert(return_value, "m^3 s^-1", "m^3 day^-1", scale_in=1, scale_out=1000000.0)
 
     def get_esrd(self):
         esrd_infow = self.esrd_table.iloc[0, 1:]
