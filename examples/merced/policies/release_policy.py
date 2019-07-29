@@ -114,10 +114,10 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         return zones[list_zones[-1]] * cfs_to_cms
 
     def conservation_release(self, timestep, scenario_index):
-        return max(self.combined_release(timestep, scenario_index), 127.4258115)  # Max of combined release or 4500 cfs
+        return min(self.combined_release(timestep, scenario_index), 127.4258115) # Max of combined release or 4500 cfs
 
     def flood_control(self, timestep, scenario_index):
-        return max(self.combined_release(timestep, scenario_index), self.get_esrd(), 169.901082)  # Max of combined release, ESRD release or 6500 cfs
+        return min(max(self.combined_release(timestep, scenario_index), self.get_esrd()), 169.901082)  # Max of combined release, ESRD release or 6500 cfs
 
     def surcharge(self, timestep, scenario_index):
         return max(self.combined_release(timestep, scenario_index), self.get_esrd())  # Max of combined release and ESRD release
