@@ -791,7 +791,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -970.869
+      "value": -1065.8082676438758
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -812,8 +812,7 @@
       "type": "node_Lake_McClure_Storage_Demand"
     },
     "node/Lake McClure/Storage Value": {
-      "type": "constant",
-      "value": -68.4096
+      "type": "node_Lake_McClure_Storage_Value"
     },
     "node/Lake McSwain/Storage Capacity": {
       "type": "constant",
@@ -876,7 +875,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -1074.91
+      "value": -987.5425721361495
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -886,7 +885,7 @@
     },
     "node/Release from ExChequer [node]/Violation Cost": {
       "type": "constant",
-      "value": -1412.34
+      "value": -1313.5064030538294
     },
     "node/MER_01 Headflow/Runoff": {
       "type": "node_MER_01_Headflow_Runoff"
@@ -962,6 +961,10 @@
     "node/Valley_Demand/Demand": {
       "type": "constant",
       "value": 0
+    },
+    "storageValueConstant": {
+      "type": "constant",
+      "value": 8.813102883580422
     }
   },
   "recorders": {
