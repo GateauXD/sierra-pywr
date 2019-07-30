@@ -11,7 +11,7 @@ def generate_csv():
     wyt_series = []
 
     for index, row in results_csv.iterrows():
-        wyt_series.append(wyt_values[int(row['Recorder'].split("-")[0])] * 400)
+        wyt_series.append(wyt_values[int(row['Recorder'].split("-")[0])])
 
     results_csv["WTS_Value"] = wyt_series
 
@@ -21,13 +21,17 @@ def generate_csv():
 def main():
     graph_data = generate_csv()
 
-    rcParams['figure.figsize'] = 24, 12
-    fig = plt.figure()
-    ax = plt.gca()
+    # Set dimensions for resulting image in pixes (width x height)
+    rcParams['figure.figsize'] = 30, 15
 
-    fig.add_subplot(graph_data.plot(kind='line', x='Recorder', y='node/Lake McClure/observed storage', ax=ax))
-    fig.add_subplot(graph_data.plot(kind='line', x='Recorder', y='node/Lake McClure/storage', ax=ax))
-    fig.add_subplot(graph_data.plot(kind='line', x='Recorder', y='WTS_Value', ax=ax))
+    # Graph the storage results
+    fig, ax1 = plt.subplots()
+    ax1.plot(graph_data["node/Lake McClure/observed storage"], label="Observed Storage")
+    ax1.plot(graph_data["node/Lake McClure/storage"], label="Storage")
+    ax1.legend()
+    # Setup secondary axis
+    ax2 = ax1.twinx()
+    ax2.plot(graph_data["WTS_Value"], 'g', label="WTS")
     plt.show()
     fig.savefig("result_graph.png", dpi=100)
 
