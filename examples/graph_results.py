@@ -7,7 +7,7 @@ def generate_csv():
                 1996:1,1997:1,1998:1,1999:1,2000:1,2001:2,2002:2,2003:1,2004:2,2005:1,2006:1,2007:2,2008:2,
                 2009:1,2010:1,2011:1,2012:2,2013:2,}
     results_csv = pd.read_csv("merced/results.csv", skiprows=[1])
-    results_csv = results_csv[['Recorder', 'node/Lake McClure/observed storage', 'node/Lake McClure/storage']].copy()
+    results_csv = results_csv[['Recorder', 'node/Lake McClure/observed storage', 'node/Lake McClure/storage', "Lake McClure Flood Control [node]"]].copy()
     wyt_series = []
 
     for index, row in results_csv.iterrows():
@@ -31,7 +31,7 @@ def main():
     ax1.legend()
     # Setup secondary axis
     ax2 = ax1.twinx()
-    ax2.plot(graph_data["WTS_Value"], 'g', label="WTS")
+    ax2.plot(graph_data["Lake McClure Flood Control [node]"], 'g', label="WTS")
     plt.show()
     fig.savefig("result_graph.png", dpi=100)
 

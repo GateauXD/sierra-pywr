@@ -793,7 +793,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -1065.8082676438758
+      "value": -1024.1258033989423
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -877,7 +877,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -987.5425721361495
+      "value": -1088.1453710568567
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -962,7 +962,7 @@
     },
     "storageValueConstant": {
       "type": "constant",
-      "value": 8.813102883580422
+      "value": 9.945189263716449
     }
   },
   "recorders": {
@@ -1149,6 +1149,10 @@
     "Release Requirement": {
       "type": "NumpyArrayParameterRecorder",
       "parameter": "node/Release from ExChequer [node]/Requirement"
+    },
+    "Lake McClure Flood Control [node]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Lake McClure Flood Control [node]"
     }
   }
 }
