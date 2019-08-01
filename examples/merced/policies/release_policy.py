@@ -54,7 +54,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
         curr_inflow = 0
         for parameter in self.inflows:
-            curr_inflow += self.model.parameters[parameter].value(timestep, scenario_index)
+            curr_inflow += self.model.parameters[parameter].value(timestep, scenario_index) * 11.5740740741
         return self.esrd_spline(self.model.parameters["node/Lake McClure/Elevation"].value(timestep, scenario_index), curr_inflow)
 
     def is_conservation_zone(self, timestep, scenario_index, operation):
