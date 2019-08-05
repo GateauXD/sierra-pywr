@@ -6,29 +6,7 @@ class node_Lake_McClure_Storage_Demand(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
-        
-        # read the San Joaquin Index
-        if timestep.index == 0:
-            self.curves = self.read_csv("policies/LakeMcLure_FloodControl_Requirements.csv",
-                                        names=['date', 'dry', 'normal', 'wet'],
-                                        index_col=0, parse_dates=False, header=0)
-            # self.curves *= 1233.5 / 1e6 / 1294 # convert to million cubic meters
-            self.curves /= 1.049e6 # normalize by AF
-            self.SJVI = self.read_csv("Scenarios/Livneh/WYT/SJVI.csv", parse_dates=False, squeeze=True, index_col=0, header=0)
-          
-        if (timestep.month, timestep.day) == (10, 1):
-            SJVI = self.SJVI[timestep.year + 1]
-        
-            if SJVI <= 2.5:
-                self.wyt = 'dry'
-            elif SJVI < 3.8:
-                self.wyt = 'normal'
-            else:
-                self.wyt = 'wet'
-        
-        date_str = '1900-{:02}-{:02}'.format(timestep.month, timestep.day)
-        val = self.curves[self.wyt][date_str]
-        return val
+        return self.model.parameters["node/Lake McClure/Storage Capacity"].value(timestep, scenario_index)  # Units Million M^3
         
     def value(self, timestep, scenario_index):
         return self._value(timestep, scenario_index)

@@ -29,6 +29,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
                                   squeeze=True)  # Units - cfs
         self.mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
                                   squeeze=True)  # Units - cfs
+        self.flood_control_table = pd.read_csv("policies/LakeMcLure_FloodControl_Requirements.csv", index_col=0)
 
     def value(self, timestep, scenario_index):
         return_value = 0
@@ -45,16 +46,17 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         elif self.model.parameters["node/Lake McClure/Elevation"].value(timestep, scenario_index) < 264.9779 and self.model.parameters["node/Lake McClure/Elevation"].value(timestep, scenario_index) < 269.4432:  # Between 869.35 ft and 884 ft
             return_value = self.surcharge(timestep, scenario_index)
 
+        return_value = max(return_value, self.flood_release(timestep, scenario_index))
         return convert(return_value, "m^3 s^-1", "m^3 day^-1", scale_in=1, scale_out=1000000.0)
 
     def get_esrd(self, timestep, scenario_index):
-
+        million_m3day_to_m3sec = 11.5740740741
         if self.model.parameters["node/Lake McClure/Elevation"].value(timestep, scenario_index) < 255.83388:
             return 0
 
         curr_inflow = 0
         for parameter in self.inflows:
-            curr_inflow += self.model.parameters[parameter].value(timestep, scenario_index) * 11.5740740741
+            curr_inflow += self.model.parameters[parameter].value(timestep, scenario_index) * million_m3day_to_m3sec
         return self.esrd_spline(self.model.parameters["node/Lake McClure/Elevation"].value(timestep, scenario_index), curr_inflow)
 
     def is_conservation_zone(self, timestep, scenario_index, operation):
@@ -133,6 +135,30 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         main_value = main_value * cfs_to_cms
 
         return ifrs_value + northside_value + main_value
+
+    def sjvi_year_type(self, SJVI_value):
+        # Select the year type (Dry, Normal, Wet)
+        if SJVI_value <= 2.1:
+            year_type = "Wet Year (AF)"
+        elif SJVI_value <= 3.1:
+            year_type = "Normal Year (AF)"
+        else:
+            year_type = "Dry Year (AF)"
+        return year_type
+
+    def flood_release(self, timestep, scenario_index):
+        ts = timestep.datetime
+        million_m3day_to_m3sec = 11.5740740741
+        cubicfeet_to_m3 = 0.0008107131821088
+        SJVI_values = {1980:2.31982434,1981:2.31982434,1982:6.076605263,1983:7.913318559,1984:4.326542067,1985:2.243236434,1986:4.304340802,1987:1.41700623,1988:1.070705,1989:1.677763379,1990:1.242278429,1991:1.899932115,1992:1.341326048,1993:4.473067276,1994:1.613377913,1995:6.222805432,1996:4.730869621,1997:4.524025386,1998:5.962029,1999:3.738780486,2000:3.091728053,2001:2.214258164,2002:2.190918974,2003:2.881437577,2004:1.763019823,2005:5.524518153,2006:6.883251982,2007:2.088416564,2008:1.699077058,2009:2.303027731,2010:3.122943467,2011:5.996164099,2012:2.298387991,2013:1.213921803}
+        SJVI_value = SJVI_values[ts.year+1]
+        year_type = self.sjvi_year_type(SJVI_value)
+        max_storage_value = self.flood_control_table.loc["1900-{:02d}-{:02d}".format(ts.month, ts.day), year_type] * cubicfeet_to_m3
+        curr_inflow = 0
+        for parameter in self.inflows:
+            curr_inflow += self.model.parameters[parameter].value(timestep, scenario_index) * million_m3day_to_m3sec
+
+        return (self.model.nodes["Lake McClure [node]"].volume+curr_inflow)-max_storage_value
 
     @classmethod
     def load(cls, model, data):
