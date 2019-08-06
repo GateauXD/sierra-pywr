@@ -111,7 +111,8 @@
     },
     {
       "name": "MERCE-L-CON3 [link]",
-      "type": "Link"
+      "type": "Link",
+      "max_flow": 0.708014727
     },
     {
       "name": "MERCE-L-CON4 [link]",
@@ -2060,6 +2061,10 @@
     "MERCE-L-RIV2": {
       "type": "NumpyArrayNodeRecorder",
       "node": "MERCE-L-RIV2"
+    },
+    "MERCE-L-CON4 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCE-L-CON4 [link]"
     },
     "Merced River (2).2.2.1.2.2.1 [link]": {
       "type": "NumpyArrayNodeRecorder",
