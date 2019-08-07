@@ -1,0 +1,17 @@
+// System
+digraph {
+	"USGS_11292610 [node]" -> "Below STN_16 Inflow [link]"
+	"Below STN_16 Inflow [link]" -> "Below Donnells outflow [node]"
+	"Donnells Reservoir [node]" -> "STANI-L-CON1 [link]"
+	"STANI-L-CON1 [link]" -> "Donnells PH [node]"
+	"Donnells PH [node]" -> "STANI-L-CON2 [link]"
+	"STANI-L-CON2 [link]" -> "Donnells Diversion Inflow [node]"
+	"Donnells Reservoir [node]" -> "STANI-L-RIV1 [link]"
+	"STANI-L-RIV1 [link]" -> "STANI-N-INS1 [node]"
+	"STANI-N-INS1 [node]" -> "STANI-L-RIV2 [link]"
+	"STANI-L-RIV2 [link]" -> "Donnells Diversion Inflow [node]"
+	"Donnells Diversion Inflow [node]" -> "STANI-L-RIV3 [link]"
+	"STANI-L-RIV3 [link]" -> "USGS_11292610 [node]"
+	"STN_1 Headflow [node]" -> "STANI-L-RUN1 [link]"
+	"STANI-L-RUN1 [link]" -> "Donnells Reservoir [node]"
+}

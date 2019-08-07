@@ -19,7 +19,8 @@
     },
     {
       "name": "STANI-L-CON1 [link]",
-      "type": "Link"
+      "type": "Link",
+      "max_flow": 1.712
     },
     {
       "name": "STANI-L-CON2 [link]",
@@ -159,7 +160,7 @@
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 584.753
+      "value": -256.114
     },
     "node/Donnells PH/Water Demand": {
       "type": "node_Donnells_PH_Water_Demand"
@@ -189,11 +190,11 @@
     },
     "node/STANI-N-INS1/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 182.746
     },
     "node/STANI-N-INS1/Requirement": {
       "type": "constant",
-      "value": 0.05
+      "value": 0.4
     },
     "node/STN_1 Headflow/Runoff": {
       "type": "node_STN_1_Headflow_Runoff"
@@ -260,6 +261,14 @@
       "parameter": "node/USGS_11292610/Observed Flow"
     },
     "node/USGS_11292610/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "USGS_11292610 [node]"
+    },
+    "STANI-L-CON1 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "USGS_11292610 [node]"
+    },
+    "STANI-L-RIV1 [link]": {
       "type": "NumpyArrayNodeRecorder",
       "node": "USGS_11292610 [node]"
     }
