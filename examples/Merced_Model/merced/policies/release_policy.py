@@ -25,9 +25,11 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         self.esrd_spline = interpolate.RectBivariateSpline(self.esrd_table.iloc[1:, 0], self.esrd_table.iloc[0, 1:], self.esrd_table.iloc[1:, 1:], kx=1, ky=1)
         self.yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
                             squeeze=True)
-        self.mid_northside = pd.read_csv("policies/MID_Northside_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+        self.SJVI_types = pd.read_csv("s3_imports/SJVI.csv", index_col=0, header=0, parse_dates=False,
+                                        squeeze=True)
+        self.mid_northside = pd.read_csv("policies/MID_WYT_average_diversion_Northside.csv", index_col=0, header=0, parse_dates=False,
                                   squeeze=True)  # Units - cfs
-        self.mid_main = pd.read_csv("policies/MID_Main_Diversion_cfs.csv", index_col=0, header=0, parse_dates=False,
+        self.mid_main = pd.read_csv("policies/MID_WYT_average_diversion_Main.csv", index_col=0, header=0, parse_dates=False,
                                   squeeze=True)  # Units - cfs
         self.flood_control_table = pd.read_csv("policies/LakeMcLure_FloodControl_Requirements.csv", index_col=0)
 
@@ -120,6 +122,20 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         # ifrs_value = Requirement_Merced_R_below_Crocker_Huffman_Dam.value(timestep, scenario_index)
         ifrs_value = self.model.recorders["node/Merced R below Crocker-Huffman Dam/requirement"].to_dataframe()
         ifrs_date = datetime(timestep.year, timestep.month, timestep.day)
+        type_value = self.yearly_types.loc[timestep.year]
+        ts = "{}/{}/1900".format(timestep.month, timestep.day)
+
+        if type_value <= 2.1:
+            year_type = "Critical"
+        elif type_value <= 2.8:
+            year_type = "Dry"
+        elif type_value <= 3.1:
+            year_type = "Below"
+        elif type_value <= 3.8:
+            year_type = "Above"
+        else:
+            year_type = "Wet"
+
 
         if ifrs_date == datetime(1980, 10, 1):
             ifrs_value = 0.061344  # Units - cms
@@ -127,8 +143,8 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
             ifrs_date = ifrs_date - timedelta(1)
             ifrs_value = ifrs_value.loc[ifrs_date].get_values()[0]  # Units - cms
 
-        northside_value = self.mid_northside.loc[csv_index]  # Units - cfs
-        main_value = self.mid_main.loc[csv_index]  # Units - cfs
+        northside_value = self.mid_northside.loc[ts, year_type]  # Units - cfs
+        main_value = self.mid_main.loc[ts, year_type]  # Units - cfs
 
         # Convert the northside and main values from CFS to CMS
         northside_value = northside_value * cfs_to_cms

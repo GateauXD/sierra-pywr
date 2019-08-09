@@ -1,0 +1,2030 @@
+{
+  "metadata": {
+    "title": "Merced River",
+    "description": "Imported from WEAP Area",
+    "minimum_version": "1.0.0"
+  },
+  "timestepper": {
+    "start": "2020-01-01",
+    "end": "2091-01-01",
+    "timestep": 1
+  },
+  "solver": {
+    "name": "glpk"
+  },
+  "nodes": [
+    {
+      "name": "Below Maxwell Ck Headflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below Maxwell Ck Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below Merced River Headflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_01 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_01 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_02 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_02 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_03 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_03 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_04 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_04 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_05 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_05 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below MER_06 Headflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Below MER_06 Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below South Fork Merced R Headflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "Below South Fork Merced R Inflow [link]",
+      "type": "River"
+    },
+    {
+      "name": "BlwMcClure.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "BlwMcClure.2.1.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "BlwMcClure.2.1.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "BlwMcClure.2.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Main Canal [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON1 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON2 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON3 [link]",
+      "type": "Link",
+      "max_flow": 0.708014727
+    },
+    {
+      "name": "MERCE-L-CON4 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON5 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-CON6 [link]",
+      "type": "Link"
+    },
+    {
+      "name": "MERCE-L-RIV2",
+      "type": "River"
+    },
+    {
+      "name": "Merced River [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (1).1.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (1).1.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.2.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.2.2.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.2.2.2.1.1.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.2.2.2.1.1.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.1.2.2.2.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.2.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.2.2.1 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River (2).2.2.2.2.2 [link]",
+      "type": "River"
+    },
+    {
+      "name": "Merced River below Crocker-Huffman [link]",
+      "type": "River"
+    },
+    {
+      "name": "Northside Canal [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Valley_inflow [link]",
+      "type": "Link"
+    },
+    {
+      "name": "Release from ExChequer [node]",
+      "type": "Link",
+      "min_flow": "node/Release from ExChequer [node]/Requirement",
+      "max_flow": "node/Release from ExChequer [node]/Requirement"
+    },
+    {
+      "name": "MERCE-N-JUN3 [node]",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "Below Merced Falls Dam [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "blwNewExchequerPH [node]",
+      "type": "InstreamFlowRequirement",
+      "mrf_cost": "node/blwNewExchequerPH/Violation Cost",
+      "mrf": "node/blwNewExchequerPH/Requirement"
+    },
+    {
+      "name": "Crocker-Huffman Diversion Reservoir [node]",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "Lake McClure Flood Control [node]",
+      "type": "InstreamFlowRequirement",
+      "mrf": "node/Lake McClure Flood Control [node]/Requirement",
+      "mrf_cost": "node/Lake McClure Flood Control [node]/Violation Cost"
+    },
+    {
+      "name": "Lake McClure [node]",
+      "type": "Storage",
+      "initial_volume": 841.35,
+      "max_volume": "node/Lake McClure/Storage Capacity",
+      "min_volume": "node/Lake McClure/Inactive Pool",
+      "cost": "node/Lake McClure/Storage Value"
+    },
+    {
+      "name": "Lake McClure Inflow [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "Lake McSwain [node]",
+      "type": "Storage",
+      "initial_volume": 10.4,
+      "max_volume": "node/Lake McSwain/Storage Capacity",
+      "min_volume": "node/Lake McSwain/Inactive Pool",
+      "cost": -20
+    },
+    {
+      "name": "Maxwell Ck Headflow [node]",
+      "type": "Catchment"
+    },
+    {
+      "name": "Maxwell Ck Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "McSwain PH [node]",
+      "type": "Hydropower",
+      "excess_cost": "node/McSwain PH/Excess Value"
+    },
+    {
+      "name": "MERCE-N-JUN1 [node]",
+      "type": "River"
+    },
+    {
+      "name": "MERCE-N-JUN2 [node]",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "Merced Falls PH [node]",
+      "type": "Hydropower",
+      "excess_cost": "node/Merced Falls PH/Excess Value",
+      "base_cost": "node/Merced Falls PH/Base Value"
+    },
+    {
+      "name": "Merced Falls Res [node]",
+      "type": "Storage",
+      "initial_volume": 0.37,
+      "max_volume": "node/Merced Falls Res/Storage Capacity",
+      "min_volume": "node/Merced Falls Res/Inactive Pool",
+      "cost": -20
+    },
+    {
+      "name": "MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500 [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "Merced R below Crocker-Huffman Dam [node]",
+      "type": "InstreamFlowRequirement",
+      "mrf_cost": "node/Merced R below Crocker-Huffman Dam/Violation Cost",
+      "mrf": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
+    },
+    {
+      "name": "Merced River Headflow [node]",
+      "type": "Catchment"
+    },
+    {
+      "name": "Merced River Outflow [node]",
+      "type": "Output"
+    },
+    {
+      "name": "MER_01 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_01 Headflow/Runoff"
+    },
+    {
+      "name": "MER_01 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MER_02 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_02 Headflow/Runoff"
+    },
+    {
+      "name": "MER_02 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MER_03 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_03 Headflow/Runoff"
+    },
+    {
+      "name": "MER_03 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MER_04 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_04 Headflow/Runoff"
+    },
+    {
+      "name": "MER_04 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MER_05 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_05 Headflow/Runoff"
+    },
+    {
+      "name": "MER_05 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MER_06 Headflow [node]",
+      "type": "Catchment",
+      "flow": "node/MER_06 Headflow/Runoff"
+    },
+    {
+      "name": "MER_06 Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "MID Main [node]",
+      "type": "Output",
+      "max_flow": "node/MID Main/Demand",
+      "cost": "node/MID Main/Cost"
+    },
+    {
+      "name": "MID Northside [node]",
+      "type": "Output",
+      "max_flow": "node/MID Northside/Demand",
+      "cost": "node/MID Northside/Cost"
+    },
+    {
+      "name": "Near Shaffer Bridge_11271290 [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "Near Stevinson_11272500 [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "New Exchequer PH [node]",
+      "type": "Hydropower",
+      "excess_cost": "node/New Exchequer PH/Excess Value",
+      "base_cost": "node/New Exchequer PH/Base Value",
+      "base_flow": "node/New Exchequer PH/Water Demand"
+    },
+    {
+      "name": "South Fork Merced R Headflow [node]",
+      "type": "Catchment"
+    },
+    {
+      "name": "South Fork Merced R Inflow [node]",
+      "type": "River"
+    },
+    {
+      "name": "USGS_11264500 MERCED R A HAPPY ISLES [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
+      "name": "Valley_Demand [node]",
+      "type": "Output",
+      "max_flow": "node/Valley_Demand/Demand"
+    },
+    {
+      "name": "Valley_Inflow [node]",
+      "type": "Catchment"
+    }
+  ],
+  "edges": [
+    [
+      "Maxwell Ck Headflow [node]",
+      "Below Maxwell Ck Headflow [link]"
+    ],
+    [
+      "Below Maxwell Ck Headflow [link]",
+      "MER_02 Inflow [node]"
+    ],
+    [
+      "South Fork Merced R Inflow [node]",
+      "Below Maxwell Ck Inflow [link]"
+    ],
+    [
+      "Below Maxwell Ck Inflow [link]",
+      "MER_03 Inflow [node]"
+    ],
+    [
+      "Merced River Headflow [node]",
+      "Below Merced River Headflow [link]"
+    ],
+    [
+      "Below Merced River Headflow [link]",
+      "MER_06 Inflow [node]"
+    ],
+    [
+      "MER_01 Headflow [node]",
+      "Below MER_01 Headflow [link]"
+    ],
+    [
+      "Below MER_01 Headflow [link]",
+      "MER_01 Inflow [node]"
+    ],
+    [
+      "MER_03 Inflow [node]",
+      "Below MER_01 Inflow [link]"
+    ],
+    [
+      "Below MER_01 Inflow [link]",
+      "Maxwell Ck Inflow [node]"
+    ],
+    [
+      "MER_02 Headflow [node]",
+      "Below MER_02 Headflow [link]"
+    ],
+    [
+      "Below MER_02 Headflow [link]",
+      "MER_02 Inflow [node]"
+    ],
+    [
+      "MER_02 Inflow [node]",
+      "Below MER_02 Inflow [link]"
+    ],
+    [
+      "Below MER_02 Inflow [link]",
+      "Maxwell Ck Inflow [node]"
+    ],
+    [
+      "MER_03 Headflow [node]",
+      "Below MER_03 Headflow [link]"
+    ],
+    [
+      "Below MER_03 Headflow [link]",
+      "MER_03 Inflow [node]"
+    ],
+    [
+      "MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500 [node]",
+      "Below MER_03 Inflow [link]"
+    ],
+    [
+      "Below MER_03 Inflow [link]",
+      "South Fork Merced R Inflow [node]"
+    ],
+    [
+      "MER_04 Headflow [node]",
+      "Below MER_04 Headflow [link]"
+    ],
+    [
+      "Below MER_04 Headflow [link]",
+      "MER_04 Inflow [node]"
+    ],
+    [
+      "MER_04 Inflow [node]",
+      "Below MER_04 Inflow [link]"
+    ],
+    [
+      "Below MER_04 Inflow [link]",
+      "South Fork Merced R Inflow [node]"
+    ],
+    [
+      "MER_05 Headflow [node]",
+      "Below MER_05 Headflow [link]"
+    ],
+    [
+      "Below MER_05 Headflow [link]",
+      "MER_05 Inflow [node]"
+    ],
+    [
+      "USGS_11264500 MERCED R A HAPPY ISLES [node]",
+      "Below MER_05 Inflow [link]"
+    ],
+    [
+      "Below MER_05 Inflow [link]",
+      "MER_05 Inflow [node]"
+    ],
+    [
+      "MER_06 Headflow [node]",
+      "Below MER_06 Headflow [link]"
+    ],
+    [
+      "Below MER_06 Headflow [link]",
+      "MER_06 Inflow [node]"
+    ],
+    [
+      "MER_06 Inflow [node]",
+      "Below MER_06 Inflow [link]"
+    ],
+    [
+      "Below MER_06 Inflow [link]",
+      "USGS_11264500 MERCED R A HAPPY ISLES [node]"
+    ],
+    [
+      "South Fork Merced R Headflow [node]",
+      "Below South Fork Merced R Headflow [link]"
+    ],
+    [
+      "Below South Fork Merced R Headflow [link]",
+      "MER_04 Inflow [node]"
+    ],
+    [
+      "MER_05 Inflow [node]",
+      "Below South Fork Merced R Inflow [link]"
+    ],
+    [
+      "Below South Fork Merced R Inflow [link]",
+      "MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500 [node]"
+    ],
+    [
+      "Lake McClure [node]",
+      "MERCE-L-CON2 [link]"
+    ],
+    [
+      "MERCE-L-CON2 [link]",
+      "Release from ExChequer [node]"
+    ],
+    [
+      "Release from ExChequer [node]",
+      "MERCE-L-CON3 [link]"
+    ],
+    [
+      "MERCE-L-CON3 [link]",
+      "New Exchequer PH [node]"
+    ],
+    [
+      "New Exchequer PH [node]",
+      "MERCE-L-CON6 [link]"
+    ],
+    [
+      "MERCE-L-CON6 [link]",
+      "MERCE-N-JUN3 [node]"
+    ],
+    [
+      "Release from ExChequer [node]",
+      "MERCE-L-RIV2"
+    ],
+    [
+      "MERCE-L-RIV2",
+      "MERCE-N-JUN3 [node]"
+    ],
+    [
+      "Lake McClure [node]",
+      "MERCE-L-CON5 [link]"
+    ],
+    [
+      "MERCE-L-CON5 [link]",
+      "Lake McClure Flood Control [node]"
+    ],
+    [
+      "Lake McClure Flood Control [node]",
+      "MERCE-L-CON4 [link]"
+    ],
+    [
+      "MERCE-L-CON4 [link]",
+      "MERCE-N-JUN3 [node]"
+    ],
+    [
+      "MERCE-N-JUN3 [node]",
+      "BlwMcClure.2.1.2 [link]"
+    ],
+    [
+      "BlwMcClure.2.1.2 [link]",
+      "blwNewExchequerPH [node]"
+    ],
+    [
+      "blwNewExchequerPH [node]",
+      "BlwMcClure.2.2 [link]"
+    ],
+    [
+      "BlwMcClure.2.2 [link]",
+      "Lake McSwain [node]"
+    ],
+    [
+      "Crocker-Huffman Diversion Reservoir [node]",
+      "Main Canal [link]"
+    ],
+    [
+      "Main Canal [link]",
+      "MID Main [node]"
+    ],
+    [
+      "MERCE-N-JUN2 [node]",
+      "MERCE-L-CON1 [link]"
+    ],
+    [
+      "MERCE-L-CON1 [link]",
+      "Valley_Demand [node]"
+    ],
+    [
+      "Maxwell Ck Inflow [node]",
+      "Merced River [link]"
+    ],
+    [
+      "Merced River [link]",
+      "MER_01 Inflow [node]"
+    ],
+    [
+      "MER_01 Inflow [node]",
+      "Merced River (1).1.1 [link]"
+    ],
+    [
+      "Merced River (1).1.1 [link]",
+      "Lake McClure Inflow [node]"
+    ],
+    [
+      "Lake McClure Inflow [node]",
+      "Merced River (1).1.2 [link]"
+    ],
+    [
+      "Merced River (1).1.2 [link]",
+      "Lake McClure [node]"
+    ],
+    [
+      "Lake McSwain [node]",
+      "Merced River (2).2.1 [link]"
+    ],
+    [
+      "Merced River (2).2.1 [link]",
+      "McSwain PH [node]"
+    ],
+    [
+      "McSwain PH [node]",
+      "Merced River (2).2.2.1.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.1 [link]",
+      "Merced Falls Res [node]"
+    ],
+    [
+      "Merced Falls Res [node]",
+      "Merced River (2).2.2.1.2.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.2.1 [link]",
+      "Merced Falls PH [node]"
+    ],
+    [
+      "Merced Falls PH [node]",
+      "Merced River (2).2.2.1.2.2.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.2.2.1 [link]",
+      "Below Merced Falls Dam [node]"
+    ],
+    [
+      "Below Merced Falls Dam [node]",
+      "Merced River (2).2.2.1.2.2.2.1.1.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.2.2.2.1.1.1 [link]",
+      "Crocker-Huffman Diversion Reservoir [node]"
+    ],
+    [
+      "Crocker-Huffman Diversion Reservoir [node]",
+      "Merced River (2).2.2.1.2.2.2.1.1.2 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.2.2.2.1.1.2 [link]",
+      "Merced R below Crocker-Huffman Dam [node]"
+    ],
+    [
+      "Near Shaffer Bridge_11271290 [node]",
+      "Merced River (2).2.2.1.2.2.2.2 [link]"
+    ],
+    [
+      "Merced River (2).2.2.1.2.2.2.2 [link]",
+      "MERCE-N-JUN1 [node]"
+    ],
+    [
+      "MERCE-N-JUN1 [node]",
+      "Merced River (2).2.2.2.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.2.1 [link]",
+      "MERCE-N-JUN2 [node]"
+    ],
+    [
+      "MERCE-N-JUN2 [node]",
+      "Merced River (2).2.2.2.2.1 [link]"
+    ],
+    [
+      "Merced River (2).2.2.2.2.1 [link]",
+      "Near Stevinson_11272500 [node]"
+    ],
+    [
+      "Near Stevinson_11272500 [node]",
+      "Merced River (2).2.2.2.2.2 [link]"
+    ],
+    [
+      "Merced River (2).2.2.2.2.2 [link]",
+      "Merced River Outflow [node]"
+    ],
+    [
+      "Merced R below Crocker-Huffman Dam [node]",
+      "Merced River below Crocker-Huffman [link]"
+    ],
+    [
+      "Merced River below Crocker-Huffman [link]",
+      "Near Shaffer Bridge_11271290 [node]"
+    ],
+    [
+      "Merced Falls PH [node]",
+      "Northside Canal [link]"
+    ],
+    [
+      "Northside Canal [link]",
+      "MID Northside [node]"
+    ],
+    [
+      "Valley_Inflow [node]",
+      "Valley_inflow [link]"
+    ],
+    [
+      "Valley_inflow [link]",
+      "MERCE-N-JUN1 [node]"
+    ]
+  ],
+  "parameters": {
+    "node/Lake McClure Flood Control [node]/Violation Cost": {
+      "type": "controlcurveinterpolated",
+      "storage_node": "Lake McClure [node]",
+      "control_curves": [
+        "node/Lake McClure/Storage Demand"
+      ],
+      "values": [
+        -5000.0,
+        0.0,
+        0.0
+      ]
+    },
+    "node/Lake McClure Flood Control [node]/Requirement": {
+      "type": "controlcurveinterpolated",
+      "storage_node": "Lake McClure [node]",
+      "control_curves": [
+        "node/Lake McClure/Storage Demand"
+      ],
+      "values": [
+        10000,
+        0.0,
+        0.0
+      ]
+    },
+    "node/blwNewExchequerPH/Violation Cost": {
+      "type": "constant",
+      "value": -1026.11
+    },
+    "node/blwNewExchequerPH/Requirement": {
+      "type": "constant",
+      "value": 0.7080147267063155
+    },
+    "node/Lake McClure/Storage Capacity": {
+      "type": "constant",
+      "value": 1293.9435056124337
+    },
+    "node/Lake McClure/Inactive Pool": {
+      "type": "constant",
+      "value": 0.37005057357838905
+    },
+    "node/Lake McClure/Storage Demand": {
+      "type": "node_Lake_McClure_Storage_Demand"
+    },
+    "node/Lake McClure/Storage Value": {
+      "type": "node_Lake_McClure_Storage_Value"
+    },
+    "node/Lake McClure/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Lake McClure [node]",
+      "values": [
+        107.39628,
+        134.82828,
+        135.13308,
+        135.43788,
+        135.74268,
+        136.04748,
+        136.35228,
+        136.65708,
+        136.96188,
+        137.26668,
+        137.57148,
+        137.87628,
+        138.18108,
+        138.48588,
+        138.79068,
+        139.09548,
+        139.40028,
+        139.70508,
+        140.00988,
+        140.31468,
+        140.61948,
+        140.92428,
+        141.22908,
+        141.53388,
+        141.83868,
+        142.14348,
+        142.44828,
+        142.75308,
+        143.05788,
+        143.36268,
+        143.66748,
+        143.97228,
+        144.27708,
+        144.58188,
+        144.88668,
+        145.19148,
+        145.49628,
+        145.80108,
+        146.10588,
+        146.41068,
+        146.71548,
+        147.02028,
+        147.32508,
+        147.62988,
+        147.93468,
+        148.23948,
+        148.54428,
+        148.84908,
+        149.15388,
+        149.45868,
+        149.76348,
+        150.06828,
+        150.37308,
+        150.67788,
+        150.98268,
+        151.28748,
+        151.59228,
+        151.89708,
+        152.20188,
+        152.50668,
+        152.81148,
+        153.11628,
+        153.42108,
+        153.72588,
+        154.03068,
+        154.33548,
+        154.64028,
+        154.94508,
+        155.24988,
+        155.55468,
+        155.85948,
+        156.16428,
+        156.46908,
+        156.77388,
+        157.07868,
+        157.38348,
+        157.68828,
+        157.99308,
+        158.29788,
+        158.60268,
+        158.90748,
+        159.21228,
+        159.51708,
+        159.82188,
+        160.12668,
+        160.43148,
+        160.73628,
+        161.04108,
+        161.34588,
+        161.65068,
+        161.95548,
+        162.26028,
+        162.56508,
+        162.86988,
+        163.17468,
+        163.47948,
+        163.78428,
+        164.08908,
+        164.39388,
+        164.69868,
+        165.00348,
+        165.30828,
+        165.61308,
+        165.91788,
+        166.22268,
+        166.52748,
+        166.83228,
+        167.13708,
+        167.44188,
+        167.74668,
+        168.05148,
+        168.35628,
+        168.66108,
+        168.96588,
+        169.27068,
+        169.57548,
+        169.88028,
+        170.18508,
+        170.48988,
+        170.79468,
+        171.09948,
+        171.40428,
+        171.70908,
+        172.01388,
+        172.31868,
+        172.62348,
+        172.92828,
+        173.23308,
+        173.53788,
+        173.84268,
+        174.14748,
+        174.45228,
+        174.75708,
+        175.06188,
+        175.36668,
+        175.67148,
+        175.97628,
+        176.28108,
+        176.58588,
+        176.89068,
+        177.19548,
+        177.50028,
+        177.80508,
+        178.10988,
+        178.41468,
+        178.71948,
+        179.02428,
+        179.5272,
+        179.832,
+        180.1368,
+        180.4416,
+        180.7464,
+        181.0512,
+        181.356,
+        181.6608,
+        181.9656,
+        182.2704,
+        182.5752,
+        182.88,
+        183.1848,
+        183.4896,
+        183.7944,
+        184.0992,
+        184.404,
+        184.7088,
+        185.0136,
+        185.3184,
+        185.6232,
+        185.928,
+        186.2328,
+        186.5376,
+        186.8424,
+        187.1472,
+        187.452,
+        187.7568,
+        188.0616,
+        188.3664,
+        188.6712,
+        188.976,
+        189.2808,
+        189.5856,
+        189.8904,
+        190.1952,
+        190.5,
+        190.8048,
+        191.1096,
+        191.4144,
+        191.7192,
+        192.024,
+        192.3288,
+        192.6336,
+        192.9384,
+        193.2432,
+        193.548,
+        193.8528,
+        194.1576,
+        194.4624,
+        194.7672,
+        195.072,
+        195.3768,
+        195.6816,
+        195.9864,
+        196.2912,
+        196.596,
+        196.9008,
+        197.2056,
+        197.5104,
+        197.8152,
+        198.12,
+        198.4248,
+        198.7296,
+        199.0344,
+        199.3392,
+        199.644,
+        199.9488,
+        200.2536,
+        200.5584,
+        200.8632,
+        201.168,
+        201.4728,
+        201.7776,
+        202.0824,
+        202.3872,
+        202.692,
+        202.9968,
+        203.3016,
+        203.6064,
+        203.9112,
+        204.216,
+        204.5208,
+        204.8256,
+        205.1304,
+        205.4352,
+        205.74,
+        206.0448,
+        206.3496,
+        206.6544,
+        206.9592,
+        207.264,
+        207.5688,
+        207.8736,
+        208.1784,
+        208.4832,
+        208.788,
+        209.0928,
+        209.3976,
+        209.7024,
+        210.0072,
+        210.312,
+        210.6168,
+        210.9216,
+        211.2264,
+        211.5312,
+        211.836,
+        212.1408,
+        212.4456,
+        212.7504,
+        213.0552,
+        213.36,
+        213.6648,
+        213.9696,
+        214.2744,
+        214.5792,
+        214.884,
+        215.1888,
+        215.4936,
+        215.7984,
+        216.1032,
+        216.408,
+        216.7128,
+        217.0176,
+        217.3224,
+        217.6272,
+        217.932,
+        218.2368,
+        218.5416,
+        218.8464,
+        219.1512,
+        219.456,
+        219.7608,
+        220.0656,
+        220.3704,
+        220.6752,
+        220.98,
+        221.2848,
+        221.5896,
+        221.8944,
+        222.1992,
+        222.504,
+        222.8088,
+        223.1136,
+        223.4184,
+        223.7232,
+        224.028,
+        224.3328,
+        224.6376,
+        224.9424,
+        225.2472,
+        225.552,
+        225.8568,
+        226.1616,
+        226.4664,
+        226.7712,
+        227.076,
+        227.3808,
+        227.6856,
+        227.9904,
+        228.2952,
+        228.6,
+        228.9048,
+        229.2096,
+        229.5144,
+        229.8192,
+        230.124,
+        230.4288,
+        230.7336,
+        231.0384,
+        231.3432,
+        231.648,
+        231.9528,
+        232.2576,
+        232.5624,
+        232.8672,
+        233.172,
+        233.4768,
+        233.7816,
+        234.0864,
+        234.3912,
+        234.696,
+        235.0008,
+        235.3056,
+        235.6104,
+        235.9152,
+        236.22,
+        236.5248,
+        236.8296,
+        237.1344,
+        237.4392,
+        237.744,
+        238.0488,
+        238.3536,
+        238.6584,
+        238.9632,
+        239.268,
+        239.5728,
+        239.8776,
+        240.1824,
+        240.4872,
+        240.792,
+        241.0968,
+        241.4016,
+        241.7064,
+        242.0112,
+        242.316,
+        242.6208,
+        242.9256,
+        243.2304,
+        243.5352,
+        243.84,
+        244.1448,
+        244.4496,
+        244.7544,
+        245.0592,
+        245.364,
+        245.6688,
+        245.9736,
+        246.2784,
+        246.5832,
+        246.888,
+        247.1928,
+        247.4976,
+        247.8024,
+        248.1072,
+        248.412,
+        248.7168,
+        249.0216,
+        249.3264,
+        249.6312,
+        249.936,
+        250.2408,
+        250.5456,
+        250.8504,
+        251.1552,
+        251.46,
+        251.7648,
+        252.0696,
+        252.3744,
+        252.6792,
+        252.984,
+        253.2888,
+        253.5936,
+        253.8984,
+        254.2032,
+        254.508,
+        254.8128,
+        255.1176,
+        255.4224,
+        255.7272,
+        256.032,
+        256.3368,
+        256.6416,
+        256.9464,
+        257.2512,
+        257.556,
+        257.8608,
+        258.1656,
+        258.4704,
+        258.7752,
+        259.08,
+        259.3848,
+        259.6896,
+        259.9944,
+        260.2992,
+        260.604,
+        260.9088,
+        261.2136,
+        261.5184,
+        261.8232,
+        262.128,
+        262.4328,
+        262.7376,
+        263.0424,
+        263.3472,
+        263.652,
+        263.9568,
+        264.2616,
+        264.5664,
+        264.8712,
+        265.176,
+        265.4808,
+        265.7856,
+        266.0904,
+        266.3952,
+        266.7,
+        267.0048,
+        267.3096,
+        267.6144,
+        267.9192,
+        268.224,
+        268.5288,
+        268.8336,
+        269.1384,
+        269.4432
+      ],
+      "volumes": [
+        0,
+        0.370044,
+        0.4070484,
+        0.4440528,
+        0.4810572,
+        0.5303964,
+        0.5797356,
+        0.6290748,
+        0.678414,
+        0.740088,
+        0.801762,
+        0.8757708,
+        0.9497796,
+        1.0237884,
+        1.110132,
+        1.1964756,
+        1.2828192,
+        1.3691628,
+        1.4555064,
+        1.5541848,
+        1.6528632,
+        1.7515416,
+        1.85022,
+        1.9612332,
+        2.0722464,
+        2.1832596,
+        2.2942728,
+        2.405286,
+        2.5162992,
+        2.6396472,
+        2.7629952,
+        2.8863432,
+        3.0096912,
+        3.145374,
+        3.2810568,
+        3.4167396,
+        3.5524224,
+        3.70044,
+        3.8484576,
+        4.00881,
+        4.1691624,
+        4.3418496,
+        4.5268716,
+        4.7242284,
+        4.93392,
+        5.1436116,
+        5.3533032,
+        5.5629948,
+        5.7726864,
+        5.9947128,
+        6.2167392,
+        6.4387656,
+        6.660792,
+        6.907488,
+        7.154184,
+        7.40088,
+        7.647576,
+        7.894272,
+        8.202642,
+        8.511012,
+        8.819382,
+        9.127752,
+        9.436122,
+        9.744492,
+        10.052862,
+        10.361232,
+        10.731276,
+        11.10132,
+        11.471364,
+        11.841408,
+        12.211452,
+        12.581496,
+        12.95154,
+        13.383258,
+        13.814976,
+        14.246694,
+        14.678412,
+        15.11013,
+        15.541848,
+        16.03524,
+        16.528632,
+        17.022024,
+        17.515416,
+        18.070482,
+        18.625548,
+        19.180614,
+        19.73568,
+        20.35242,
+        20.96916,
+        21.5859,
+        22.20264,
+        22.81938,
+        23.497794,
+        24.176208,
+        24.854622,
+        25.533036,
+        26.273124,
+        27.013212,
+        27.7533,
+        28.493388,
+        29.233476,
+        29.973564,
+        30.775326,
+        31.577088,
+        32.37885,
+        33.180612,
+        33.982374,
+        34.784136,
+        35.647572,
+        36.511008,
+        37.374444,
+        38.23788,
+        39.101316,
+        40.026426,
+        40.951536,
+        41.876646,
+        42.801756,
+        43.726866,
+        44.651976,
+        45.63876,
+        46.625544,
+        47.612328,
+        48.599112,
+        49.585896,
+        50.57268,
+        51.682812,
+        52.792944,
+        53.903076,
+        55.013208,
+        56.12334,
+        57.233472,
+        58.343604,
+        59.453736,
+        60.563868,
+        61.674,
+        62.90748,
+        64.14096,
+        65.37444,
+        66.60792,
+        67.8414,
+        69.07488,
+        70.30836,
+        71.54184,
+        72.898668,
+        74.255496,
+        75.612324,
+        76.969152,
+        77.88155716,
+        79.08210324,
+        80.29461408,
+        81.52167998,
+        82.7634243,
+        84.01750342,
+        85.28453407,
+        86.56500966,
+        87.85991696,
+        89.17098286,
+        90.49598707,
+        91.83394283,
+        93.18571356,
+        94.55154596,
+        95.93181008,
+        97.32527244,
+        98.73316651,
+        100.1578359,
+        101.5963203,
+        103.0475095,
+        104.5130071,
+        105.9933064,
+        107.4879142,
+        108.9957201,
+        110.5178344,
+        112.0538871,
+        113.6042481,
+        115.167684,
+        116.7448115,
+        118.3362474,
+        119.9414983,
+        121.5597007,
+        123.191348,
+        124.836687,
+        126.4969511,
+        128.1720169,
+        129.8620079,
+        131.5679107,
+        133.288862,
+        135.0246151,
+        136.7741831,
+        138.5380595,
+        140.3172311,
+        142.1115744,
+        143.9204728,
+        145.7452831,
+        147.5851419,
+        149.4390624,
+        151.3072912,
+        153.1908151,
+        155.0901276,
+        157.0070789,
+        158.942039,
+        160.8946378,
+        162.8651221,
+        164.8531218,
+        166.8587603,
+        168.8817909,
+        170.9234469,
+        172.9852088,
+        175.0658428,
+        177.1647324,
+        179.2822475,
+        181.4166613,
+        183.5679738,
+        185.7370484,
+        187.9252419,
+        190.1339112,
+        192.3614527,
+        194.6071264,
+        196.8705622,
+        199.15102,
+        201.4488699,
+        203.7643586,
+        206.0979794,
+        208.4487456,
+        210.8164104,
+        213.2023308,
+        215.6062599,
+        218.0288147,
+        220.470365,
+        222.9293074,
+        225.4058885,
+        227.9002318,
+        230.4129539,
+        232.9460284,
+        235.4978518,
+        238.0674374,
+        240.6550317,
+        243.2616216,
+        245.8867138,
+        248.5316649,
+        251.1963518,
+        253.8799109,
+        256.5828356,
+        259.3052493,
+        262.047152,
+        264.8084203,
+        267.5881908,
+        270.3865869,
+        273.2039786,
+        276.0404892,
+        278.8962421,
+        281.7730875,
+        284.6694219,
+        287.5848752,
+        290.5200642,
+        293.4758523,
+        296.453103,
+        299.4532964,
+        302.4758158,
+        305.5205379,
+        308.5877092,
+        311.6784401,
+        314.7938405,
+        317.9339105,
+        321.0979101,
+        324.284729,
+        327.4941206,
+        330.7274417,
+        333.9862959,
+        337.2696963,
+        340.5775196,
+        343.9086557,
+        347.2642147,
+        350.6432098,
+        354.0447776,
+        357.4702749,
+        360.9200718,
+        364.3929347,
+        367.8899739,
+        371.411806,
+        374.9579376,
+        378.526642,
+        382.1181657,
+        385.734359,
+        389.3758386,
+        393.0411245,
+        396.7298464,
+        400.4431146,
+        404.1822859,
+        407.9476069,
+        411.7401879,
+        415.5583019,
+        419.4041692,
+        423.2769263,
+        427.17645,
+        431.1007666,
+        435.0524665,
+        439.0364835,
+        443.0509675,
+        447.0924648,
+        451.1615919,
+        455.2594592,
+        459.3842163,
+        463.5341364,
+        467.7109464,
+        471.9168665,
+        476.1525135,
+        480.4151737,
+        484.7060805,
+        489.0267143,
+        493.3769515,
+        497.754202,
+        502.1593291,
+        506.5931964,
+        511.0567904,
+        515.5492479,
+        520.0694587,
+        524.6163127,
+        529.19055,
+        533.7930339,
+        538.4247513,
+        543.0849621,
+        547.7753931,
+        552.495181,
+        557.2451891,
+        562.0260342,
+        566.8366062,
+        571.6745615,
+        576.5402701,
+        581.4357055,
+        586.3611145,
+        591.3173605,
+        596.3019765,
+        601.3150859,
+        606.3563187,
+        611.4274016,
+        616.5311718,
+        621.6676293,
+        626.8343069,
+        632.0300947,
+        637.2570896,
+        642.5149214,
+        647.8030969,
+        653.1228494,
+        658.4761526,
+        663.8612796,
+        669.2776136,
+        674.7272516,
+        680.2090834,
+        685.7236025,
+        691.2716722,
+        696.8535392,
+        702.4678468,
+        708.1144715,
+        713.7935368,
+        719.5047959,
+        725.2486189,
+        731.0262392,
+        736.8437009,
+        742.6970569,
+        748.5838402,
+        754.5038041,
+        760.4571953,
+        766.445124,
+        772.4666033,
+        778.5210165,
+        784.6123108,
+        790.7457901,
+        796.9226879,
+        803.1420174,
+        809.3997082,
+        815.6951434,
+        822.0288165,
+        828.4007275,
+        834.8102596,
+        841.2577829,
+        847.7416939,
+        854.2624859,
+        860.8210224,
+        867.4166867,
+        874.0502187,
+        880.7232222,
+        887.4364371,
+        894.1897401,
+        900.9823911,
+        907.8146368,
+        914.6862306,
+        921.5966789,
+        928.546722,
+        935.5369765,
+        942.5659623,
+        949.6330626,
+        956.7404977,
+        963.8881442,
+        971.0739053,
+        978.2997545,
+        985.5670486,
+        992.8754176,
+        1000.226835,
+        1007.622905,
+        1015.060912,
+        1022.540488,
+        1030.063976,
+        1037.628539,
+        1045.23319,
+        1052.878792,
+        1060.566333,
+        1068.298032,
+        1076.072657,
+        1083.888603,
+        1091.74513,
+        1099.642979,
+        1107.583507,
+        1115.567946,
+        1123.597408,
+        1131.670041,
+        1139.785599,
+        1147.944946,
+        1156.147958,
+        1164.393155,
+        1172.682264,
+        1181.015532,
+        1189.390861,
+        1197.809485,
+        1206.271281,
+        1214.777113,
+        1223.326363,
+        1231.917551,
+        1240.548087,
+        1249.214518,
+        1257.917952,
+        1266.659132,
+        1275.439906,
+        1284.262372,
+        1293.127392,
+        1302.035585,
+        1310.987689,
+        1319.983829,
+        1329.026594,
+        1338.114135,
+        1347.245464,
+        1356.420952,
+        1365.640598,
+        1374.904773
+      ],
+      "kind": "cubic"
+    },
+    "node/Lake McSwain/Storage Capacity": {
+      "type": "constant",
+      "value": 12
+    },
+    "node/Lake McSwain/Inactive Pool": {
+      "type": "constant",
+      "value": 4
+    },
+    "node/McSwain PH/Fixed Head": {
+      "type": "constant",
+      "value": 137.0
+    },
+    "node/McSwain PH/Turbine Capacity": {
+      "type": "constant",
+      "value": 7.87
+    },
+    "node/McSwain PH/Excess Value": {
+      "type": "constant",
+      "value": -1
+    },
+    "node/McSwain PH/Unconstrained Cost": {
+      "type": "constant",
+      "value": 1
+    },
+    "node/McSwain PH/Base Value": {
+      "type": "constant",
+      "value": 10
+    },
+    "node/Merced Falls PH/Fixed Head": {
+      "type": "constant",
+      "value": 103.0
+    },
+    "node/Merced Falls PH/Turbine Capacity": {
+      "type": "constant",
+      "value": 4.075
+    },
+    "node/Merced Falls PH/Excess Value": {
+      "type": "constant",
+      "value": -1
+    },
+    "node/Merced Falls PH/Base Value": {
+      "type": "constant",
+      "value": 10
+    },
+    "node/Merced Falls PH/Unconstrained Cost": {
+      "type": "constant",
+      "value": 1
+    },
+    "node/Merced Falls Res/Storage Capacity": {
+      "type": "constant",
+      "value": 0.37
+    },
+    "node/Merced Falls Res/Inactive Pool": {
+      "type": "constant",
+      "value": 0
+    },
+    "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
+      "type": "constant",
+      "value": -974.928
+    },
+    "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
+      "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
+    },
+    "node/Release from ExChequer [node]/Requirement": {
+      "type": "Lake_Mclure_Release_Policy"
+    },
+    "node/MER_01 Headflow/Runoff": {
+      "type": "node_MER_01_Headflow_Runoff"
+    },
+    "node/MER_02 Headflow/Runoff": {
+      "type": "node_MER_02_Headflow_Runoff"
+    },
+    "node/MER_03 Headflow/Runoff": {
+      "type": "node_MER_03_Headflow_Runoff"
+    },
+    "node/MER_04 Headflow/Runoff": {
+      "type": "node_MER_04_Headflow_Runoff"
+    },
+    "node/MER_05 Headflow/Runoff": {
+      "type": "node_MER_05_Headflow_Runoff"
+    },
+    "node/MER_06 Headflow/Runoff": {
+      "type": "node_MER_06_Headflow_Runoff"
+    },
+    "node/MID Main/Demand": {
+      "type": "node_MID_Main_Demand"
+    },
+    "node/MID Main/Cost": {
+      "type": "constant",
+      "value": -50
+    },
+    "node/MID Northside/Demand": {
+      "type": "node_MID_Northside_Demand"
+    },
+    "node/MID Northside/Cost": {
+      "type": "constant",
+      "value": -50
+    },
+    "node/New Exchequer PH/Fixed Head": {
+      "type": "constant",
+      "value": 264.0
+    },
+    "node/New Exchequer PH/Turbine Capacity": {
+      "type": "constant",
+      "value": 42.92
+    },
+    "node/New Exchequer PH/Excess Value": {
+      "type": "constant",
+      "value": -1
+    },
+    "node/New Exchequer PH/Base Value": {
+      "type": "constant",
+      "value": 50
+    },
+    "node/New Exchequer PH/Water Demand": {
+      "type": "constant",
+      "value": 42.92
+    },
+    "node/New Exchequer PH/Unconstrained Cost": {
+      "type": "constant",
+      "value": -50
+    },
+    "node/Valley_Demand/Demand": {
+      "type": "constant",
+      "value": 0
+    },
+    "storageValueConstant": {
+      "type": "constant",
+      "value": 8.55538
+    }
+  },
+  "recorders": {
+    "node/Below Merced Falls Dam/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Below Merced Falls Dam [node]"
+    },
+    "node/blwNewExchequerPH/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "blwNewExchequerPH [node]"
+    },
+    "node/blwNewExchequerPH/requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/blwNewExchequerPH/Requirement"
+    },
+    "node/Lake McClure/storage": {
+      "type": "NumpyArrayStorageRecorder",
+      "node": "Lake McClure [node]"
+    },
+    "node/Lake McClure Inflow/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Lake McClure Inflow [node]"
+    },
+    "node/Lake McSwain/storage": {
+      "type": "NumpyArrayStorageRecorder",
+      "node": "Lake McSwain [node]"
+    },
+    "node/McSwain PH/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "McSwain PH [node]"
+    },
+    "node/Merced Falls PH/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced Falls PH [node]"
+    },
+    "node/Merced Falls Res/storage": {
+      "type": "NumpyArrayStorageRecorder",
+      "node": "Merced Falls Res [node]"
+    },
+    "node/MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCED R A POHONO BRIDGE NR YOSEMITE CA_11266500 [node]"
+    },
+    "node/Merced R below Crocker-Huffman Dam/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced R below Crocker-Huffman Dam [node]"
+    },
+    "node/Merced R below Crocker-Huffman Dam/requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
+    },
+    "node/Merced River Outflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced River Outflow [node]"
+    },
+    "node/MER_01 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_01 Headflow [node]"
+    },
+    "node/MER_01 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_01 Headflow [node]"
+    },
+    "node/MER_02 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_02 Headflow [node]"
+    },
+    "node/MER_02 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_02 Headflow [node]"
+    },
+    "node/MER_03 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_03 Headflow [node]"
+    },
+    "node/MER_03 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_03 Headflow [node]"
+    },
+    "node/MER_04 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_04 Headflow [node]"
+    },
+    "node/MER_04 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_04 Headflow [node]"
+    },
+    "node/MER_05 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_05 Headflow [node]"
+    },
+    "node/MER_05 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_05 Headflow [node]"
+    },
+    "node/MER_06 Headflow/runoff": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_06 Headflow [node]"
+    },
+    "node/MER_06 Headflow/outflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MER_06 Headflow [node]"
+    },
+    "node/MID Main/demand": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/MID Main/Demand"
+    },
+    "node/MID Main/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MID Main [node]"
+    },
+    "node/MID Main/cost": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/MID Main/Cost"
+    },
+    "node/MID Northside/demand": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/MID Northside/Demand"
+    },
+    "node/MID Northside/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MID Northside [node]"
+    },
+    "node/MID Northside/cost": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/MID Northside/Cost"
+    },
+    "node/Near Shaffer Bridge_11271290/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Near Shaffer Bridge_11271290 [node]"
+    },
+    "node/Near Stevinson_11272500/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Near Stevinson_11272500 [node]"
+    },
+    "node/New Exchequer PH/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "New Exchequer PH [node]"
+    },
+    "node/New Exchequer PH/water demand": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/New Exchequer PH/Water Demand"
+    },
+    "node/USGS_11264500 MERCED R A HAPPY ISLES/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "USGS_11264500 MERCED R A HAPPY ISLES [node]"
+    },
+    "node/Valley_Demand/flow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Valley_Demand [node]"
+    },
+    "Release Requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Release from ExChequer [node]/Requirement"
+    },
+    "Lake McClure Flood Control [node]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Lake McClure Flood Control [node]"
+    },
+    "MERCE-L-CON2 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCE-L-CON2 [link]"
+    },
+    "MERCE-L-CON3 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCE-L-CON3 [link]"
+    },
+    "MERCE-L-RIV2": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCE-L-RIV2"
+    },
+    "MERCE-L-CON4 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "MERCE-L-CON4 [link]"
+    },
+    "Merced River (2).2.2.1.2.2.1 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced River (2).2.2.1.2.2.1 [link]"
+    },
+    "Northside Canal [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Northside Canal [link]"
+    },
+    "Merced River (2).2.2.1.2.2.2.1.1.2 [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced River (2).2.2.1.2.2.2.1.1.2 [link]"
+    },
+    "Main Canal [link]": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Main Canal [link]"
+    }
+  }
+}

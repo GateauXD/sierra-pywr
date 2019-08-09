@@ -9,7 +9,7 @@ import numpy as np
 # Append the results from that CSV to a new CSV with a new file name
 
 model_name = "merced"
-model_folder = "Merced_Model"
+model_folder = "Merced_Climate`"
 model_run_script = "run_merced_model.py"
 climate_change_folder = "Climate Change"
 climate_change_dest = "s3_imports"
