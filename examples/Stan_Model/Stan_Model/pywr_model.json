@@ -68,7 +68,8 @@
         },
         {
             "name": "Angels PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Angels PH/Water Demand"
         },
         {
             "name": "Angles Canal Outflow [node]",
@@ -93,7 +94,8 @@
             "type": "Storage",
             "initial_volume": 116.6,
             "max_volume": "node/Beardsley Reservoir/Storage Capacity",
-            "min_volume": "node/Beardsley Reservoir/Inactive Pool"
+            "min_volume": "node/Beardsley Reservoir/Inactive Pool",
+            "cost": "node/Beardsley Reservoir/Storage Value"
         },
         {
             "name": "BEAVER C DIV TO MCKAYS POINT RES NR ARNO_11295210 [node]",
@@ -143,7 +145,8 @@
         },
         {
             "name": "Collierville PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Collierville PH/Water Demand"
         },
         {
             "name": "Collierville Tunnel Inflow [node]",
@@ -159,14 +162,16 @@
         },
         {
             "name": "Donnells PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Donnells PH/Water Demand"
         },
         {
             "name": "Donnells Reservoir [node]",
             "type": "Storage",
             "initial_volume": 38.3,
             "max_volume": "node/Donnells Reservoir/Storage Capacity",
-            "min_volume": "node/Donnells Reservoir/Inactive Pool"
+            "min_volume": "node/Donnells Reservoir/Inactive Pool",
+            "cost": "node/Donnells Reservoir/Storage Value"
         },
         {
             "name": "Gauge_Phoenix [node]",
@@ -205,51 +210,61 @@
         {
             "name": "IFR bl Angels Div [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Angels Div/Violation Cost",
             "mrf": "node/IFR bl Angels Div/Requirement"
         },
         {
             "name": "IFR bl Donnells Reservoir [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Donnells Reservoir/Violation Cost",
             "mrf": "node/IFR bl Donnells Reservoir/Requirement"
         },
         {
             "name": "IFR bl Hunters Reservoir [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Hunters Reservoir/Violation Cost",
             "mrf": "node/IFR bl Hunters Reservoir/Requirement"
         },
         {
             "name": "IFR bl Lyons Res [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Lyons Res/Violation Cost",
             "mrf": "node/IFR bl Lyons Res/Requirement"
         },
         {
             "name": "IFR bl McKays Point Div [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl McKays Point Div/Violation Cost",
             "mrf": "node/IFR bl McKays Point Div/Requirement"
         },
         {
             "name": "IFR bl New Spicer Meadow Reservoir [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl New Spicer Meadow Reservoir/Violation Cost",
             "mrf": "node/IFR bl New Spicer Meadow Reservoir/Requirement"
         },
         {
             "name": "IFR bl Philadelphia Div [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Philadelphia Div/Violation Cost",
             "mrf": "node/IFR bl Philadelphia Div/Requirement"
         },
         {
             "name": "IFR bl Relief Reservoir [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Relief Reservoir/Violation Cost",
             "mrf": "node/IFR bl Relief Reservoir/Requirement"
         },
         {
             "name": "IFR bl Sand Bar Div [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Sand Bar Div/Violation Cost",
             "mrf": "node/IFR bl Sand Bar Div/Requirement"
         },
         {
             "name": "IFR bl Utica Div [node]",
             "type": "InstreamFlowRequirement",
+            "mrf_cost": "node/IFR bl Utica Div/Violation Cost",
             "mrf": "node/IFR bl Utica Div/Requirement"
         },
         {
@@ -273,7 +288,8 @@
             "type": "Storage",
             "initial_volume": 2.9,
             "max_volume": "node/Lyons Reservoir/Storage Capacity",
-            "min_volume": "node/Lyons Reservoir/Inactive Pool"
+            "min_volume": "node/Lyons Reservoir/Inactive Pool",
+            "cost": "node/Lyons Reservoir/Storage Value"
         },
         {
             "name": "McKay Point Diversion [node]",
@@ -319,24 +335,28 @@
         },
         {
             "name": "Murphys PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Murphys PH/Water Demand"
         },
         {
             "name": "New Melones Lake [node]",
             "type": "Storage",
             "initial_volume": 0.0,
-            "max_volume": 0.0
+            "max_volume": 0.0,
+            "cost": "node/New Melones Lake/Storage Value"
         },
         {
             "name": "New Melones PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/New Melones PH/Water Demand"
         },
         {
             "name": "New Spicer Meadow Reservoir [node]",
             "type": "Storage",
             "initial_volume": 154.8,
             "max_volume": "node/New Spicer Meadow Reservoir/Storage Capacity",
-            "min_volume": "node/New Spicer Meadow Reservoir/Inactive Pool"
+            "min_volume": "node/New Spicer Meadow Reservoir/Inactive Pool",
+            "cost": "node/New Spicer Meadow Reservoir/Storage Value"
         },
         {
             "name": "NF STANISLAUS DIV TU OL BL HOBART C_11293710 [node]",
@@ -382,25 +402,29 @@
         },
         {
             "name": "Phoenix PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Phoenix PH/Water Demand"
         },
         {
             "name": "Pinecrest Reservoir [node]",
             "type": "Storage",
             "initial_volume": 14.9,
             "max_volume": "node/Pinecrest Reservoir/Storage Capacity",
-            "min_volume": "node/Pinecrest Reservoir/Inactive Pool"
+            "min_volume": "node/Pinecrest Reservoir/Inactive Pool",
+            "cost": "node/Pinecrest Reservoir/Storage Value"
         },
         {
             "name": "Relief Reservoir [node]",
             "type": "Storage",
             "initial_volume": 6.0,
             "max_volume": "node/Relief Reservoir/Storage Capacity",
-            "min_volume": "node/Relief Reservoir/Inactive Pool"
+            "min_volume": "node/Relief Reservoir/Inactive Pool",
+            "cost": "node/Relief Reservoir/Storage Value"
         },
         {
             "name": "Sand Bar PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Sand Bar PH/Water Demand"
         },
         {
             "name": "Sand Bar Power Tunnel Inflow [node]",
@@ -440,7 +464,8 @@
         },
         {
             "name": "Spring Gap PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Spring Gap PH/Water Demand"
         },
         {
             "name": "STANI-N-INF1 [node]",
@@ -462,7 +487,8 @@
         },
         {
             "name": "Stanislaus PH [node]",
-            "type": "Hydropower"
+            "type": "PiecewiseLink",
+            "max_flow": "node/Stanislaus PH/Water Demand"
         },
         {
             "name": "Stanislaus Tunnel Inflow [node]",
@@ -725,7 +751,8 @@
             "name": "Tulloch Lake [node]",
             "type": "Storage",
             "initial_volume": 0.0,
-            "max_volume": 0.0
+            "max_volume": 0.0,
+            "cost": "node/Tulloch Lake/Storage Value"
         },
         {
             "name": "UPA Tunnel Tap Inflow [node]",
@@ -1483,6 +1510,9 @@
             "type": "constant",
             "value": 1412.5880000000002
         },
+        "node/Angels PH/Water Demand": {
+            "type": "node_Angels_PH_Water_Demand"
+        },
         "node/AVERY_11294500/Observed Flow": {
             "type": "node_AVERY_11294500_Observed_Flow"
         },
@@ -1497,6 +1527,9 @@
             "type": "constant",
             "value": 25
         },
+        "node/Beardsley Reservoir/Observed Storage": {
+            "type": "node_Beardsley_Reservoir_Observed_Storage"
+        },
         "node/Beardsley Reservoir/Turbine Capacity": {
             "type": "constant",
             "value": 21895.114
@@ -1504,6 +1537,10 @@
         "node/Beardsley Reservoir/Cloudiness Fraction": {
             "type": "constant",
             "value": 0.5
+        },
+        "node/Beardsley Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
         },
         "node/BEAVER C DIV TO MCKAYS POINT RES NR ARNO_11295210/Observed Flow": {
             "type": "node_BEAVER_C_DIV_TO_MCKAYS_POINT_RES_NR_ARNO_11295210_Observed_Flow"
@@ -1525,6 +1562,9 @@
             "type": "constant",
             "value": 49440.58
         },
+        "node/Collierville PH/Water Demand": {
+            "type": "node_Collierville_PH_Water_Demand"
+        },
         "node/Donnells PH/Fixed Head": {
             "type": "constant",
             "value": 350.8
@@ -1532,6 +1572,9 @@
         "node/Donnells PH/Turbine Capacity": {
             "type": "constant",
             "value": 24720.29
+        },
+        "node/Donnells PH/Water Demand": {
+            "type": "node_Donnells_PH_Water_Demand"
         },
         "node/Donnells Reservoir/Storage Capacity": {
             "type": "constant",
@@ -1541,9 +1584,16 @@
             "type": "constant",
             "value": 6.2
         },
+        "node/Donnells Reservoir/Observed Storage": {
+            "type": "node_Donnells_Reservoir_Observed_Storage"
+        },
         "node/Donnells Reservoir/Cloudiness Fraction": {
             "type": "constant",
             "value": 0.5
+        },
+        "node/Donnells Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
         },
         "node/Gauge_Phoenix/Observed Flow": {
             "type": "node_Gauge_Phoenix_Observed_Flow"
@@ -1554,36 +1604,76 @@
         "node/HOBART C AT NF DIV TUNNL OUTLT NR SPICER_11293700/Observed Flow": {
             "type": "node_HOBART_C_AT_NF_DIV_TUNNL_OUTLT_NR_SPICER_11293700_Observed_Flow"
         },
+        "node/IFR bl Angels Div/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl Angels Div/Requirement": {
             "type": "constant",
             "value": 0.142
         },
+        "node/IFR bl Donnells Reservoir/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl Donnells Reservoir/Requirement": {
             "type": "node_IFR_bl_Donnells_Reservoir_Requirement"
         },
+        "node/IFR bl Hunters Reservoir/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl Hunters Reservoir/Requirement": {
             "type": "node_IFR_bl_Hunters_Reservoir_Requirement"
+        },
+        "node/IFR bl Lyons Res/Violation Cost": {
+            "type": "constant",
+            "value": 10
         },
         "node/IFR bl Lyons Res/Requirement": {
             "type": "constant",
             "value": 0.142
         },
+        "node/IFR bl McKays Point Div/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl McKays Point Div/Requirement": {
             "type": "constant",
             "value": 0.4672
+        },
+        "node/IFR bl New Spicer Meadow Reservoir/Violation Cost": {
+            "type": "constant",
+            "value": 10
         },
         "node/IFR bl New Spicer Meadow Reservoir/Requirement": {
             "type": "constant",
             "value": 0.4672
         },
+        "node/IFR bl Philadelphia Div/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl Philadelphia Div/Requirement": {
             "type": "node_IFR_bl_Philadelphia_Div_Requirement"
+        },
+        "node/IFR bl Relief Reservoir/Violation Cost": {
+            "type": "constant",
+            "value": 10
         },
         "node/IFR bl Relief Reservoir/Requirement": {
             "type": "node_IFR_bl_Relief_Reservoir_Requirement"
         },
+        "node/IFR bl Sand Bar Div/Violation Cost": {
+            "type": "constant",
+            "value": 10
+        },
         "node/IFR bl Sand Bar Div/Requirement": {
             "type": "node_IFR_bl_Sand_Bar_Div_Requirement"
+        },
+        "node/IFR bl Utica Div/Violation Cost": {
+            "type": "constant",
+            "value": 10
         },
         "node/IFR bl Utica Div/Requirement": {
             "type": "constant",
@@ -1600,9 +1690,16 @@
             "type": "constant",
             "value": 1.25
         },
+        "node/Lyons Reservoir/Observed Storage": {
+            "type": "node_Lyons_Reservoir_Observed_Storage"
+        },
         "node/Lyons Reservoir/Cloudiness Fraction": {
             "type": "constant",
             "value": 0.5
+        },
+        "node/Lyons Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
         },
         "node/MF STANISLAUS R A HELLS HALF ACRE BRIDGE_11292700/Observed Flow": {
             "type": "node_MF_STANISLAUS_R_A_HELLS_HALF_ACRE_BRIDGE_11292700_Observed_Flow"
@@ -1624,6 +1721,19 @@
             "type": "constant",
             "value": 3460.8406
         },
+        "node/Murphys PH/Water Demand": {
+            "type": "node_Murphys_PH_Water_Demand"
+        },
+        "node/New Melones Lake/Observed Storage": {
+            "type": "node_New_Melones_Lake_Observed_Storage"
+        },
+        "node/New Melones Lake/Storage Value": {
+            "type": "constant",
+            "value": 10
+        },
+        "node/New Melones PH/Water Demand": {
+            "type": "node_New_Melones_PH_Water_Demand"
+        },
         "node/New Spicer Meadow Reservoir/Storage Capacity": {
             "type": "constant",
             "value": 227.24
@@ -1632,6 +1742,9 @@
             "type": "constant",
             "value": 50
         },
+        "node/New Spicer Meadow Reservoir/Observed Storage": {
+            "type": "node_New_Spicer_Meadow_Reservoir_Observed_Storage"
+        },
         "node/New Spicer Meadow Reservoir/Turbine Capacity": {
             "type": "constant",
             "value": 7062.9400000000005
@@ -1639,6 +1752,10 @@
         "node/New Spicer Meadow Reservoir/Cloudiness Fraction": {
             "type": "constant",
             "value": 0.5
+        },
+        "node/New Spicer Meadow Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
         },
         "node/NF STANISLAUS DIV TU OL BL HOBART C_11293710/Observed Flow": {
             "type": "node_NF_STANISLAUS_DIV_TU_OL_BL_HOBART_C_11293710_Observed_Flow"
@@ -1660,6 +1777,9 @@
             "type": "constant",
             "value": 882.8675000000001
         },
+        "node/Phoenix PH/Water Demand": {
+            "type": "node_Phoenix_PH_Water_Demand"
+        },
         "node/Pinecrest Reservoir/Storage Capacity": {
             "type": "constant",
             "value": 22.58
@@ -1667,6 +1787,9 @@
         "node/Pinecrest Reservoir/Inactive Pool": {
             "type": "constant",
             "value": 4
+        },
+        "node/Pinecrest Reservoir/Observed Storage": {
+            "type": "node_Pinecrest_Reservoir_Observed_Storage"
         },
         "node/Pinecrest Reservoir/Cloudiness Fraction": {
             "type": "constant",
@@ -1680,6 +1803,10 @@
             "type": "constant",
             "value": 99
         },
+        "node/Pinecrest Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
+        },
         "node/Relief Reservoir/Storage Capacity": {
             "type": "constant",
             "value": 18.5
@@ -1688,9 +1815,16 @@
             "type": "constant",
             "value": 1.2
         },
+        "node/Relief Reservoir/Observed Storage": {
+            "type": "node_Relief_Reservoir_Observed_Storage"
+        },
         "node/Relief Reservoir/Cloudiness Fraction": {
             "type": "constant",
             "value": 0.5
+        },
+        "node/Relief Reservoir/Storage Value": {
+            "type": "constant",
+            "value": 10
         },
         "node/Sand Bar PH/Fixed Head": {
             "type": "constant",
@@ -1699,6 +1833,9 @@
         "node/Sand Bar PH/Turbine Capacity": {
             "type": "constant",
             "value": 21188.82
+        },
+        "node/Sand Bar PH/Water Demand": {
+            "type": "node_Sand_Bar_PH_Water_Demand"
         },
         "node/SF STANISLAUS R A STRAWBERRY CA_11296500/Observed Flow": {
             "type": "node_SF_STANISLAUS_R_A_STRAWBERRY_CA_11296500_Observed_Flow"
@@ -1717,6 +1854,9 @@
             "type": "constant",
             "value": 2083.5673
         },
+        "node/Spring Gap PH/Water Demand": {
+            "type": "node_Spring_Gap_PH_Water_Demand"
+        },
         "node/Stanislaus PH/Fixed Head": {
             "type": "constant",
             "value": 463.296
@@ -1724,6 +1864,9 @@
         "node/Stanislaus PH/Turbine Capacity": {
             "type": "constant",
             "value": 29311.201
+        },
+        "node/Stanislaus PH/Water Demand": {
+            "type": "node_Stanislaus_PH_Water_Demand"
         },
         "node/STN_01 Headflow/Runoff": {
             "type": "node_STN_01_Headflow_Runoff"
@@ -1800,6 +1943,13 @@
         "node/STN_25 Headflow/Runoff": {
             "type": "node_STN_25_Headflow_Runoff"
         },
+        "node/Tulloch Lake/Observed Storage": {
+            "type": "node_Tulloch_Lake_Observed_Storage"
+        },
+        "node/Tulloch Lake/Storage Value": {
+            "type": "constant",
+            "value": 10
+        },
         "node/USGS_11292610 DONNELLS PH/Observed Flow": {
             "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
         },
@@ -1838,6 +1988,10 @@
             "type": "NumpyArrayNodeRecorder",
             "node": "Angels PH [node]"
         },
+        "node/Angels PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Angels PH/Water Demand"
+        },
         "node/AVERY_11294500/observed flow": {
             "type": "NumpyArrayParameterRecorder",
             "parameter": "node/AVERY_11294500/Observed Flow"
@@ -1857,6 +2011,10 @@
         "node/Beardsley Reservoir/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "Beardsley Reservoir [node]"
+        },
+        "node/Beardsley Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Beardsley Reservoir/Observed Storage"
         },
         "node/BEAVER C DIV TO MCKAYS POINT RES NR ARNO_11295210/observed flow": {
             "type": "NumpyArrayParameterRecorder",
@@ -1894,13 +2052,25 @@
             "type": "NumpyArrayNodeRecorder",
             "node": "Collierville PH [node]"
         },
+        "node/Collierville PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Collierville PH/Water Demand"
+        },
         "node/Donnells PH/flow": {
             "type": "NumpyArrayNodeRecorder",
             "node": "Donnells PH [node]"
         },
+        "node/Donnells PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Donnells PH/Water Demand"
+        },
         "node/Donnells Reservoir/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "Donnells Reservoir [node]"
+        },
+        "node/Donnells Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Donnells Reservoir/Observed Storage"
         },
         "node/Gauge_Phoenix/observed flow": {
             "type": "NumpyArrayParameterRecorder",
@@ -2018,6 +2188,10 @@
             "type": "NumpyArrayStorageRecorder",
             "node": "Lyons Reservoir [node]"
         },
+        "node/Lyons Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Lyons Reservoir/Observed Storage"
+        },
         "node/MF STANISLAUS R A HELLS HALF ACRE BRIDGE_11292700/observed flow": {
             "type": "NumpyArrayParameterRecorder",
             "parameter": "node/MF STANISLAUS R A HELLS HALF ACRE BRIDGE_11292700/Observed Flow"
@@ -2054,17 +2228,33 @@
             "type": "NumpyArrayNodeRecorder",
             "node": "Murphys PH [node]"
         },
+        "node/Murphys PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Murphys PH/Water Demand"
+        },
         "node/New Melones Lake/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "New Melones Lake [node]"
+        },
+        "node/New Melones Lake/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/New Melones Lake/Observed Storage"
         },
         "node/New Melones PH/flow": {
             "type": "NumpyArrayNodeRecorder",
             "node": "New Melones PH [node]"
         },
+        "node/New Melones PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/New Melones PH/Water Demand"
+        },
         "node/New Spicer Meadow Reservoir/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "New Spicer Meadow Reservoir [node]"
+        },
+        "node/New Spicer Meadow Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/New Spicer Meadow Reservoir/Observed Storage"
         },
         "node/NF STANISLAUS DIV TU OL BL HOBART C_11293710/observed flow": {
             "type": "NumpyArrayParameterRecorder",
@@ -2106,17 +2296,33 @@
             "type": "NumpyArrayNodeRecorder",
             "node": "Phoenix PH [node]"
         },
+        "node/Phoenix PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Phoenix PH/Water Demand"
+        },
         "node/Pinecrest Reservoir/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "Pinecrest Reservoir [node]"
+        },
+        "node/Pinecrest Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Pinecrest Reservoir/Observed Storage"
         },
         "node/Relief Reservoir/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "Relief Reservoir [node]"
         },
+        "node/Relief Reservoir/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Relief Reservoir/Observed Storage"
+        },
         "node/Sand Bar PH/flow": {
             "type": "NumpyArrayNodeRecorder",
             "node": "Sand Bar PH [node]"
+        },
+        "node/Sand Bar PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Sand Bar PH/Water Demand"
         },
         "node/SF STANISLAUS R A STRAWBERRY CA_11296500/observed flow": {
             "type": "NumpyArrayParameterRecorder",
@@ -2146,9 +2352,17 @@
             "type": "NumpyArrayNodeRecorder",
             "node": "Spring Gap PH [node]"
         },
+        "node/Spring Gap PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Spring Gap PH/Water Demand"
+        },
         "node/Stanislaus PH/flow": {
             "type": "NumpyArrayNodeRecorder",
             "node": "Stanislaus PH [node]"
+        },
+        "node/Stanislaus PH/water demand": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Stanislaus PH/Water Demand"
         },
         "node/STN-L-DEL1 Outflow/outflow": {
             "type": "NumpyArrayNodeRecorder",
@@ -2365,6 +2579,10 @@
         "node/Tulloch Lake/storage": {
             "type": "NumpyArrayStorageRecorder",
             "node": "Tulloch Lake [node]"
+        },
+        "node/Tulloch Lake/observed storage": {
+            "type": "NumpyArrayParameterRecorder",
+            "parameter": "node/Tulloch Lake/Observed Storage"
         },
         "node/USGS_11292610 DONNELLS PH/observed flow": {
             "type": "NumpyArrayParameterRecorder",
