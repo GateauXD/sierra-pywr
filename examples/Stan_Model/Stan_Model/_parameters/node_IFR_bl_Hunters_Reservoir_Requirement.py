@@ -1,3 +1,4 @@
+import datetime
 from parameters import WaterLPParameter
 
 from utilities.converter import convert
@@ -9,12 +10,12 @@ class node_IFR_bl_Hunters_Reservoir_Requirement(WaterLPParameter):
         
         management = "BAU"
         path = "Management/{mgt}/IFRs/blHuntersReservoir_daily.csv".format(mgt=management)
-        data = self.read_csv(path, usecols=[0,1, index_col=0, header=None, names=['date','Req'], parse_dates=False)
+        data = self.read_csv(path, usecols=[0, 1], index_col=0, header=None, names=['date','Req'], parse_dates=False)
         if timestep.datetime.month >= 10:
-        	dt = datetime.date(1999, timestep.datetime.month, timestep.datetime.day)
+            dt = "1999-{:02d}-{:02d}".format(timestep.month, timestep.day)
         else:
-        	dt = datetime.date(2000, timestep.datetime.month, timestep.datetime.day)
-        return data['Req'][dt]
+            dt = "2000-{:02d}-{:02d}".format(timestep.month, timestep.day)
+        return float(data['Req'][dt])
         
     def value(self, timestep, scenario_index):
         return convert(self._value(timestep, scenario_index), "m^3 s^-1", "m^3 day^-1", scale_in=1, scale_out=1000000.0)

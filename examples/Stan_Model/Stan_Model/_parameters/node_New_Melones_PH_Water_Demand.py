@@ -4,13 +4,15 @@ from utilities.converter import convert
 
 class node_New_Melones_PH_Water_Demand(WaterLPParameter):
     """"""
-
+    # TODO ADD A TURBINE CAPACITY
     def _value(self, timestep, scenario_index):
-        kwargs = dict(timestep=timestep, scenario_index=scenario_index)
-        return =self.GET("node/89468/1615", **kwargs)
-        
+        TC = self.model.parameters["node/Donnells PH/Turbine Capacity"].value(timestep, scenario_index)
+        qDemand = TC * 3600 * 6
+        return qDemand
+
     def value(self, timestep, scenario_index):
-        return convert(self._value(timestep, scenario_index), "m^3 s^-1", "m^3 day^-1", scale_in=1, scale_out=1000000.0)
+        m3day_to_millionm3 = 0.000001
+        return self._value(timestep, scenario_index) * m3day_to_millionm3
 
     @classmethod
     def load(cls, model, data):

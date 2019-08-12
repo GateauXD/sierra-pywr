@@ -5,8 +5,8 @@
         "minimum_version": "1.0.0"
     },
     "timestepper": {
-        "start": "1980-10-01",
-        "end": "2006-09-30",
+        "start": "2009-10-01",
+        "end": "2010-09-30",
         "timestep": 1
     },
     "solver": {
@@ -15,38 +15,31 @@
     "nodes": [
         {
             "name": "Donnells Diversion [link]",
-            "type": "Link",
-            "max_flow": "link/Donnells Diversion/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "Lower Collierville Tunnel 1 [link]",
-            "type": "Link",
-            "max_flow": "link/Lower Collierville Tunnel 1/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "Lower Collierville Tunnel 2 [link]",
-            "type": "Link",
-            "max_flow": "link/Lower Collierville Tunnel 2/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "Philadelphia Aqueduct [link]",
-            "type": "Link",
-            "max_flow": "link/Philadelphia Aqueduct/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "Sand Bar Power Tunnel [link]",
-            "type": "Link",
-            "max_flow": "link/Sand Bar Power Tunnel/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "Stanislaus Tunnel [link]",
-            "type": "Link",
-            "max_flow": "link/Stanislaus Tunnel/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "USGS_11293580_NF STAN R DIV TUNNEL [link]",
-            "type": "Link",
-            "max_flow": "link/USGS_11293580_NF STAN R DIV TUNNEL/Flow Capacity"
+            "type": "Link"
         },
         {
             "name": "ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700 [node]",
@@ -69,7 +62,18 @@
         {
             "name": "Angels PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Angels PH/Water Demand"
+            "max_flows": [
+                "node/Angels PH/Water Demand",
+                "node/Angels PH/Water Demand",
+                "node/Angels PH/Water Demand",
+                "node/Angels PH/Water Demand"
+              ],
+            "costs": [
+                "node/Angels PH/Cost_1",
+                "node/Angels PH/Cost_2",
+                "node/Angels PH/Cost_3",
+                "node/Angels PH/Cost_4"
+              ]
         },
         {
             "name": "Angles Canal Outflow [node]",
@@ -146,7 +150,18 @@
         {
             "name": "Collierville PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Collierville PH/Water Demand"
+            "max_flows": [
+                "node/Collierville PH/Water Demand",
+                "node/Collierville PH/Water Demand",
+                "node/Collierville PH/Water Demand",
+                "node/Collierville PH/Water Demand"
+              ],
+            "costs": [
+                "node/Collierville PH/Cost_1",
+                "node/Collierville PH/Cost_2",
+                "node/Collierville PH/Cost_3",
+                "node/Collierville PH/Cost_4"
+              ]
         },
         {
             "name": "Collierville Tunnel Inflow [node]",
@@ -163,7 +178,18 @@
         {
             "name": "Donnells PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Donnells PH/Water Demand"
+            "max_flows": [
+                "node/Donnells PH/Water Demand",
+                "node/Donnells PH/Water Demand",
+                "node/Donnells PH/Water Demand",
+                "node/Donnells PH/Water Demand"
+              ],
+            "costs": [
+                "node/Donnells PH/Cost_1",
+                "node/Donnells PH/Cost_2",
+                "node/Donnells PH/Cost_3",
+                "node/Donnells PH/Cost_4"
+              ]
         },
         {
             "name": "Donnells Reservoir [node]",
@@ -336,7 +362,18 @@
         {
             "name": "Murphys PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Murphys PH/Water Demand"
+            "max_flows": [
+                "node/Murphys PH/Water Demand",
+                "node/Murphys PH/Water Demand",
+                "node/Murphys PH/Water Demand",
+                "node/Murphys PH/Water Demand"
+            ],
+            "costs": [
+                "node/Murphys PH/Cost_1",
+                "node/Murphys PH/Cost_2",
+                "node/Murphys PH/Cost_3",
+                "node/Murphys PH/Cost_4"
+              ]
         },
         {
             "name": "New Melones Lake [node]",
@@ -348,7 +385,18 @@
         {
             "name": "New Melones PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/New Melones PH/Water Demand"
+            "max_flows": [
+                "node/New Melones PH/Water Demand",
+                "node/New Melones PH/Water Demand",
+                "node/New Melones PH/Water Demand",
+                "node/New Melones PH/Water Demand"
+            ],
+            "costs": [
+                "node/New Melones PH/Cost_1",
+                "node/New Melones PH/Cost_2",
+                "node/New Melones PH/Cost_3",
+                "node/New Melones PH/Cost_4"
+              ]
         },
         {
             "name": "New Spicer Meadow Reservoir [node]",
@@ -403,7 +451,18 @@
         {
             "name": "Phoenix PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Phoenix PH/Water Demand"
+            "max_flows": [
+                "node/Phoenix PH/Water Demand",
+                "node/Phoenix PH/Water Demand",
+                "node/Phoenix PH/Water Demand",
+                "node/Phoenix PH/Water Demand"
+            ],
+            "costs": [
+                "node/Phoenix PH/Cost_1",
+                "node/Phoenix PH/Cost_2",
+                "node/Phoenix PH/Cost_3",
+                "node/Phoenix PH/Cost_4"
+              ]
         },
         {
             "name": "Pinecrest Reservoir [node]",
@@ -424,7 +483,18 @@
         {
             "name": "Sand Bar PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Sand Bar PH/Water Demand"
+            "max_flows": [
+                "node/Sand Bar PH/Water Demand",
+                "node/Sand Bar PH/Water Demand",
+                "node/Sand Bar PH/Water Demand",
+                "node/Sand Bar PH/Water Demand"
+            ],
+            "costs": [
+                "node/Sand Bar PH/Cost_1",
+                "node/Sand Bar PH/Cost_2",
+                "node/Sand Bar PH/Cost_3",
+                "node/Sand Bar PH/Cost_4"
+              ]
         },
         {
             "name": "Sand Bar Power Tunnel Inflow [node]",
@@ -465,7 +535,18 @@
         {
             "name": "Spring Gap PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Spring Gap PH/Water Demand"
+            "max_flows": [
+                "node/Spring Gap PH/Water Demand",
+                "node/Spring Gap PH/Water Demand",
+                "node/Spring Gap PH/Water Demand",
+                "node/Spring Gap PH/Water Demand"
+            ],
+            "costs": [
+                "node/Spring Gap PH/Cost_1",
+                "node/Spring Gap PH/Cost_2",
+                "node/Spring Gap PH/Cost_3",
+                "node/Spring Gap PH/Cost_4"
+              ]
         },
         {
             "name": "STANI-N-INF1 [node]",
@@ -488,7 +569,18 @@
         {
             "name": "Stanislaus PH [node]",
             "type": "PiecewiseLink",
-            "max_flow": "node/Stanislaus PH/Water Demand"
+            "max_flows": [
+                "node/Stanislaus PH/Water Demand",
+                "node/Stanislaus PH/Water Demand",
+                "node/Stanislaus PH/Water Demand",
+                "node/Stanislaus PH/Water Demand"
+            ],
+            "costs": [
+                "node/Stanislaus PH/Cost_1",
+                "node/Stanislaus PH/Cost_2",
+                "node/Stanislaus PH/Cost_3",
+                "node/Stanislaus PH/Cost_4"
+              ]
         },
         {
             "name": "Stanislaus Tunnel Inflow [node]",
@@ -1478,30 +1570,6 @@
         ]
     ],
     "parameters": {
-        "link/Donnells Diversion/Flow Capacity": {
-            "type": "link_Donnells_Diversion_Flow_Capacity"
-        },
-        "link/Lower Collierville Tunnel 1/Flow Capacity": {
-            "type": "link_Lower_Collierville_Tunnel_1_Flow_Capacity"
-        },
-        "link/Lower Collierville Tunnel 2/Flow Capacity": {
-            "type": "link_Lower_Collierville_Tunnel_2_Flow_Capacity"
-        },
-        "link/Philadelphia Aqueduct/Flow Capacity": {
-            "type": "link_Philadelphia_Aqueduct_Flow_Capacity"
-        },
-        "link/Sand Bar Power Tunnel/Flow Capacity": {
-            "type": "link_Sand_Bar_Power_Tunnel_Flow_Capacity"
-        },
-        "link/Stanislaus Tunnel/Flow Capacity": {
-            "type": "link_Stanislaus_Tunnel_Flow_Capacity"
-        },
-        "link/USGS_11293580_NF STAN R DIV TUNNEL/Flow Capacity": {
-            "type": "link_USGS_11293580_NF_STAN_R_DIV_TUNNEL_Flow_Capacity"
-        },
-        "node/ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700/Observed Flow": {
-            "type": "node_ANGELS_C_BL_UTICA_D_DIV_DAM_NR_MURPHYS_CA_11298700_Observed_Flow"
-        },
         "node/Angels PH/Fixed Head": {
             "type": "constant",
             "value": 135.3
@@ -1512,6 +1580,18 @@
         },
         "node/Angels PH/Water Demand": {
             "type": "node_Angels_PH_Water_Demand"
+        },
+        "node/Angels PH/Cost_1": {
+          "type": "node_Angels_PH_Cost_1"
+        },
+        "node/Angels PH/Cost_2": {
+          "type": "node_Angels_PH_Cost_2"
+        },
+        "node/Angels PH/Cost_3": {
+          "type": "node_Angels_PH_Cost_3"
+        },
+        "node/Angels PH/Cost_4": {
+          "type": "node_Angels_PH_Cost_4"
         },
         "node/AVERY_11294500/Observed Flow": {
             "type": "node_AVERY_11294500_Observed_Flow"
@@ -1565,6 +1645,18 @@
         "node/Collierville PH/Water Demand": {
             "type": "node_Collierville_PH_Water_Demand"
         },
+        "node/Collierville PH/Cost_1": {
+          "type": "node_Collierville_PH_Cost_1"
+        },
+        "node/Collierville PH/Cost_2": {
+          "type": "node_Collierville_PH_Cost_2"
+        },
+        "node/Collierville PH/Cost_3": {
+          "type": "node_Collierville_PH_Cost_3"
+        },
+        "node/Collierville PH/Cost_4": {
+          "type": "node_Collierville_PH_Cost_4"
+        },
         "node/Donnells PH/Fixed Head": {
             "type": "constant",
             "value": 350.8
@@ -1575,6 +1667,18 @@
         },
         "node/Donnells PH/Water Demand": {
             "type": "node_Donnells_PH_Water_Demand"
+        },
+        "node/Donnells PH/Cost_1": {
+          "type": "node_Donnells_PH_Cost_1"
+        },
+        "node/Donnells PH/Cost_2": {
+          "type": "node_Donnells_PH_Cost_2"
+        },
+        "node/Donnells PH/Cost_3": {
+          "type": "node_Donnells_PH_Cost_3"
+        },
+        "node/Donnells PH/Cost_4": {
+          "type": "node_Donnells_PH_Cost_4"
         },
         "node/Donnells Reservoir/Storage Capacity": {
             "type": "constant",
@@ -1594,9 +1698,6 @@
         "node/Donnells Reservoir/Storage Value": {
             "type": "constant",
             "value": 10
-        },
-        "node/Gauge_Phoenix/Observed Flow": {
-            "type": "node_Gauge_Phoenix_Observed_Flow"
         },
         "node/HIGHLAND CREEK BELOW NEW SPICER_11294000/Observed Flow": {
             "type": "node_HIGHLAND_CREEK_BELOW_NEW_SPICER_11294000_Observed_Flow"
@@ -1724,6 +1825,18 @@
         "node/Murphys PH/Water Demand": {
             "type": "node_Murphys_PH_Water_Demand"
         },
+        "node/Murphys PH/Cost_1": {
+          "type": "node_Murphys_PH_Cost_1"
+        },
+        "node/Murphys PH/Cost_2": {
+          "type": "node_Murphys_PH_Cost_2"
+        },
+        "node/Murphys PH/Cost_3": {
+          "type": "node_Murphys_PH_Cost_3"
+        },
+        "node/Murphys PH/Cost_4": {
+          "type": "node_Murphys_PH_Cost_4"
+        },
         "node/New Melones Lake/Observed Storage": {
             "type": "node_New_Melones_Lake_Observed_Storage"
         },
@@ -1731,8 +1844,24 @@
             "type": "constant",
             "value": 10
         },
+        "node/New Melones PH/Turbine Capacity": {
+            "type": "constant",
+            "value": 882.8675000000001
+        },
         "node/New Melones PH/Water Demand": {
             "type": "node_New_Melones_PH_Water_Demand"
+        },
+        "node/New Melones PH/Cost_1": {
+          "type": "node_New_Melones_PH_Cost_1"
+        },
+        "node/New Melones PH/Cost_2": {
+          "type": "node_New_Melones_PH_Cost_2"
+        },
+        "node/New Melones PH/Cost_3": {
+          "type": "node_New_Melones_PH_Cost_3"
+        },
+        "node/New Melones PH/Cost_4": {
+          "type": "node_New_Melones_PH_Cost_4"
         },
         "node/New Spicer Meadow Reservoir/Storage Capacity": {
             "type": "constant",
@@ -1779,6 +1908,18 @@
         },
         "node/Phoenix PH/Water Demand": {
             "type": "node_Phoenix_PH_Water_Demand"
+        },
+        "node/Phoenix PH/Cost_1": {
+          "type": "node_Phoenix_PH_Cost_1"
+        },
+        "node/Phoenix PH/Cost_2": {
+          "type": "node_Phoenix_PH_Cost_2"
+        },
+        "node/Phoenix PH/Cost_3": {
+          "type": "node_Phoenix_PH_Cost_3"
+        },
+        "node/Phoenix PH/Cost_4": {
+          "type": "node_Phoenix_PH_Cost_4"
         },
         "node/Pinecrest Reservoir/Storage Capacity": {
             "type": "constant",
@@ -1837,6 +1978,18 @@
         "node/Sand Bar PH/Water Demand": {
             "type": "node_Sand_Bar_PH_Water_Demand"
         },
+        "node/Sand Bar PH/Cost_1": {
+          "type": "node_Sand_Bar_PH_Cost_1"
+        },
+        "node/Sand Bar PH/Cost_2": {
+          "type": "node_Sand_Bar_PH_Cost_2"
+        },
+        "node/Sand Bar PH/Cost_3": {
+          "type": "node_Sand_Bar_PH_Cost_3"
+        },
+        "node/Sand Bar PH/Cost_4": {
+          "type": "node_Sand_Bar_PH_Cost_4"
+        },
         "node/SF STANISLAUS R A STRAWBERRY CA_11296500/Observed Flow": {
             "type": "node_SF_STANISLAUS_R_A_STRAWBERRY_CA_11296500_Observed_Flow"
         },
@@ -1857,6 +2010,18 @@
         "node/Spring Gap PH/Water Demand": {
             "type": "node_Spring_Gap_PH_Water_Demand"
         },
+        "node/Spring Gap PH/Cost_1": {
+          "type": "node_Spring_Gap_PH_Cost_1"
+        },
+        "node/Spring Gap PH/Cost_2": {
+          "type": "node_Spring_Gap_PH_Cost_2"
+        },
+        "node/Spring Gap PH/Cost_3": {
+          "type": "node_Spring_Gap_PH_Cost_3"
+        },
+        "node/Spring Gap PH/Cost_4": {
+          "type": "node_Spring_Gap_PH_Cost_4"
+        },
         "node/Stanislaus PH/Fixed Head": {
             "type": "constant",
             "value": 463.296
@@ -1867,6 +2032,18 @@
         },
         "node/Stanislaus PH/Water Demand": {
             "type": "node_Stanislaus_PH_Water_Demand"
+        },
+        "node/Stanislaus PH/Cost_1": {
+          "type": "node_Stanislaus_PH_Cost_1"
+        },
+        "node/Stanislaus PH/Cost_2": {
+          "type": "node_Stanislaus_PH_Cost_2"
+        },
+        "node/Stanislaus PH/Cost_3": {
+          "type": "node_Stanislaus_PH_Cost_3"
+        },
+        "node/Stanislaus PH/Cost_4": {
+          "type": "node_Stanislaus_PH_Cost_4"
         },
         "node/STN_01 Headflow/Runoff": {
             "type": "node_STN_01_Headflow_Runoff"
@@ -1973,13 +2150,45 @@
         },
         "WYI_SJValley": {
             "type": "WYI_SJValley"
+        },
+        "node/Angels PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Collierville PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Donnells PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Murphys PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/New Melones PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Phoenix PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Sand Bar PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Spring Gap PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
+        },
+        "node/Stanislaus PH/Demand Constant": {
+            "type": "constant",
+            "value": 100
         }
     },
     "recorders": {
-        "node/ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700/observed flow": {
-            "type": "NumpyArrayParameterRecorder",
-            "parameter": "node/ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700/Observed Flow"
-        },
         "node/ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700/flow": {
             "type": "NumpyArrayNodeRecorder",
             "node": "ANGELS C BL UTICA D DIV DAM NR MURPHYS CA_11298700 [node]"
@@ -2071,10 +2280,6 @@
         "node/Donnells Reservoir/observed storage": {
             "type": "NumpyArrayParameterRecorder",
             "parameter": "node/Donnells Reservoir/Observed Storage"
-        },
-        "node/Gauge_Phoenix/observed flow": {
-            "type": "NumpyArrayParameterRecorder",
-            "parameter": "node/Gauge_Phoenix/Observed Flow"
         },
         "node/Gauge_Phoenix/flow": {
             "type": "NumpyArrayNodeRecorder",

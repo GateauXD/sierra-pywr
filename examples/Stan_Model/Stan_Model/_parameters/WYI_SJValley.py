@@ -1,3 +1,4 @@
+import pandas as pd
 from parameters import WaterLPParameter
 
 from utilities.converter import convert
@@ -5,12 +6,9 @@ from utilities.converter import convert
 class WYI_SJValley(WaterLPParameter):
     """"""
 
-    def _value(self, timestep, scenario_index):
-        
-        return Scenarios/Livneh/WYT/SJVI.csv
-        
     def value(self, timestep, scenario_index):
-        return convert(self._value(timestep, scenario_index), "ac-ft", "m^3", scale_in=1000000, scale_out=1000000.0)
+        return pd.read_csv("s3_imports/SJVI.csv", index_col=0, header=0, parse_dates=False,
+                           squeeze=True).loc[timestep.year]
 
     @classmethod
     def load(cls, model, data):

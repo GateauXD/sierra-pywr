@@ -41,7 +41,7 @@ def load_model(root_dir, model_path, bucket=None, network_key=None, check_graph=
     return ret
 
 
-root_dir = os.path.join(os.getcwd(), 'stanislaus_demo')
+root_dir = os.path.join(os.getcwd(), 'Stan_Model')
 bucket = 'openagua-networks'
 model_path = os.path.join(root_dir, 'pywr_model.json')
 network_key = os.environ.get('NETWORK_KEY')
@@ -56,7 +56,7 @@ step = None
 # run model
 # note that tqdm + step adds a little bit of overhead.
 # use model.run() instead if seeing progress is not important
-path = 's3://{}/{}/'.format(bucket, network_key) + 'Scenarios/Livneh/energy_netDemand.csv'
+path = "s3_imports/energy_netDemand.csv"
 energy_data = pd.read_csv(path, usecols=[0,1,2,3], index_col=0, header=None, names=['day','TotDemand','MaxDemand','MinDemand'], parse_dates=False)
 
 for step in tqdm(timesteps, ncols=80):
