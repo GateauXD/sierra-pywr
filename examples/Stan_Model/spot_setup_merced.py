@@ -6,7 +6,7 @@ import subprocess
 
 from spotpy.objectivefunctions import rmse
 
-root_dir = os.path.join(os.getcwd(), 'stanislaus_demo')
+root_dir = os.path.join(os.getcwd(), 'Stan_Model')
 bucket = 'openagua-networks'
 model_path = os.path.join(root_dir, 'pywr_model.json')
 network_key = os.environ.get('NETWORK_KEY')
@@ -20,7 +20,7 @@ class SpotSetup(object):
     def __init__(self, used_algorithm='default'):
         self.used_algorithm = used_algorithm
         # Generating Parameter Values via CSV
-        parameters_csv = pd.read_csv("stanislaus_demo/input_csvs/parameters.csv")
+        parameters_csv = pd.read_csv("Stan_Model/input_csvs/parameters.csv")
         self.params = []
         for index in range(0, len(parameters_csv)):
             self.params.append(spotpy.parameter.Uniform(parameters_csv.iloc[index, 0],
@@ -31,8 +31,8 @@ class SpotSetup(object):
 
         # Generating Evaluation Data via CSV
         self.evaluation_data = np.array([])
-        evaluation_csv = pd.read_csv("stanislaus_demo/input_csvs/evaluation.csv")
-        results = pd.read_csv("stanislaus_demo/results.csv")
+        evaluation_csv = pd.read_csv("Stan_Model/input_csvs/evaluation.csv")
+        results = pd.read_csv("Stan_Model/results.csv")
         for index in range(0, len(evaluation_csv)):
             self.evaluation_data = np.append(self.evaluation_data, results[evaluation_csv.iloc[index]][1:])
         del evaluation_csv, results
@@ -49,7 +49,7 @@ class SpotSetup(object):
         # Simulate the model in another file simulation_run.py
         proc = subprocess.run(['python', 'simulation_run.py',
                                model_path, root_dir, bucket, network_key, str(parameters)], stdout=subprocess.PIPE)
-        return np.load("stanislaus_demo/model_output.npy")
+        return np.load("Stan_Model/model_output.npy")
 
     def evaluation(self):
         # Returns the observed data

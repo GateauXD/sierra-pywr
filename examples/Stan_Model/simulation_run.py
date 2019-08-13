@@ -12,7 +12,7 @@ def evaluate_model(model_path, root_dir, bucket, network_key, parameters):
     with open(model_path, "r") as f:
         data = json.load(f)
 
-    parameters_csv = pd.read_csv("stanislaus_demo/input_csvs/parameters.csv")
+    parameters_csv = pd.read_csv("Stan_Model/input_csvs/parameters.csv")
     for index in range(0, len(parameters_csv)):
         data['parameters'][parameters_csv.iloc[index, 0]]['value'] = parameters[index]
     del parameters_csv
