@@ -23,11 +23,11 @@ final_csv = None
 
 def add_data(final_csv, prefix):
     results_csv = pd.read_csv(os.getcwd() + "\\" + model_folder + "\\" + model_name + "\\" + "results.csv")
-    results_csv.add_prefix(prefix)
+    results_csv = results_csv.add_prefix(prefix + "/")
     if final_csv is None:
         final_csv = results_csv
     else:
-        final_csv.join(results_csv)
+        final_csv = final_csv.join(results_csv)
     return final_csv
 
 def run_model():
@@ -43,14 +43,14 @@ for folder in folder_names:
     # Copy the Runoff files to the model
     src_files = os.listdir(os.getcwd() + "\\" + climate_change_folder + "\\" + folder)
     for file_name in src_files:
-        file_path = os.path.join(os.getcwd() + "\\" + climate_change_folder + "\\" + folder, file_name)
+        file_path = os.path.joisn(os.getcwd() + "\\" + climate_change_folder + "\\" + folder, file_name)
         shutil.copy(file_path, dest)
 
     # Run the model
+    print("Running Model " + str(folder))
     run_model()
     os.chdir("..")
-
     prefix = folder
     final_csv = add_data(final_csv, prefix)
 
-final_csv.to_csv(root_dir + "\\climate_change.csv")
+final_csv.to_csv(os.getcwd() + "\\climate_change.csv")
