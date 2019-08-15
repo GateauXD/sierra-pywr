@@ -26,7 +26,7 @@ class node_MID_Northside_Demand(WaterLPParameter):
         else:
             year_type = "Wet"
 
-        return pd.read_csv("policies/MID_WYT_average_diversion_Main.csv", index_col=0, header=0, squeeze=True).loc[
+        return pd.read_csv("policies/MID_WYT_average_diversion_Northside.csv", index_col=0, header=0, squeeze=True).loc[
                    ts, year_type] / m3_to_cfs
         
     def value(self, timestep, scenario_index):
