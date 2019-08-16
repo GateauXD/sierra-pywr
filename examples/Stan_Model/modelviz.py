@@ -4,7 +4,7 @@ import json
 
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
-with open("stanislaus_demo/pywr_model.json") as f:
+with open("Stan_Model/pywr_model.json") as f:
     model = json.load(f)
 
 dot = Digraph(comment='System')

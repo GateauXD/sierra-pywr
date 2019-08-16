@@ -901,6 +901,42 @@
       "type": "RiverGauge",
       "mrf": 0.0,
       "mrf_cost": 0.0
+    },
+    {
+      "name": "Release from New Melones [node]",
+      "type": "Link",
+      "min_flow": "node/Release from New Melones [node]/Requirement",
+      "max_flow": "node/Release from New Melones [node]/Requirement"
+    },
+    {
+      "name": "New Melones Flood Control [node]",
+      "type": "InstreamFlowRequirement",
+      "mrf": "node/New Melones Flood Control [node]/Requirement",
+      "mrf_cost": "node/New Melones Flood Control [node]/Violation Cost"
+    },
+    {
+      "name": "STAN-L-CON 1",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 2",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 3",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 4",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 5",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 6",
+      "type": "Link"
     }
   ],
   "edges": [
@@ -1538,7 +1574,51 @@
     ],
     [
       "New Melones Lake [node]",
+      "STAN-L-CON 1"
+    ],
+    [
+      "STAN-L-CON 1",
+      "Release from New Melones [node]"
+    ],
+    [
+      "Release from New Melones [node]",
+      "STAN-L-CON 2"
+    ],
+    [
+      "STAN-L-CON 2",
       "New Melones PH [node]"
+    ],
+    [
+      "New Melones PH [node]",
+      "STAN-L-CON 3"
+    ],
+    [
+      "STAN-L-CON 3",
+      "Tulloch Lake [node]"
+    ],
+    [
+      "Release from New Melones [node]",
+      "STAN-L-CON 4"
+    ],
+    [
+      "STAN-L-CON 4",
+      "Tulloch Lake [node]"
+    ],
+    [
+      "New Melones Lake [node]",
+      "STAN-L-CON 5"
+    ],
+    [
+      "STAN-L-CON 5",
+      "New Melones Flood Control [node]"
+    ],
+    [
+      "New Melones Flood Control [node]",
+      "STAN-L-CON 6"
+    ],
+    [
+      "STAN-L-CON 6",
+      "Tulloch Lake [node]"
     ],
     [
       "STN_R-N-JUN1 [node]",
@@ -1551,10 +1631,6 @@
     [
       "Tulloch Lake [node]",
       "STN_R-N-JUN1 [node]"
-    ],
-    [
-      "New Melones PH [node]",
-      "Tulloch Lake [node]"
     ],
     [
       "USGS_11293580_NF STAN R DIV TUNNEL [node]",
@@ -1570,6 +1646,30 @@
     ]
   ],
   "parameters": {
+    "node/New Melones Flood Control [node]/Violation Cost": {
+      "type": "controlcurveinterpolated",
+      "storage_node": "New Melones Lake [node]",
+      "control_curves": [
+        "node/Lake McClure/Storage Demand"
+      ],
+      "values": [
+        -5000.0,
+        0.0,
+        0.0
+      ]
+    },
+    "node/New Melones Flood Control [node]/Requirement": {
+      "type": "controlcurveinterpolated",
+      "storage_node": "New Melones Lake [node]",
+      "control_curves": [
+        "node/Lake McClure/Storage Demand"
+      ],
+      "values": [
+        10000,
+        0.0,
+        0.0
+      ]
+    },
     "node/Angels PH/Fixed Head": {
       "type": "constant",
       "value": 135.3
@@ -1615,8 +1715,47 @@
       "value": 17.556
     },
     "node/Beardsley Reservoir/Storage Value": {
-      "type": "constant",
-      "value": 16.94282388950708
+      "type": "node_Beardsley_Reservoir_Storage_Value",
+      "value": -88.6324844064964
+    },
+    "node/Beardsley Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Beardsley Reservoir [node]",
+      "values": [
+        953.1,
+        963.2,
+        966.2,
+        969.3,
+        972.3,
+        975.4,
+        978.4,
+        981.5,
+        987.6,
+        993.6,
+        1002.8,
+        1011.9,
+        1021.1,
+        1027.2,
+        1035.7
+      ],
+      "volumes": [
+        0,
+        0.05,
+        0.33,
+        0.85,
+        1.69,
+        2.92,
+        4.67,
+        7.05,
+        14.3,
+        24.04,
+        40.81,
+        60.17,
+        81.87,
+        97.65,
+        121.45
+      ],
+      "kind": "cubic"
     },
     "node/BEAVER C DIV TO MCKAYS POINT RES NR ARNO_11295210/Observed Flow": {
       "type": "node_BEAVER_C_DIV_TO_MCKAYS_POINT_RES_NR_ARNO_11295210_Observed_Flow"
@@ -1688,8 +1827,49 @@
       "type": "node_Donnells_Reservoir_Observed_Storage"
     },
     "node/Donnells Reservoir/Storage Value": {
-      "type": "constant",
-      "value": 85.855977866501
+      "type": "node_Donnells_Reservoir_Storage_Value",
+      "value": -79.310062028757
+    },
+    "node/Donnells Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Donnells Reservoir [node]",
+      "values": [
+        1411.5,
+        1438.7,
+        1440.2,
+        1441.7,
+        1443.2,
+        1444.8,
+        1447.8,
+        1450.8,
+        1453.9,
+        1456.9,
+        1460,
+        1463,
+        1469.1,
+        1478.3,
+        1487.4,
+        1498.7
+      ],
+      "volumes": [
+        0,
+        2.65,
+        3.51,
+        4.6,
+        5.83,
+        7.19,
+        10.14,
+        13.32,
+        16.52,
+        19.97,
+        23.55,
+        27.25,
+        35.02,
+        47.72,
+        61.4,
+        79.83
+      ],
+      "kind": "cubic"
     },
     "node/HIGHLAND CREEK BELOW NEW SPICER_11294000/Observed Flow": {
       "type": "node_HIGHLAND_CREEK_BELOW_NEW_SPICER_11294000_Observed_Flow"
@@ -1787,8 +1967,37 @@
       "type": "node_Lyons_Reservoir_Observed_Storage"
     },
     "node/Lyons Reservoir/Storage Value": {
-      "type": "constant",
-      "value": 87.730369886277
+      "type": "node_Lyons_Reservoir_Storage_Value",
+      "value": -24.20515027627175
+    },
+    "node/Lyons Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Lyons Reservoir [node]",
+      "values": [
+        1248.1,
+        1266.1,
+        1267.7,
+        1269.2,
+        1272.2,
+        1275.3,
+        1278.3,
+        1281.4,
+        1284.4,
+        1286.3
+      ],
+      "volumes": [
+        0,
+        0.04,
+        0.12,
+        0.23,
+        0.58,
+        1.12,
+        1.96,
+        3.2,
+        4.82,
+        7.5
+      ],
+      "kind": "cubic"
     },
     "node/MF STANISLAUS R A HELLS HALF ACRE BRIDGE_11292700/Observed Flow": {
       "type": "node_MF_STANISLAUS_R_A_HELLS_HALF_ACRE_BRIDGE_11292700_Observed_Flow"
@@ -1829,8 +2038,8 @@
       "type": "node_New_Melones_Lake_Observed_Storage"
     },
     "node/New Melones Lake/Storage Value": {
-      "type": "constant",
-      "value": -63.3773572163445
+      "type": "node_New_Melones_Reservoir_Storage_Value",
+      "value": 68.1284479160352
     },
     "node/New Melones PH/Turbine Capacity": {
       "type": "constant",
@@ -1851,6 +2060,9 @@
     "node/New Melones PH/Cost_4": {
       "type": "node_New_Melones_PH_Cost_4"
     },
+    "node/Release from New Melones [node]/Requirement": {
+      "type": "New_Melones_Release_Policy"
+    },
     "node/New Spicer Meadow Reservoir/Storage Capacity": {
       "type": "constant",
       "value": 227.24
@@ -1867,8 +2079,41 @@
       "value": 5.66
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
-      "type": "constant",
-      "value": -46.2060281185217
+      "type": "node_New_Spicer_Meadow_Reservoir_Storage_Value",
+      "value": -17.1570280094693
+    },
+    "node/New Spicer Meadow Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "New Spicer Meadow Reservoir [node]",
+      "values": [
+        1940.1,
+        1956.8,
+        1962.9,
+        1969,
+        1975.1,
+        1981.2,
+        1987.3,
+        1993.4,
+        1999.5,
+        2005.6,
+        2011.7,
+        2015.9
+      ],
+      "volumes": [
+        0,
+        5.8,
+        11.47,
+        19.12,
+        29.32,
+        43.41,
+        61.77,
+        85.88,
+        116.96,
+        154.49,
+        197.65,
+        227.24
+      ],
+      "kind": "cubic"
     },
     "node/NF STANISLAUS DIV TU OL BL HOBART C_11293710/Observed Flow": {
       "type": "node_NF_STANISLAUS_DIV_TU_OL_BL_HOBART_C_11293710_Observed_Flow"
@@ -1917,8 +2162,37 @@
       "type": "node_Pinecrest_Reservoir_Observed_Storage"
     },
     "node/Pinecrest Reservoir/Storage Value": {
-      "type": "constant",
-      "value": -33.41728083462536
+      "type": "node_Pinecrest_Reservoir_Storage_Value",
+      "value": -54.2370831752879
+    },
+    "node/Pinecrest Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Pinecrest Reservoir [node]",
+      "values": [
+        1671.2,
+        1682.5,
+        1685.5,
+        1688.6,
+        1691.6,
+        1694.7,
+        1697.7,
+        1700.8,
+        1706.9,
+        1712.2
+      ],
+      "volumes": [
+        0,
+        0.98,
+        1.92,
+        3.05,
+        4.36,
+        5.84,
+        7.89,
+        10.57,
+        16.69,
+        22.58
+      ],
+      "kind": "cubic"
     },
     "node/Relief Reservoir/Storage Capacity": {
       "type": "constant",
@@ -1932,8 +2206,43 @@
       "type": "node_Relief_Reservoir_Observed_Storage"
     },
     "node/Relief Reservoir/Storage Value": {
-      "type": "constant",
-      "value": 50.78894506504142
+      "type": "node_Relief_Reservoir_Storage_Value",
+      "value": -12.0753707470679
+    },
+    "node/Relief Reservoir/Elevation": {
+      "type": "interpolatedvolume",
+      "node": "Relief Reservoir [node]",
+      "values": [
+        2156.6,
+        2197.6,
+        2200.7,
+        2203.7,
+        2206.8,
+        2209.8,
+        2212.8,
+        2215.9,
+        2218.9,
+        2222,
+        2225,
+        2231.1,
+        2232.1
+      ],
+      "volumes": [
+        0,
+        0.07,
+        0.13,
+        0.38,
+        1.04,
+        1.98,
+        3.25,
+        4.64,
+        6.29,
+        8.11,
+        9.99,
+        14.67,
+        18.5
+      ],
+      "kind": "cubic"
     },
     "node/Sand Bar PH/Fixed Head": {
       "type": "constant",
@@ -2093,7 +2402,7 @@
     },
     "node/Tulloch Lake/Storage Value": {
       "type": "constant",
-      "value": -2.771163714442426
+      "value": 75.4521182166705
     },
     "node/USGS_11292610 DONNELLS PH/Observed Flow": {
       "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
@@ -2121,39 +2430,63 @@
     },
     "node/Angels PH/Demand Constant": {
       "type": "constant",
-      "value": 387.91536302993
+      "value": 958.230743414711
     },
     "node/Collierville PH/Demand Constant": {
       "type": "constant",
-      "value": 807.18323626151
+      "value": 165.2725104141144
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 540.012108861187
+      "value": 46.44309810809872
     },
     "node/Murphys PH/Demand Constant": {
       "type": "constant",
-      "value": 417.547244833778
+      "value": 294.655618942065
     },
     "node/New Melones PH/Demand Constant": {
       "type": "constant",
-      "value": 553.127340123381
+      "value": 327.6402564696251
     },
     "node/Phoenix PH/Demand Constant": {
       "type": "constant",
-      "value": 180.8050655010527
+      "value": 196.4993486352508
     },
     "node/Sand Bar PH/Demand Constant": {
       "type": "constant",
-      "value": 520.151121061727
+      "value": 945.8655696668
     },
     "node/Spring Gap PH/Demand Constant": {
       "type": "constant",
-      "value": 635.718641059067
+      "value": 775.982077202702
     },
     "node/Stanislaus PH/Demand Constant": {
       "type": "constant",
-      "value": 45.23580006616944
+      "value": 89.07849185187
+    },
+    "storageValueConstant": {
+      "type": "constant",
+      "value": 10
+    },
+    "storage_value_numerator": {
+      "type": "constant",
+      "value": 10
+    },
+    "storage_value_leading": {
+      "type": "constant",
+      "value": 10
+    },
+    "melones_storageValueConstant": {
+      "type": "constant",
+      "value": 10
+    },
+    "melones_storage_value_numerator": {
+      "type": "constant",
+      "value": 10
+    },
+    "melones_storage_value_leading": {
+      "type": "constant",
+      "value": 10
     }
   },
   "recorders": {
