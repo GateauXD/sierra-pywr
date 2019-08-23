@@ -6,7 +6,7 @@
   },
   "timestepper": {
     "start": "2020-01-01",
-    "end": "2091-01-01",
+    "end": "2099-12-31",
     "timestep": 1
   },
   "solver": {
@@ -795,7 +795,7 @@
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
-      "value": 0.7080147267063155
+      "value": 0.0612
     },
     "node/Lake McClure/Storage Capacity": {
       "type": "constant",
@@ -2025,6 +2025,30 @@
     "Main Canal [link]": {
       "type": "NumpyArrayNodeRecorder",
       "node": "Main Canal [link]"
+    },
+    "McSwain PH Inflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced River (2).2.2.1.1 [link]"
+    },
+    "Merced PH Inflow": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "Merced River (2).2.2.1.2.2.1 [link]"
+    },
+    "node/New Merced Falls PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Merced Falls PH/Fixed Head"
+    },
+    "node/New McSwain PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/McSwain PH/Fixed Head"
+    },
+    "node/New Exchequer PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/New Exchequer PH/Fixed Head"
+    },
+    "node/Lake McClure Flood Control [node]/requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Lake McClure Flood Control [node]/Requirement"
     }
   }
 }

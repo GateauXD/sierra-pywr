@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import subprocess
 
-from spotpy.objectivefunctions import rmse
+from spotpy.objectivefunctions import nashsutcliffe, rmse
 
 root_dir = os.path.join(os.getcwd(), 'Stan_Model')
 bucket = 'openagua-networks'

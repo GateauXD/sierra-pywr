@@ -62,13 +62,13 @@
     {
       "name": "Angels PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Angels PH/Water Demand",
         "node/Angels PH/Water Demand",
         "node/Angels PH/Water Demand",
         "node/Angels PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Angels PH/Cost_1",
         "node/Angels PH/Cost_2",
         "node/Angels PH/Cost_3",
@@ -150,13 +150,13 @@
     {
       "name": "Collierville PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Collierville PH/Water Demand",
         "node/Collierville PH/Water Demand",
         "node/Collierville PH/Water Demand",
         "node/Collierville PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Collierville PH/Cost_1",
         "node/Collierville PH/Cost_2",
         "node/Collierville PH/Cost_3",
@@ -178,13 +178,13 @@
     {
       "name": "Donnells PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Donnells PH/Water Demand",
         "node/Donnells PH/Water Demand",
         "node/Donnells PH/Water Demand",
         "node/Donnells PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Donnells PH/Cost_1",
         "node/Donnells PH/Cost_2",
         "node/Donnells PH/Cost_3",
@@ -362,13 +362,13 @@
     {
       "name": "Murphys PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Murphys PH/Water Demand",
         "node/Murphys PH/Water Demand",
         "node/Murphys PH/Water Demand",
         "node/Murphys PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Murphys PH/Cost_1",
         "node/Murphys PH/Cost_2",
         "node/Murphys PH/Cost_3",
@@ -385,13 +385,13 @@
     {
       "name": "New Melones PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/New Melones PH/Water Demand",
         "node/New Melones PH/Water Demand",
         "node/New Melones PH/Water Demand",
         "node/New Melones PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/New Melones PH/Cost_1",
         "node/New Melones PH/Cost_2",
         "node/New Melones PH/Cost_3",
@@ -451,13 +451,13 @@
     {
       "name": "Phoenix PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Phoenix PH/Water Demand",
         "node/Phoenix PH/Water Demand",
         "node/Phoenix PH/Water Demand",
         "node/Phoenix PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Phoenix PH/Cost_1",
         "node/Phoenix PH/Cost_2",
         "node/Phoenix PH/Cost_3",
@@ -483,13 +483,13 @@
     {
       "name": "Sand Bar PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Sand Bar PH/Water Demand",
         "node/Sand Bar PH/Water Demand",
         "node/Sand Bar PH/Water Demand",
         "node/Sand Bar PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Sand Bar PH/Cost_1",
         "node/Sand Bar PH/Cost_2",
         "node/Sand Bar PH/Cost_3",
@@ -535,13 +535,13 @@
     {
       "name": "Spring Gap PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Spring Gap PH/Water Demand",
         "node/Spring Gap PH/Water Demand",
         "node/Spring Gap PH/Water Demand",
         "node/Spring Gap PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Spring Gap PH/Cost_1",
         "node/Spring Gap PH/Cost_2",
         "node/Spring Gap PH/Cost_3",
@@ -569,13 +569,13 @@
     {
       "name": "Stanislaus PH [node]",
       "type": "PiecewiseLink",
-      "max_flow": [
+      "max_flows": [
         "node/Stanislaus PH/Water Demand",
         "node/Stanislaus PH/Water Demand",
         "node/Stanislaus PH/Water Demand",
         "node/Stanislaus PH/Water Demand"
       ],
-      "cost": [
+      "costs": [
         "node/Stanislaus PH/Cost_1",
         "node/Stanislaus PH/Cost_2",
         "node/Stanislaus PH/Cost_3",
@@ -1777,7 +1777,7 @@
     },
     "node/IFR bl Angels Div/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Angels Div/Requirement": {
       "type": "constant",
@@ -1785,21 +1785,21 @@
     },
     "node/IFR bl Donnells Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Donnells Reservoir/Requirement": {
       "type": "node_IFR_bl_Donnells_Reservoir_Requirement"
     },
     "node/IFR bl Hunters Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Hunters Reservoir/Requirement": {
       "type": "node_IFR_bl_Hunters_Reservoir_Requirement"
     },
     "node/IFR bl Lyons Res/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Lyons Res/Requirement": {
       "type": "constant",
@@ -1807,7 +1807,7 @@
     },
     "node/IFR bl McKays Point Div/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl McKays Point Div/Requirement": {
       "type": "constant",
@@ -1815,7 +1815,7 @@
     },
     "node/IFR bl New Spicer Meadow Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl New Spicer Meadow Reservoir/Requirement": {
       "type": "constant",
@@ -1823,28 +1823,28 @@
     },
     "node/IFR bl Philadelphia Div/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Philadelphia Div/Requirement": {
       "type": "node_IFR_bl_Philadelphia_Div_Requirement"
     },
     "node/IFR bl Relief Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Relief Reservoir/Requirement": {
       "type": "node_IFR_bl_Relief_Reservoir_Requirement"
     },
     "node/IFR bl Sand Bar Div/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Sand Bar Div/Requirement": {
       "type": "node_IFR_bl_Sand_Bar_Div_Requirement"
     },
     "node/IFR bl Utica Div/Violation Cost": {
       "type": "constant",
-      "value": 10
+      "value": 300
     },
     "node/IFR bl Utica Div/Requirement": {
       "type": "constant",
@@ -1972,7 +1972,7 @@
       "type": "constant",
       "value": 5.66
     },
-  "node/New Spicer Meadow Reservoir/Storage Value": {
+    "node/New Spicer Meadow Reservoir/Storage Value": {
       "type": "node_New_Spicer_Meadow_Reservoir_Storage_Value"
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
@@ -2321,19 +2321,19 @@
     },
     "node/Angels PH/Demand Constant": {
       "type": "constant",
-      "value": 387.91536302993
+      "value": 177.619575770034
     },
     "node/Collierville PH/Demand Constant": {
       "type": "constant",
-      "value": 807.18323626151
+      "value": 230.4189611927031
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 540.012108861187
+      "value": 993.706687083742
     },
     "node/Murphys PH/Demand Constant": {
       "type": "constant",
-      "value": 417.547244833778
+      "value": 162.129184483711
     },
     "node/New Melones PH/Demand Constant": {
       "type": "constant",
@@ -2341,29 +2341,29 @@
     },
     "node/Phoenix PH/Demand Constant": {
       "type": "constant",
-      "value": 180.8050655010527
+      "value": 179.1975563625893
     },
     "node/Sand Bar PH/Demand Constant": {
       "type": "constant",
-      "value": 520.151121061727
+      "value": 781.67369611011
     },
     "node/Spring Gap PH/Demand Constant": {
       "type": "constant",
-      "value": 635.718641059067
+      "value": 908.371243482072
     },
     "node/Stanislaus PH/Demand Constant": {
       "type": "constant",
-      "value": 45.23580006616944
+      "value": 620.717459829095
     },
     "storageValueConstant": {
       "type": "constant",
-      "value": 10
-    },
-    "storage_value_numerator": {
-      "type": "constant",
-      "value": 10
+      "value": 6.37259389359916
     },
     "storage_value_leading": {
+      "type": "constant",
+      "value": 0.2814421040126504
+    },
+    "storage_value_for_all": {
       "type": "constant",
       "value": 10
     }

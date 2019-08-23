@@ -9,9 +9,12 @@ class node_New_Spicer_Meadow_Reservoir_Storage_Value(WaterLPParameter):
 
     def _value(self, timestep, scenario_index):
         multiplier = self.model.parameters['storageValueConstant'].value(timestep, scenario_index)
-        storage_value_numerator = self.model.parameters['storage_value_numerator'].value(timestep, scenario_index)
         leading_multiplier = self.model.parameters['storage_value_leading'].value(timestep, scenario_index)
-        return leading_multiplier * math.exp(multiplier * (storage_value_numerator / self.model.parameters["node/New Spicer Meadow Reservoir/Elevation"].value(timestep, scenario_index)))
+        current_elevation = self.model.parameters["node/New Spicer Meadow Reservoir/Elevation"].value(timestep, scenario_index)
+        max_elevation = self.model.parameters["node/New Spicer Meadow Reservoir/Storage Capacity"].value(timestep, scenario_index)
+        min_elevation = self.model.parameters["node/New Spicer Meadow Reservoir/Inactive Pool"].value(timestep, scenario_index)
+
+        return leading_multiplier * math.exp(multiplier * (max_elevation - current_elevation)/(max_elevation-min_elevation))
 
     def value(self, timestep, scenario_index):
         return self._value(timestep, scenario_index)

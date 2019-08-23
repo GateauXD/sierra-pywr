@@ -5,12 +5,12 @@ from spot_setup_merced import SpotSetup
 dbname = "temp_db"
 dbformat = "csv"
 
-rep = 4
+rep = 50
 results = []
 spot_setup = SpotSetup()
 
 # Setup the environment with a markov chain monte carlo algorithm
-sampler = spotpy.algorithms.mcmc(spot_setup, dbformat=dbformat, dbname=dbname)
+sampler = spotpy.algorithms.lhs(spot_setup, dbformat=dbformat, dbname=dbname)
 
 # Calibrate the model over "rep" iterations
 sampler.sample(rep)
