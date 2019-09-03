@@ -27,22 +27,18 @@ def generate_csv():
     results_csv = results_csv[columns].copy()
     return_csv = results_csv[["Recorder", "node/Lake McClure/storage", "node/Lake McClure/observed storage"]].copy()
 
-    # 1
+    # 1 Inflow to McClure
     return_csv["Lake McClure Inflow"] = (results_csv["node/Lake McClure Inflow/flow"] * mcm_to_cms)
-    # 2
+    # 2 Outflow from Merced Basin
     return_csv["node/Basin Outflow/flow"] = results_csv["node/Near Stevinson_11272500/flow"] * mcm_to_cms
-    # 3
-    wyt_series = np.array([])
-    for date in results_csv["Recorder"]:
-        wyt_series = np.append(wyt_series, wyt_csv.loc[int(date.split("-")[0])])
-
-    return_csv["Water year types"] = pd.DataFrame(wyt_series)
-    # 4
-    return_csv["Flood Days"] = (results_csv["MERCE-L-CON2 [link]"] + results_csv["MERCE-L-CON4 [link]"]) > 15.9
-    # 5
+    # 3 Flood days Out of Lake McClure
+    return_csv["Lake McClure Outflow Flood Days"] = ((results_csv["MERCE-L-CON2 [link]"] + results_csv["MERCE-L-CON4 [link]"]) > 15.9).astype(int)
+    # 4 Flood Days Into Lake McClure
+    return_csv["Lake McClure Inflow Flood Days"] = ((results_csv["node/Lake McClure Inflow/flow"] * mcm_to_cms) > 14.68).astype(int)
+    # 5 No. of days IRFs not being met
     for index, value in enumerate(ifrs):
         # Sum up time the IFR did not pass
-        return_csv[value + "/ifr_not_met"] = (results_csv[ifrs_req[index]] - results_csv[ifrs[index]] > 0.0001)
+        return_csv[value + "/ifr_not_met"] = (results_csv[ifrs_req[index]] - results_csv[ifrs[index]] > 0.0001).astype(int)
         # # Sort by monthly and sum up the truth values
         # ifr_csv = results_csv[["Recorder", "ifr_not_met"]].copy()
         # ifr_csv["Recorder"] = pd.to_datetime(ifr_csv['Recorder'])
@@ -57,7 +53,7 @@ def generate_csv():
         # ax.xaxis.set_major_locator(ticker.MultipleLocator(4))
         # plt.title("{} IFR".format(ifrs[index].split("/")[1]))
         # plt.ylabel("Occurrences")
-    # 6
+    # 6 Total HP production (MWH)
     for index, powerhouse in enumerate(powerhouses):
         return_csv[powerhouse.split("/")[1] + "/Hydropower Production"] = efficiency * water_density * gravity * results_csv[powerhouse] \
                                                                    * results_csv[powerhouse_flows[index]] * 3600 / 1000000

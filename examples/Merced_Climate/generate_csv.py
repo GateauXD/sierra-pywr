@@ -31,14 +31,17 @@ def generate_csv():
                     results_csv[climate_scenario + "/node/Lake McClure Inflow/flow"] * mcm_to_cms)
         # 2 Outflow from Merced Basin
         return_csv[climate_scenario + "/node/Basin Outflow/flow"] = results_csv[climate_scenario + "/node/Near Stevinson_11272500/flow"] * mcm_to_cms
-        # 3 Flood days
-        return_csv["Flood Days"] = (results_csv[climate_scenario + "/MERCE-L-CON2 [link]"] + results_csv[climate_scenario + "/MERCE-L-CON4 [link]"]) > 15.9
-        # 4 No. of days IRFs not being met
+        # 3 Flood days Out of Lake McClure
+        return_csv[climate_scenario + "/Lake McClure Outflow Flood Days"] = ((results_csv[climate_scenario + "/MERCE-L-CON2 [link]"] + results_csv[climate_scenario + "/MERCE-L-CON4 [link]"]) > 15.9).astype(int)
+        # Flood days Into Lake McClure
+        return_csv[climate_scenario + "/Lake McClure Inflow Flood Days"] = ((results_csv[climate_scenario + "/node/Lake McClure Inflow/flow"] * mcm_to_cms) > 14.68).astype(int)
+
+        # 5 No. of days IRFs not being met
         for index, value in enumerate(ifrs):
             # Sum up time the IFR did not pass
-            return_csv[climate_scenario + "/" + value + "/ifr_not_met"] = (results_csv[climate_scenario + "/" + ifrs_req[index]] - results_csv[climate_scenario + "/" + ifrs[index]] > 0.0001)
+            return_csv[climate_scenario + "/" + value + "/ifr_not_met"] = (results_csv[climate_scenario + "/" + ifrs_req[index]] - results_csv[climate_scenario + "/" + ifrs[index]] > 0.0001).astype(int)
 
-        # 5 Total HP production (MWH)
+        # 6 Total HP production (MWH)
         for index, powerhouse in enumerate(powerhouses):
             return_csv[climate_scenario + "/" + powerhouse.split("/")[1] + "/Hydropower Production"] = efficiency * water_density * gravity * \
                                                                               results_csv[climate_scenario + "/" +powerhouse] \
