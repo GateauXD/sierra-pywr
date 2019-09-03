@@ -17,18 +17,14 @@ def generate_csv():
     return graph_melt
 
 
-graph_data = generate_csv()
-plt.rcParams["figure.figsize"] = [16,9]
-
-time = ["Near Future (2030-2060)", "Far Future (2070-2100)"]
 index = 0
+time = ["Near Future (2030-2060)", "Far Future (2070-2100)"]
+graph_data = generate_csv()
 
-# Inflow from Lake McClure
-# RCP 4.8
+plt.rcParams["figure.figsize"] = [16,9]
 sns.set(style="whitegrid", rc={'figure.figsize': (20.7, 13.27)}, font_scale=1.5)
 sns.boxplot(x="Month", y="values", hue="Scen", data=graph_data)
 plt.title("Lake McClure Monthly Inflow - All Scenarios RCP 4.5 - {}".format(time[index]))
-plt.xlabel("Time")
-plt.ylabel("Flow Value")
+plt.xlabel("Month")
+plt.ylabel(r"Flow Value (million $m^{3}$)")
 plt.savefig("Figures/{}_monthly_inflow_all_4.5.png".format(time[index].split()[0].lower()))
-plt.show()
