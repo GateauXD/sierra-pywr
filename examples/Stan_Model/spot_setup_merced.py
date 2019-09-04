@@ -49,8 +49,12 @@ class SpotSetup(object):
         # Simulate the model in another file simulation_run.py
         proc = subprocess.run(['python', 'simulation_run.py',
                                model_path, root_dir, bucket, network_key, str(parameters)], stdout=subprocess.PIPE)
-        return np.load("Stan_Model/model_output.npy")
+        simulation_data = np.load("Stan_Model/model_output.npy").T
+        return_data = []
+        for index in range(0, len(simulation_data)):
+            return_data.append(simulation_data[index])
 
+        return return_data
     def evaluation(self):
         # Returns the observed data
         return self.evaluation_data
