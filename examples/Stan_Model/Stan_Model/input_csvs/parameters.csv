@@ -7,5 +7,4 @@ node/Phoenix PH/Demand Constant, 10, 1000, 100
 node/Sand Bar PH/Demand Constant, 10, 1000, 100
 node/Spring Gap PH/Demand Constant, 10, 1000, 100
 node/Stanislaus PH/Demand Constant, 10, 1000, 100
-storageValueConstant, 2, 20, 2
-storage_value_leading, 0.01, 1, 0.1
+storage_value_for_all, 50, 500, 100

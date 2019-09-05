@@ -64,7 +64,7 @@ class SpotSetup(object):
             else:
                 evaluation_input = np.append(evaluation_input, evaluation[index])
         # Generates a minimum objective value of the output
-        objective_function = -rmse(evaluation=evaluation_input, simulation=simulation)
+        objective_function = nashsutcliffe(evaluation=evaluation_input, simulation=simulation)
 
         print("Objective Value: {}".format(objective_function))
         return objective_function

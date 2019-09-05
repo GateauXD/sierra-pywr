@@ -1615,7 +1615,7 @@
       "value": 17.556
     },
     "node/Beardsley Reservoir/Storage Value": {
-      "type": "node_Beardsley_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/Beardsley Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1726,7 +1726,7 @@
       "type": "node_Donnells_Reservoir_Observed_Storage"
     },
     "node/Donnells Reservoir/Storage Value": {
-      "type": "node_Donnells_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/Donnells Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1865,7 +1865,7 @@
       "type": "node_Lyons_Reservoir_Observed_Storage"
     },
     "node/Lyons Reservoir/Storage Value": {
-      "type": "node_Lyons_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/Lyons Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1973,7 +1973,7 @@
       "value": 5.66
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
-      "type": "node_New_Spicer_Meadow_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2055,7 +2055,7 @@
       "type": "node_Pinecrest_Reservoir_Observed_Storage"
     },
     "node/Pinecrest Reservoir/Storage Value": {
-      "type": "node_Pinecrest_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/Pinecrest Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2098,7 +2098,7 @@
       "type": "node_Relief_Reservoir_Observed_Storage"
     },
     "node/Relief Reservoir/Storage Value": {
-      "type": "node_Relief_Reservoir_Storage_Value"
+      "type": "one_storage_value"
     },
     "node/Relief Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2321,19 +2321,19 @@
     },
     "node/Angels PH/Demand Constant": {
       "type": "constant",
-      "value": 177.619575770034
+      "value": 291.357454885687
     },
     "node/Collierville PH/Demand Constant": {
       "type": "constant",
-      "value": 230.4189611927031
+      "value": 343.078978144843
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 993.706687083742
+      "value": 747.399238068013
     },
     "node/Murphys PH/Demand Constant": {
       "type": "constant",
-      "value": 162.129184483711
+      "value": 121.0427036415691
     },
     "node/New Melones PH/Demand Constant": {
       "type": "constant",
@@ -2341,19 +2341,19 @@
     },
     "node/Phoenix PH/Demand Constant": {
       "type": "constant",
-      "value": 179.1975563625893
+      "value": 132.411481660311
     },
     "node/Sand Bar PH/Demand Constant": {
       "type": "constant",
-      "value": 781.67369611011
+      "value": 731.387571444817
     },
     "node/Spring Gap PH/Demand Constant": {
       "type": "constant",
-      "value": 908.371243482072
+      "value": 629.904401508919
     },
     "node/Stanislaus PH/Demand Constant": {
       "type": "constant",
-      "value": 620.717459829095
+      "value": 663.879199028688
     },
     "storageValueConstant": {
       "type": "constant",
@@ -2365,7 +2365,7 @@
     },
     "storage_value_for_all": {
       "type": "constant",
-      "value": 10
+      "value": 497.919745405016
     }
   },
   "recorders": {
