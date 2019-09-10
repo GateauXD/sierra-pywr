@@ -2,10 +2,7 @@ import pandas as pd
 from datetime import datetime
 from parameters import WaterLPParameter
 from utilities.converter import convert
-
-yearly_types = pd.read_csv("s3_imports/SJVI.csv", index_col=0, header=0, parse_dates=False,
-                           squeeze=True)
-
+from utilities.getSJVI_WYT import getSJVI_WYT
 
 class node_MID_Main_Demand(WaterLPParameter):
     """"""
@@ -13,16 +10,16 @@ class node_MID_Main_Demand(WaterLPParameter):
     def _value(self, timestep, scenario_index):
 
         m3_to_cfs = 35.31
-        type_value = yearly_types.loc[timestep.year]
+        type_value = getSJVI_WYT(timestep)
         ts = "{}/{}/1900".format(timestep.month, timestep.day)
 
-        if type_value <= 2.1:
+        if type_value == 1:
             year_type = "Critical"
-        elif type_value <= 2.8:
+        elif type_value == 2:
             year_type = "Dry"
-        elif type_value <= 3.1:
+        elif type_value == 3:
             year_type = "Below"
-        elif type_value <= 3.8:
+        elif type_value == 4:
             year_type = "Above"
         else:
             year_type = "Wet"

@@ -6,7 +6,7 @@ from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
 from parameters import WaterLPParameter
 from utilities.converter import convert
-from utilities.getWYT import getWYT
+from utilities.getSJVI_WYT import getSJVI_WYT
 
 class Lake_Mclure_Release_Policy(WaterLPParameter):
     """
@@ -23,8 +23,8 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
                         "node/MER_05 Headflow/Runoff", "node/MER_06 Headflow/Runoff"]
         self.esrd_table = pd.read_csv("policies/ESRD_unitsSI.csv", header=None)  # Units - meters and mcm
         self.esrd_spline = interpolate.RectBivariateSpline(self.esrd_table.iloc[1:, 0], self.esrd_table.iloc[0, 1:], self.esrd_table.iloc[1:, 1:], kx=1, ky=1)
-        self.yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
-                            squeeze=True)
+        self.mid_yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
+                                        squeeze=True)
         self.mid_northside = pd.read_csv("policies/MID_WYT_average_diversion_Northside.csv", index_col=0, header=0, parse_dates=False,
                                   squeeze=True)  # Units - cfs
         self.mid_main = pd.read_csv("policies/MID_WYT_average_diversion_Main.csv", index_col=0, header=0, parse_dates=False,
@@ -82,7 +82,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
     def min_release(self, timestep):
         # Yearly_Types == Dry or Normal year
         cfs_to_cms = 0.028316847
-        type_value = self.yearly_types.loc[timestep.year]
+        type_value = self.mid_yearly_types.loc[timestep.year]
         date = datetime(2000, timestep.month, timestep.day)
 
         # Dry Year
@@ -120,16 +120,16 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         # ifrs_value = Requirement_Merced_R_below_Crocker_Huffman_Dam.value(timestep, scenario_index)
         ifrs_value = self.model.recorders["node/Merced R below Crocker-Huffman Dam/requirement"].to_dataframe()
         ifrs_date = datetime(timestep.year, timestep.month, timestep.day)
-        type_value = self.yearly_types.loc[timestep.year]
+        type_value = getSJVI_WYT(timestep)
         ts = "{}/{}/1900".format(timestep.month, timestep.day)
 
-        if type_value <= 2.1:
+        if type_value == 1:
             year_type = "Critical"
-        elif type_value <= 2.8:
+        elif type_value == 2:
             year_type = "Dry"
-        elif type_value <= 3.1:
+        elif type_value == 3:
             year_type = "Below"
-        elif type_value <= 3.8:
+        elif type_value == 4:
             year_type = "Above"
         else:
             year_type = "Wet"
@@ -152,9 +152,9 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
 
     def sjvi_year_type(self, SJVI_value):
         # Select the year type (Dry, Normal, Wet)
-        if SJVI_value <= 2.1:
+        if SJVI_value == 5:
             year_type = "Wet Year (AF)"
-        elif SJVI_value <= 3.1:
+        elif SJVI_value == 3 or SJVI_value == 4:
             year_type = "Normal Year (AF)"
         else:
             year_type = "Dry Year (AF)"
@@ -164,7 +164,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         ts = timestep.datetime
         million_m3day_to_m3sec = 11.5740740741
         cubicfeet_to_millionm3 = 0.00123348
-        SJVI_value = getWYT(timestep)
+        SJVI_value = getSJVI_WYT(timestep)
         year_type = self.sjvi_year_type(SJVI_value)
         max_storage_value = self.flood_control_table.loc["1900-{:02d}-{:02d}".format(ts.month, ts.day), year_type] * cubicfeet_to_millionm3
         curr_inflow = 0
