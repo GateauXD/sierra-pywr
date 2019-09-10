@@ -1726,7 +1726,11 @@
     },
     "node/McSwain PH/Turbine Capacity": {
       "type": "constant",
-      "value": 7.87
+      "value": 0.68
+    },
+    "node/McSwain PH/Water Demand": {
+      "type": "constant",
+      "value": 0.68
     },
     "node/McSwain PH/Excess Value": {
       "type": "constant",
@@ -1746,7 +1750,11 @@
     },
     "node/Merced Falls PH/Turbine Capacity": {
       "type": "constant",
-      "value": 4.075
+      "value": 0.352
+    },
+    "node/Merced Falls PH/Water Demand": {
+      "type": "constant",
+      "value": 0.352
     },
     "node/Merced Falls PH/Excess Value": {
       "type": "constant",
@@ -1831,7 +1839,7 @@
     },
     "node/New Exchequer PH/Turbine Capacity": {
       "type": "constant",
-      "value": 42.92
+      "value": 3.71
     },
     "node/New Exchequer PH/Excess Value": {
       "type": "constant",
@@ -1839,11 +1847,11 @@
     },
     "node/New Exchequer PH/Base Value": {
       "type": "constant",
-      "value": 50
+      "value": 75
     },
     "node/New Exchequer PH/Water Demand": {
       "type": "constant",
-      "value": 42.92
+      "value": 3.71
     },
     "node/New Exchequer PH/Unconstrained Cost": {
       "type": "constant",
