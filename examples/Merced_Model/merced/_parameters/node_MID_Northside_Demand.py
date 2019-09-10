@@ -2,17 +2,14 @@ import pandas as pd
 from parameters import WaterLPParameter
 
 from utilities.converter import convert
-
-yearly_types = pd.read_csv("s3_imports/SJVI.csv", index_col=0, header=0, parse_dates=False,
-                           squeeze=True)
-
+from utilities.getWYT import getWYT
 
 class node_MID_Northside_Demand(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
         m3_to_cfs = 35.31
-        type_value = yearly_types.loc[timestep.year]
+        type_value = getWYT(timestep)
         ts = "{}/{}/1900".format(timestep.month, timestep.day)
 
         if type_value <= 2.1:

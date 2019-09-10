@@ -6,6 +6,7 @@ from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
 from parameters import WaterLPParameter
 from utilities.converter import convert
+from ..utilities.getWYT import
 
 
 class Lake_Mclure_Release_Policy(WaterLPParameter):

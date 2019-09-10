@@ -56,8 +56,6 @@ step = None
 # use model.run() instead if seeing progress is not important
 for step in tqdm(timesteps, ncols=80):
     try:
-        if step == 11769:
-            print("HI")
         model.step()
     except Exception as err:
         print('Failed at step {}'.format(model.timestepper.current))

@@ -6,7 +6,7 @@ from pywr.recorders.recorders import NodeRecorder
 from scipy import interpolate
 from parameters import WaterLPParameter
 from utilities.converter import convert
-
+from utilities.getWYT import getWYT
 
 class Lake_Mclure_Release_Policy(WaterLPParameter):
     """
@@ -25,8 +25,6 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         self.esrd_spline = interpolate.RectBivariateSpline(self.esrd_table.iloc[1:, 0], self.esrd_table.iloc[0, 1:], self.esrd_table.iloc[1:, 1:], kx=1, ky=1)
         self.yearly_types = pd.read_csv("s3_imports/WYT.csv", index_col=0, header=0, parse_dates=False,
                             squeeze=True)
-        self.SJVI_types = pd.read_csv("s3_imports/SJVI.csv", index_col=0, header=0, parse_dates=False,
-                                        squeeze=True)
         self.mid_northside = pd.read_csv("policies/MID_WYT_average_diversion_Northside.csv", index_col=0, header=0, parse_dates=False,
                                   squeeze=True)  # Units - cfs
         self.mid_main = pd.read_csv("policies/MID_WYT_average_diversion_Main.csv", index_col=0, header=0, parse_dates=False,
@@ -166,8 +164,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
         ts = timestep.datetime
         million_m3day_to_m3sec = 11.5740740741
         cubicfeet_to_millionm3 = 0.00123348
-        SJVI_values = {1980:2.31982434,1981:2.31982434,1982:6.076605263,1983:7.913318559,1984:4.326542067,1985:2.243236434,1986:4.304340802,1987:1.41700623,1988:1.070705,1989:1.677763379,1990:1.242278429,1991:1.899932115,1992:1.341326048,1993:4.473067276,1994:1.613377913,1995:6.222805432,1996:4.730869621,1997:4.524025386,1998:5.962029,1999:3.738780486,2000:3.091728053,2001:2.214258164,2002:2.190918974,2003:2.881437577,2004:1.763019823,2005:5.524518153,2006:6.883251982,2007:2.088416564,2008:1.699077058,2009:2.303027731,2010:3.122943467,2011:5.996164099,2012:2.298387991,2013:1.213921803,2014:1.213921803}
-        SJVI_value = SJVI_values[ts.year+1]
+        SJVI_value = getWYT(timestep)
         year_type = self.sjvi_year_type(SJVI_value)
         max_storage_value = self.flood_control_table.loc["1900-{:02d}-{:02d}".format(ts.month, ts.day), year_type] * cubicfeet_to_millionm3
         curr_inflow = 0
