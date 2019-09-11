@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import subprocess
 
-from spotpy.objectivefunctions import rmse
+from spotpy.objectivefunctions import rmse, nashsutcliffe
 
 root_dir = os.path.join(os.getcwd(), 'merced')
 bucket = 'openagua-networks'
@@ -64,7 +64,7 @@ class SpotSetup(object):
             else:
                 evaluation_input = np.append(evaluation_input, evaluation[index])
         # Generates a minimum objective value of the output
-        objective_function = -rmse(evaluation=evaluation_input, simulation=simulation)
+        objective_function = nashsutcliffe(evaluation=evaluation_input, simulation=simulation)
 
         print("Objective Value: {}".format(objective_function))
         return objective_function
