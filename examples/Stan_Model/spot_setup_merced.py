@@ -74,8 +74,7 @@ class SpotSetup(object):
         # Generate the multiple objective functions =
         objective_values = []
         for index in range(0, len(evaluation)-1):
-            objective_values.append(-rmse(evaluation=evaluation[index], simulation=simulation[index]))
+            objective_values.append(nashsutcliffe(evaluation=evaluation[index], simulation=simulation[index]))
 
         print("Objective Value: {}".format(objective_values))
         return objective_values
-    

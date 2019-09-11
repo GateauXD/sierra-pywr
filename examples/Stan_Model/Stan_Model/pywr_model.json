@@ -1615,7 +1615,8 @@
       "value": 17.556
     },
     "node/Beardsley Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -265.513
     },
     "node/Beardsley Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1726,7 +1727,8 @@
       "type": "node_Donnells_Reservoir_Observed_Storage"
     },
     "node/Donnells Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -609.652
     },
     "node/Donnells Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1777,7 +1779,7 @@
     },
     "node/IFR bl Angels Div/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Angels Div/Requirement": {
       "type": "constant",
@@ -1785,21 +1787,21 @@
     },
     "node/IFR bl Donnells Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Donnells Reservoir/Requirement": {
       "type": "node_IFR_bl_Donnells_Reservoir_Requirement"
     },
     "node/IFR bl Hunters Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Hunters Reservoir/Requirement": {
       "type": "node_IFR_bl_Hunters_Reservoir_Requirement"
     },
     "node/IFR bl Lyons Res/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Lyons Res/Requirement": {
       "type": "constant",
@@ -1807,7 +1809,7 @@
     },
     "node/IFR bl McKays Point Div/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl McKays Point Div/Requirement": {
       "type": "constant",
@@ -1815,7 +1817,7 @@
     },
     "node/IFR bl New Spicer Meadow Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl New Spicer Meadow Reservoir/Requirement": {
       "type": "constant",
@@ -1823,28 +1825,28 @@
     },
     "node/IFR bl Philadelphia Div/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Philadelphia Div/Requirement": {
       "type": "node_IFR_bl_Philadelphia_Div_Requirement"
     },
     "node/IFR bl Relief Reservoir/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Relief Reservoir/Requirement": {
       "type": "node_IFR_bl_Relief_Reservoir_Requirement"
     },
     "node/IFR bl Sand Bar Div/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Sand Bar Div/Requirement": {
       "type": "node_IFR_bl_Sand_Bar_Div_Requirement"
     },
     "node/IFR bl Utica Div/Violation Cost": {
       "type": "constant",
-      "value": 300
+      "value": 1000
     },
     "node/IFR bl Utica Div/Requirement": {
       "type": "constant",
@@ -1865,7 +1867,8 @@
       "type": "node_Lyons_Reservoir_Observed_Storage"
     },
     "node/Lyons Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -657.614
     },
     "node/Lyons Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1973,7 +1976,8 @@
       "value": 5.66
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -502.075
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2055,7 +2059,8 @@
       "type": "node_Pinecrest_Reservoir_Observed_Storage"
     },
     "node/Pinecrest Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -302.043
     },
     "node/Pinecrest Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2098,7 +2103,8 @@
       "type": "node_Relief_Reservoir_Observed_Storage"
     },
     "node/Relief Reservoir/Storage Value": {
-      "type": "one_storage_value"
+      "type": "constant",
+      "value": -735.748
     },
     "node/Relief Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2321,19 +2327,19 @@
     },
     "node/Angels PH/Demand Constant": {
       "type": "constant",
-      "value": 291.357454885687
+      "value": 860.75552239188
     },
     "node/Collierville PH/Demand Constant": {
       "type": "constant",
-      "value": 343.078978144843
+      "value": 345.9008836710118
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 747.399238068013
+      "value": 939.143762691043
     },
     "node/Murphys PH/Demand Constant": {
       "type": "constant",
-      "value": 121.0427036415691
+      "value": 222.3170446603135
     },
     "node/New Melones PH/Demand Constant": {
       "type": "constant",
@@ -2341,19 +2347,19 @@
     },
     "node/Phoenix PH/Demand Constant": {
       "type": "constant",
-      "value": 132.411481660311
+      "value": 30.73013129346002
     },
     "node/Sand Bar PH/Demand Constant": {
       "type": "constant",
-      "value": 731.387571444817
+      "value": 503.136512866371
     },
     "node/Spring Gap PH/Demand Constant": {
       "type": "constant",
-      "value": 629.904401508919
+      "value": 44.64805037741333
     },
     "node/Stanislaus PH/Demand Constant": {
       "type": "constant",
-      "value": 663.879199028688
+      "value": 346.2491635182028
     },
     "storageValueConstant": {
       "type": "constant",
@@ -2365,7 +2371,7 @@
     },
     "storage_value_for_all": {
       "type": "constant",
-      "value": 497.919745405016
+      "value": -179.021
     }
   },
   "recorders": {
