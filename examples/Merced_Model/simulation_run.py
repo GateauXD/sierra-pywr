@@ -42,11 +42,12 @@ def evaluate_model(model_path, root_dir, bucket, network_key, parameters):
     results = model.to_dataframe()
     results.to_csv('results.csv')
 
-    output = np.array([])
-    simulation_csv = pd.read_csv("input_csvs/simulations.csv")
-    for index in range(0, len(simulation_csv)):
-        output = np.append(output, results[simulation_csv.iloc[index]])
 
+
+    simulation_csv = pd.read_csv("input_csvs/simulations.csv")
+    output = np.array(results[simulation_csv.iloc[0]])
+    for index in range(1, len(simulation_csv)):
+        output = np.concatenate((output, np.array(results[simulation_csv.iloc[index]])), axis=1)
     # Save time series data to a local file
     np.save("model_output.npy", output)
 

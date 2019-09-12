@@ -1,4 +1,6 @@
 Parameters, Min, High, StepSize
-storageValueConstant, 0, 15, 1
+storageValueConstant, 8.5, 10, 0.2
 node/blwNewExchequerPH/Violation Cost, -1100, -900, 20
 node/Merced R below Crocker-Huffman Dam/Violation Cost, -1100, -900, 20
+node/MID Main/Cost, -500, -50, 50
+node/MID Northside/Cost, -500, -50, 50
