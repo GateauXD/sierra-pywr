@@ -43,7 +43,7 @@ for folder in folder_names:
     # Copy the Runoff files to the model
     src_files = os.listdir(os.getcwd() + "\\" + climate_change_folder + "\\" + folder)
     for file_name in src_files:
-        file_path = os.path.joisn(os.getcwd() + "\\" + climate_change_folder + "\\" + folder, file_name)
+        file_path = os.path.join(os.getcwd() + "\\" + climate_change_folder + "\\" + folder, file_name)
         shutil.copy(file_path, dest)
 
     # Run the model

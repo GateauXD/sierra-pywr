@@ -39,7 +39,7 @@ class SpotSetup(object):
 
     def simulation(self, vector):
 
-        print("Trying parametre: {}".format(vector))
+        print("Trying parameter: {}".format(vector))
 
         # Create an array of parameters to pass to the model
         parameters = []

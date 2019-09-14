@@ -791,7 +791,7 @@
     },
     "node/blwNewExchequerPH/Violation Cost": {
       "type": "constant",
-      "value": -1026.11
+      "value": -903.711
     },
     "node/blwNewExchequerPH/Requirement": {
       "type": "constant",
@@ -1764,7 +1764,7 @@
     },
     "node/Merced R below Crocker-Huffman Dam/Violation Cost": {
       "type": "constant",
-      "value": -974.928
+      "value": -1043.98
     },
     "Requirement_Merced_R_below_Crocker_Huffman_Dam": {
       "type": "Requirement_Merced_R_below_Crocker_Huffman_Dam"
@@ -1795,14 +1795,14 @@
     },
     "node/MID Main/Cost": {
       "type": "constant",
-      "value": -50
+      "value": -178.277
     },
     "node/MID Northside/Demand": {
       "type": "node_MID_Northside_Demand"
     },
     "node/MID Northside/Cost": {
       "type": "constant",
-      "value": -50
+      "value": -58.3507
     },
     "node/New Exchequer PH/Fixed Head": {
       "type": "constant",
@@ -1834,7 +1834,7 @@
     },
     "storageValueConstant": {
       "type": "constant",
-      "value": 8.55538
+      "value": 9.97216
     }
   },
   "recorders": {
