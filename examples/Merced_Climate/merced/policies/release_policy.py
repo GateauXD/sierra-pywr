@@ -135,7 +135,7 @@ class Lake_Mclure_Release_Policy(WaterLPParameter):
             year_type = "Wet"
 
 
-        if ifrs_date == datetime(1980, 10, 1):
+        if ifrs_date == datetime(2020,1,1):
             ifrs_value = 0.061344  # Units - cms
         else:
             ifrs_date = ifrs_date - timedelta(1)
