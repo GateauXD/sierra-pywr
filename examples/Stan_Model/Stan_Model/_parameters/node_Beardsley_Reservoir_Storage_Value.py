@@ -11,7 +11,9 @@ class node_Beardsley_Reservoir_Storage_Value(WaterLPParameter):
         multiplier = self.model.parameters['storageValueConstant'].value(timestep, scenario_index)
         storage_value_numerator = self.model.parameters['storage_value_numerator'].value(timestep, scenario_index)
         leading_multiplier = self.model.parameters['storage_value_leading'].value(timestep, scenario_index)
-        return leading_multiplier * math.exp(multiplier * (storage_value_numerator / self.model.parameters["node/Beardsley Reservoir/Elevation"].value(timestep, scenario_index)))
+        return leading_multiplier * math.exp(multiplier * (
+                    storage_value_numerator / self.model.parameters["node/Beardsley Reservoir/Elevation"].value(
+                timestep, scenario_index)))
 
     def value(self, timestep, scenario_index):
         return self._value(timestep, scenario_index)

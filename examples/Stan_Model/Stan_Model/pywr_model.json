@@ -1650,7 +1650,7 @@
       "type": "controlcurveinterpolated",
       "storage_node": "New Melones Lake [node]",
       "control_curves": [
-        "node/Lake McClure/Storage Demand"
+        "node/New Melones/Storage Demand"
       ],
       "values": [
         -5000.0,
@@ -1662,7 +1662,7 @@
       "type": "controlcurveinterpolated",
       "storage_node": "New Melones Lake [node]",
       "control_curves": [
-        "node/Lake McClure/Storage Demand"
+        "node/New Melones/Storage Demand"
       ],
       "values": [
         10000,
@@ -1715,8 +1715,7 @@
       "value": 17.556
     },
     "node/Beardsley Reservoir/Storage Value": {
-      "type": "node_Beardsley_Reservoir_Storage_Value",
-      "value": -88.6324844064964
+      "type": "node_Beardsley_Reservoir_Storage_Value"
     },
     "node/Beardsley Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1827,8 +1826,7 @@
       "type": "node_Donnells_Reservoir_Observed_Storage"
     },
     "node/Donnells Reservoir/Storage Value": {
-      "type": "node_Donnells_Reservoir_Storage_Value",
-      "value": -79.310062028757
+      "type": "node_Donnells_Reservoir_Storage_Value"
     },
     "node/Donnells Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -1967,8 +1965,7 @@
       "type": "node_Lyons_Reservoir_Observed_Storage"
     },
     "node/Lyons Reservoir/Storage Value": {
-      "type": "node_Lyons_Reservoir_Storage_Value",
-      "value": -24.20515027627175
+      "type": "node_Lyons_Reservoir_Storage_Value"
     },
     "node/Lyons Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2037,9 +2034,11 @@
     "node/New Melones Lake/Observed Storage": {
       "type": "node_New_Melones_Lake_Observed_Storage"
     },
+    "node/New Melones/Storage Demand": {
+      "type": "node_New_Melones_Storage_Demand"
+    },
     "node/New Melones Lake/Storage Value": {
-      "type": "node_New_Melones_Reservoir_Storage_Value",
-      "value": 68.1284479160352
+      "type": "node_New_Melones_Reservoir_Storage_Value"
     },
     "node/New Melones PH/Turbine Capacity": {
       "type": "constant",
@@ -2079,8 +2078,7 @@
       "value": 5.66
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
-      "type": "node_New_Spicer_Meadow_Reservoir_Storage_Value",
-      "value": -17.1570280094693
+      "type": "node_New_Spicer_Meadow_Reservoir_Storage_Value"
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2162,8 +2160,7 @@
       "type": "node_Pinecrest_Reservoir_Observed_Storage"
     },
     "node/Pinecrest Reservoir/Storage Value": {
-      "type": "node_Pinecrest_Reservoir_Storage_Value",
-      "value": -54.2370831752879
+      "type": "node_Pinecrest_Reservoir_Storage_Value"
     },
     "node/Pinecrest Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2206,8 +2203,7 @@
       "type": "node_Relief_Reservoir_Observed_Storage"
     },
     "node/Relief Reservoir/Storage Value": {
-      "type": "node_Relief_Reservoir_Storage_Value",
-      "value": -12.0753707470679
+      "type": "node_Relief_Reservoir_Storage_Value"
     },
     "node/Relief Reservoir/Elevation": {
       "type": "interpolatedvolume",
