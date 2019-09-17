@@ -1744,14 +1744,14 @@
     ],
     [
       "STAN-L-CON 8",
-      "1 Control [node]"
+      "Tulloch Lake Flood Control [node]"
     ],
     [
       "Tulloch Lake Flood Control [node]",
-      "STANI-L-CON 10"
+      "STAN-L-CON 10"
     ],
     [
-      "STANI-L-CON 10",
+      "STAN-L-CON 10",
       "STANI-N-JUN6"
     ],
     [
@@ -1760,18 +1760,18 @@
     ],
     [
       "STANI-N-JUN6",
-      "STANI-L-CON 11"
+      "STAN-L-CON 11"
     ],
     [
-      "STANI-L-CON 11",
+      "STAN-L-CON 11",
       "Tulloch Lake PH [node]"
     ],
     [
       "Tulloch Lake PH [node]",
-      "STANI-L-CON 12"
+      "STAN-L-CON 12"
     ],
     [
-      "STANI-L-CON 12",
+      "STAN-L-CON 12",
       "STANI-N-JUN7"
     ],
     [
@@ -2572,6 +2572,9 @@
     },
     "node/Tulloch Lake/Storage Demand": {
       "type": "node_Tulloch_Lake_Storage_Demand"
+    },
+    "node/Release from Tulloch Lake [node]/Requirement": {
+      "type": "node_Release_From_Tulloch_Lake"
     },
     "node/USGS_11292610 DONNELLS PH/Observed Flow": {
       "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
