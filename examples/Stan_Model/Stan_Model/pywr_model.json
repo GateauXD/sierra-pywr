@@ -865,6 +865,12 @@
       "mrf_cost": 0.0
     },
     {
+      "name": "blwTullochPH",
+      "type": "InstreamFlowRequirement",
+      "mrf": "node/blwTullochPH/Requirement",
+      "mrf_cost": 0
+    },
+    {
       "name": "UPA Tunnel Tap Inflow [node]",
       "type": "River"
     },
@@ -1776,6 +1782,10 @@
     ],
     [
       "STANI-N-JUN7",
+      "blwTullochPH"
+    ],
+    [
+      "blwTullochPH",
       "STN_R-N-JUN1 [node]"
     ],
     [
@@ -2569,6 +2579,9 @@
     },
     "node/Tulloch Lake/Storage Demand": {
       "type": "node_Tulloch_Lake_Storage_Demand"
+    },
+    "node/blwTullochPH/Requirement": {
+      "type": "node_blwTullochPH_Requirement"
     },
     "node/USGS_11292610 DONNELLS PH/Observed Flow": {
       "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
