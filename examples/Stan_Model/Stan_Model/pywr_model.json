@@ -847,6 +847,24 @@
       "cost": "node/Tulloch Lake/Storage Value"
     },
     {
+      "name": "Release from Tulloch Lake [node]",
+      "type": "Link",
+      "min_flow": "node/Release from Tulloch Lake [node]/Requirement",
+      "max_flow": "node/Release from Tulloch Lake [node]/Requirement"
+    },
+    {
+      "name": "Tulloch Lake Flood Control [node]",
+      "type": "InstreamFlowRequirement",
+      "mrf": "node/Tulloch Lake Flood Control [node]/Requirement",
+      "mrf_cost": "node/Tulloch Lake Flood Control [node]/Violation Cost"
+    },
+    {
+      "name": "Tulloch Lake PH [node]",
+      "type": "RiverGauge",
+      "mrf": 0.0,
+      "mrf_cost": 0.0
+    },
+    {
       "name": "UPA Tunnel Tap Inflow [node]",
       "type": "River"
     },
@@ -937,6 +955,66 @@
     {
       "name": "STAN-L-CON 6",
       "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 7",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 8",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 9",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 10",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 11",
+      "type": "Link"
+    },
+    {
+      "name": "STAN-L-CON 12",
+      "type": "Link"
+    },
+    {
+      "name": "STN_below_Melons.2.1",
+      "type": "River"
+    },
+    {
+      "name": "STN_below_Melons.2.2",
+      "type": "River"
+    },
+    {
+      "name": "STN-L-RIV2.1.2.1",
+      "type": "River"
+    },
+    {
+      "name": "STANI-N-JUN4",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "STANI-N-JUN5",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "STANI-N-JUN6",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
+    },
+    {
+      "name": "STANI-N-JUN7",
+      "type": "Storage",
+      "initial_volume": 0.0,
+      "max_volume": 0.0
     }
   ],
   "edges": [
@@ -1582,42 +1660,58 @@
     ],
     [
       "Release from New Melones [node]",
-      "STAN-L-CON 2"
-    ],
-    [
-      "STAN-L-CON 2",
-      "New Melones PH [node]"
-    ],
-    [
-      "New Melones PH [node]",
       "STAN-L-CON 3"
     ],
     [
       "STAN-L-CON 3",
-      "Tulloch Lake [node]"
-    ],
-    [
-      "Release from New Melones [node]",
-      "STAN-L-CON 4"
-    ],
-    [
-      "STAN-L-CON 4",
-      "Tulloch Lake [node]"
+      "STANI-N-JUN4"
     ],
     [
       "New Melones Lake [node]",
-      "STAN-L-CON 5"
+      "STAN-L-CON 2"
     ],
     [
-      "STAN-L-CON 5",
+      "STAN-L-CON 2",
       "New Melones Flood Control [node]"
     ],
     [
       "New Melones Flood Control [node]",
+      "STAN-L-CON 4"
+    ],
+    [
+      "STAN-L-CON 4",
+      "STANI-N-JUN4"
+    ],
+    [
+      "STANI-N-JUN4",
+      "STAN-L-CON 5"
+    ],
+    [
+      "STAN-L-CON 5",
+      "New Melones PH [node]"
+    ],
+    [
+      "New Melones PH [node]",
       "STAN-L-CON 6"
     ],
     [
       "STAN-L-CON 6",
+      "STANI-N-JUN5"
+    ],
+    [
+      "STANI-N-JUN4",
+      "STN_below_Melons.2.1"
+    ],
+    [
+      "STN_below_Melons.2.1",
+      "STANI-N-JUN5"
+    ],
+    [
+      "STANI-N-JUN5",
+      "STN_below_Melons.2.2"
+    ],
+    [
+      "STN_below_Melons.2.2",
       "Tulloch Lake [node]"
     ],
     [
@@ -1630,6 +1724,58 @@
     ],
     [
       "Tulloch Lake [node]",
+      "STAN-L-CON 7"
+    ],
+    [
+      "STAN-L-CON 7",
+      "Release from Tulloch Lake [node]"
+    ],
+    [
+      "Release from Tulloch Lake [node]",
+      "STAN-L-CON 9"
+    ],
+    [
+      "STAN-L-CON 9",
+      "STANI-N-JUN6"
+    ],
+    [
+      "Tulloch Lake [node]",
+      "STAN-L-CON 8"
+    ],
+    [
+      "STAN-L-CON 8",
+      "Tulloch Lake Flood Control [node]"
+    ],
+    [
+      "Tulloch Lake Flood Control [node]",
+      "STANI-L-CON 10"
+    ],
+    [
+      "STANI-L-CON 10",
+      "STANI-N-JUN6"
+    ],
+    [
+      "STANI-N-JUN6",
+      "STANI-N-JUN7"
+    ],
+    [
+      "STANI-N-JUN6",
+      "STANI-L-CON 11"
+    ],
+    [
+      "STANI-L-CON 11",
+      "Tulloch Lake PH [node]"
+    ],
+    [
+      "Tulloch Lake PH [node]",
+      "STANI-L-CON 12"
+    ],
+    [
+      "STANI-L-CON 12",
+      "STANI-N-JUN7"
+    ],
+    [
+      "STANI-N-JUN7",
       "STN_R-N-JUN1 [node]"
     ],
     [
