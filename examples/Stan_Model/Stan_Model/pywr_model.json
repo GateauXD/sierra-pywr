@@ -849,8 +849,8 @@
     {
       "name": "Release from Tulloch Lake [node]",
       "type": "Link",
-      "min_flow": "node/Release from Tulloch Lake [node]/Requirement",
-      "max_flow": "node/Release from Tulloch Lake [node]/Requirement"
+      "min_flow": 0,
+      "max_flow": 0
     },
     {
       "name": "Tulloch Lake Flood Control [node]",
@@ -923,8 +923,8 @@
     {
       "name": "Release from New Melones [node]",
       "type": "Link",
-      "min_flow": "node/Release from New Melones [node]/Requirement",
-      "max_flow": "node/Release from New Melones [node]/Requirement"
+      "min_flow": 0,
+      "max_flow": 0
     },
     {
       "name": "New Melones Flood Control [node]",
@@ -2229,9 +2229,6 @@
     "node/New Melones PH/Cost_4": {
       "type": "node_New_Melones_PH_Cost_4"
     },
-    "node/Release from New Melones [node]/Requirement": {
-      "type": "New_Melones_Release_Policy"
-    },
     "node/New Spicer Meadow Reservoir/Storage Capacity": {
       "type": "constant",
       "value": 227.24
@@ -2572,9 +2569,6 @@
     },
     "node/Tulloch Lake/Storage Demand": {
       "type": "node_Tulloch_Lake_Storage_Demand"
-    },
-    "node/Release from Tulloch Lake [node]/Requirement": {
-      "type": "node_Release_From_Tulloch_Lake"
     },
     "node/USGS_11292610 DONNELLS PH/Observed Flow": {
       "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
