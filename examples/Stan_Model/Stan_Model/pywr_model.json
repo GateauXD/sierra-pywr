@@ -929,8 +929,8 @@
     {
       "name": "Release from New Melones [node]",
       "type": "Link",
-      "min_flow": 0,
-      "max_flow": 0
+      "min_flow": "node/Release from Tulloch Lake/Release",
+      "max_flow": "node/Release from Tulloch Lake/Release"
     },
     {
       "name": "New Melones Flood Control [node]",
@@ -2582,6 +2582,9 @@
     },
     "node/blwTullochPH/Requirement": {
       "type": "node_blwTullochPH_Requirement"
+    },
+    "node/Release from Tulloch Lake/Release": {
+      "type": "node_Release_From_Tulloch_Lake"
     },
     "node/USGS_11292610 DONNELLS PH/Observed Flow": {
       "type": "node_USGS_11292610_DONNELLS_PH_Observed_Flow"
