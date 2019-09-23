@@ -849,8 +849,7 @@
     {
       "name": "Release from Tulloch Lake [node]",
       "type": "Link",
-      "min_flow": 0,
-      "max_flow": 0
+      "max_flow": "node/Release from Tulloch Lake/Release"
     },
     {
       "name": "Tulloch Lake Flood Control [node]",
@@ -929,8 +928,7 @@
     {
       "name": "Release from New Melones [node]",
       "type": "Link",
-      "min_flow": "node/Release from Tulloch Lake/Release",
-      "max_flow": "node/Release from Tulloch Lake/Release"
+      "max_flow": "node/Release from New Melones/Release"
     },
     {
       "name": "New Melones Flood Control [node]",
@@ -2238,6 +2236,9 @@
     },
     "node/New Melones PH/Cost_4": {
       "type": "node_New_Melones_PH_Cost_4"
+    },
+    "node/Release from New Melones/Release": {
+      "type": "New_Melones_Release_Policy"
     },
     "node/New Spicer Meadow Reservoir/Storage Capacity": {
       "type": "constant",

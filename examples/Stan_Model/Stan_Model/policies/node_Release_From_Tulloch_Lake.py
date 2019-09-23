@@ -17,7 +17,9 @@ class node_Release_From_Tulloch_Lake(WaterLPParameter):
         year_type = year_names[getSJVI_WYT(timestep)-1]
         net_demand_csv = pd.read_csv("s3_imports/NetDemand_belowTulloch.csv", index_col=[0])
 
-        return net_demand_csv.loc[str(timestep_datetime.date()), year_type] / million_m3day_to_m3sec
+        date = "/".join([str(timestep_datetime.month), str(timestep_datetime.day), str(timestep_datetime.year)])
+
+        return net_demand_csv.loc[date, year_type] / million_m3day_to_m3sec
 
     def _value(self, timestep, scenario_index):
         out_flow = self.model.nodes["Tulloch Lake [node]"].volume[-1] + self.model.nodes["STN_below_Melons.2.2"].flow[-1] - self.model.parameters["node/Tulloch Lake/Storage Demand"].value(timestep, scenario_index)
