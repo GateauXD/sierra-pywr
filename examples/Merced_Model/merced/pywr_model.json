@@ -2089,6 +2089,21 @@
     "Main Canal [link]": {
       "type": "NumpyArrayNodeRecorder",
       "node": "Main Canal [link]"
-    }
+    },
+    "node/New Exchequer PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/New Exchequer PH/Fixed Head"
+    },
+    "node/New Merced Falls PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Merced Falls PH/Fixed Head"
+    },
+    "node/New McSwain PH/Fixed head": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/McSwain PH/Fixed Head"
+    },
+    "node/Lake McClure Flood Control [node]/requirement": {
+      "type": "NumpyArrayParameterRecorder",
+      "parameter": "node/Lake McClure Flood Control [node]/Requirement"
   }
 }
