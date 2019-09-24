@@ -46,7 +46,7 @@ def generate_csv():
             return_csv[climate_scenario + "/" + powerhouse.split("/")[1] + "/Hydropower Production"] = efficiency * water_density * gravity * \
                                                                               results_csv[climate_scenario + "/" +powerhouse] \
                                                                               * results_csv[
-                                                                                  climate_scenario + "/" + powerhouse_flows[index]] * 3600 / 1000000
+                                                                                  climate_scenario + "/" + powerhouse_flows[index]] /3600
 
     return_csv.to_csv("Graph.csv")
     return return_csv

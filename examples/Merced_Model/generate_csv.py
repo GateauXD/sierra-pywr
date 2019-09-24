@@ -56,7 +56,7 @@ def generate_csv():
     # 6 Total HP production (MWH)
     for index, powerhouse in enumerate(powerhouses):
         return_csv[powerhouse.split("/")[1] + "/Hydropower Production"] = efficiency * water_density * gravity * results_csv[powerhouse] \
-                                                                   * results_csv[powerhouse_flows[index]] * 3600 / 1000000
+                                                                   * results_csv[powerhouse_flows[index]] / 3600
 
     return_csv.to_csv("Graph.csv")
 
