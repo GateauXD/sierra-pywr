@@ -15,7 +15,7 @@ class node_Release_From_Tulloch_Lake(WaterLPParameter):
         timestep_datetime = datetime(1990, timestep_datetime.month, timestep_datetime.day)
 
         year_type = year_names[getSJVI_WYT(timestep)-1]
-        net_demand_csv = pd.read_csv("s3_imports/NetDemand_belowTulloch.csv", index_col=[0])
+        net_demand_csv = self.read_csv("s3_imports/NetDemand_belowTulloch.csv", index_col=[0])
 
         date = "/".join([str(timestep_datetime.month), str(timestep_datetime.day), str(timestep_datetime.year)])
 
