@@ -111,3 +111,5 @@ plt.ylabel("Percent Difference (%)", fontsize='54')
 plt.xlabel("Quarter", fontsize='54')
 plt.savefig("Figures/outflow_flood_percent_" + time[index].split()[0])
 
+quarter_climate.to_csv("merced/s3_imports/quarter_avg.csv")
+yearly_climate.to_csv("merced/s3_imports/yearly_avg.csv")
