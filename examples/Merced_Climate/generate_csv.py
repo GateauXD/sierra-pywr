@@ -26,11 +26,13 @@ def generate_csv():
     for climate_scenario in climate_scenarios:
         results_csv = climate_change_scenarios.filter(regex=climate_scenario)
 
+        return_csv[climate_scenario + "/Lake McClure Storage"] = results_csv[climate_scenario + "/node/Lake McClure/storage"] * 0.81071318210885
+
         # 1 Inflow to McClure
         return_csv[climate_scenario + "/Lake McClure Inflow"] = (
                     results_csv[climate_scenario + "/node/Lake McClure Inflow/flow"] * mcm_to_cms)
         # 2 Outflow from Merced Basin
-        return_csv[climate_scenario + "/node/Basin Outflow/flow"] = results_csv[climate_scenario + "/node/Near Stevinson_11272500/flow"] * mcm_to_cms
+        return_csv[climate_scenario + "/node/Basin Outflow/flow"] = results_csv[climate_scenario + "/node/Near Stevinson_11272500/flow"] * 0.81071318210885
         # 3 Flood days Out of Lake McClure
         return_csv[climate_scenario + "/Lake McClure Outflow Flood Days"] = ((results_csv[climate_scenario + "/MERCE-L-CON2 [link]"] + results_csv[climate_scenario + "/MERCE-L-CON4 [link]"]) > 15.9).astype(int)
         # Flood days Into Lake McClure
@@ -42,11 +44,12 @@ def generate_csv():
             return_csv[climate_scenario + "/" + value + "/ifr_not_met"] = (results_csv[climate_scenario + "/" + ifrs_req[index]] - results_csv[climate_scenario + "/" + ifrs[index]] > 0.0001).astype(int)
 
         # 6 Total HP production (MWH)
+        return_csv[climate_scenario + "/Hydropower Production"] = 0
         for index, powerhouse in enumerate(powerhouses):
-            return_csv[climate_scenario + "/" + powerhouse.split("/")[1] + "/Hydropower Production"] = efficiency * water_density * gravity * \
+            return_csv[climate_scenario + "/Hydropower Production"] = return_csv[climate_scenario + "/Hydropower Production"] + \
+                                                                            (efficiency * water_density * gravity * \
                                                                               results_csv[climate_scenario + "/" +powerhouse] \
-                                                                              * results_csv[
-                                                                                  climate_scenario + "/" + powerhouse_flows[index]] /3600
+                                                                              * results_csv[climate_scenario + "/" + powerhouse_flows[index]] /3600)
 
     return_csv.to_csv("Graph.csv")
     return return_csv
