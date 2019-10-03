@@ -5,6 +5,7 @@ from parameters import WaterLPParameter
 from datetime import datetime, timedelta
 from utilities.get_year_type import getSJVI_WYT
 
+flow_threshold = 19.572
 class New_Melones_Release_Policy(WaterLPParameter):
 
     def get_demand(self, timestep, scenario_index):
@@ -57,11 +58,11 @@ class New_Melones_Release_Policy(WaterLPParameter):
 
             out_flow = (self.model.nodes["New Melones Lake [node]"].max_volume -
                         (self.model.nodes["New Melones Lake [node]"].volume[-1]+itot-dtot))/days_till
-            return max(net_demand, min(out_flow, 226.535))
+            return max(net_demand, min(out_flow, flow_threshold))
         elif datetime(1900, 8, 1) < date_timestep < datetime(1900, 9, 14):
             return net_demand
         else:
-            return max(net_demand, min(out_flow, 226.535))
+            return max(net_demand, min(out_flow, flow_threshold))
 
     def value(self, timestep, scenario_index):
         return self._value(timestep, scenario_index)
