@@ -20,6 +20,7 @@ class node_Beardsley_Reservoir_Storage_Value(WaterLPParameter):
 
     @classmethod
     def load(cls, model, data):
+        data = {}
         return cls(model, **data)
 
 
