@@ -2710,10 +2710,6 @@
       "type": "constant",
       "value": 10
     },
-    "storage_value_numerator": {
-      "type": "constant",
-      "value": 10
-    },
     "storage_value_leading": {
       "type": "constant",
       "value": 10
