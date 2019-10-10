@@ -1894,7 +1894,7 @@
     },
     "node/Beardsley Reservoir/Storage Value": {
       "type": "constant",
-      "value": -61.6224
+      "value": -6.9738
     },
     "node/Beardsley Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2006,7 +2006,7 @@
     },
     "node/Donnells Reservoir/Storage Value": {
       "type": "constant",
-      "value": -54.0688
+      "value": -98.3327
     },
     "node/Donnells Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2313,7 +2313,7 @@
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
       "type": "constant",
-      "value": -23.3034
+      "value": -16.568
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2396,7 +2396,7 @@
     },
     "node/Pinecrest Reservoir/Storage Value": {
       "type": "constant",
-      "value": -88.7153
+      "value": -21.233
     },
     "node/Pinecrest Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2440,7 +2440,7 @@
     },
     "node/Relief Reservoir/Storage Value": {
       "type": "constant",
-      "value": -17.1942
+      "value": -80.8432
     },
     "node/Relief Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2635,7 +2635,7 @@
     },
     "node/Tulloch Lake/Storage Value": {
       "type": "constant",
-      "value": -92.7973
+      "value": -62.8252
     },
     "node/Tulloch Lake/Storage Demand": {
       "type": "node_Tulloch_Lake_Storage_Demand"
@@ -2716,7 +2716,7 @@
     },
     "melones_storageValueConstant": {
       "type": "constant",
-      "value": 5.97698
+      "value": 5.08993
     },
     "melones_storage_value_numerator": {
       "type": "constant",
@@ -2724,7 +2724,7 @@
     },
     "melones_storage_value_leading": {
       "type": "constant",
-      "value": 0.277864
+      "value": 0.308206
     }
   },
   "recorders": {
