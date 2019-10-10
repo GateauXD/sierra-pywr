@@ -5,8 +5,8 @@
     "minimum_version": "1.0.0"
   },
   "timestepper": {
-    "start": "2009-10-01",
-    "end": "2010-09-30",
+    "start": "2008-10-01",
+    "end": "2009-09-30",
     "timestep": 1
   },
   "solver": {
@@ -1894,7 +1894,7 @@
     },
     "node/Beardsley Reservoir/Storage Value": {
       "type": "constant",
-      "value": 10
+      "value": -61.6224
     },
     "node/Beardsley Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2006,7 +2006,7 @@
     },
     "node/Donnells Reservoir/Storage Value": {
       "type": "constant",
-      "value": 10
+      "value": -54.0688
     },
     "node/Donnells Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2242,7 +2242,7 @@
         289.55,
         297.17,
         304.79,
-        312.40,
+        312.4,
         320.02,
         327.64,
         335.26,
@@ -2270,7 +2270,7 @@
         2436.11,
         2789.12,
         3172.31,
-        3486.00
+        3486.0
       ],
       "kind": "cubic"
     },
@@ -2313,7 +2313,7 @@
     },
     "node/New Spicer Meadow Reservoir/Storage Value": {
       "type": "constant",
-      "value": 10
+      "value": -23.3034
     },
     "node/New Spicer Meadow Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2396,7 +2396,7 @@
     },
     "node/Pinecrest Reservoir/Storage Value": {
       "type": "constant",
-      "value": 10
+      "value": -88.7153
     },
     "node/Pinecrest Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2440,7 +2440,7 @@
     },
     "node/Relief Reservoir/Storage Value": {
       "type": "constant",
-      "value": 10
+      "value": -17.1942
     },
     "node/Relief Reservoir/Elevation": {
       "type": "interpolatedvolume",
@@ -2635,7 +2635,7 @@
     },
     "node/Tulloch Lake/Storage Value": {
       "type": "constant",
-      "value": 75.4521182166705
+      "value": -92.7973
     },
     "node/Tulloch Lake/Storage Demand": {
       "type": "node_Tulloch_Lake_Storage_Demand"
@@ -2672,39 +2672,39 @@
     },
     "node/Angels PH/Demand Constant": {
       "type": "constant",
-      "value": 958.230743414711
+      "value": 38.25654154221102
     },
     "node/Collierville PH/Demand Constant": {
       "type": "constant",
-      "value": 165.2725104141144
+      "value": 135.1519007212807
     },
     "node/Donnells PH/Demand Constant": {
       "type": "constant",
-      "value": 46.44309810809872
+      "value": 343.3906735095928
     },
     "node/Murphys PH/Demand Constant": {
       "type": "constant",
-      "value": 294.655618942065
+      "value": 371.9845182901212
     },
     "node/New Melones PH/Demand Constant": {
       "type": "constant",
-      "value": 327.6402564696251
+      "value": 891.922615973035
     },
     "node/Phoenix PH/Demand Constant": {
       "type": "constant",
-      "value": 196.4993486352508
+      "value": 925.13741907885
     },
     "node/Sand Bar PH/Demand Constant": {
       "type": "constant",
-      "value": 945.8655696668
+      "value": 858.669527017185
     },
     "node/Spring Gap PH/Demand Constant": {
       "type": "constant",
-      "value": 775.982077202702
+      "value": 645.080483931574
     },
     "node/Stanislaus PH/Demand Constant": {
       "type": "constant",
-      "value": 89.07849185187
+      "value": 431.73476356573
     },
     "storageValueConstant": {
       "type": "constant",
@@ -2716,7 +2716,7 @@
     },
     "melones_storageValueConstant": {
       "type": "constant",
-      "value": 10
+      "value": 5.97698
     },
     "melones_storage_value_numerator": {
       "type": "constant",
@@ -2724,7 +2724,7 @@
     },
     "melones_storage_value_leading": {
       "type": "constant",
-      "value": 10
+      "value": 0.277864
     }
   },
   "recorders": {
@@ -3375,6 +3375,14 @@
     "node/USGS_11297500_TUOLUMNE CN/flow": {
       "type": "NumpyArrayNodeRecorder",
       "node": "USGS_11297500_TUOLUMNE CN [node]"
+    },
+    "STAN-L-CON 1": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "STAN-L-CON 1"
+    },
+    "STAN-L-CON 2": {
+      "type": "NumpyArrayNodeRecorder",
+      "node": "STAN-L-CON 2"
     }
   }
 }
