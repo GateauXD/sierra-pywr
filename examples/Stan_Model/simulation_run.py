@@ -4,7 +4,7 @@ import sys
 import json
 
 from tqdm import tqdm
-from Merced_Model.load_model import load_model
+from load_model import load_model
 
 
 def evaluate_model(model_path, root_dir, bucket, network_key, parameters):

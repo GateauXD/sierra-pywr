@@ -8,11 +8,11 @@ from datetime import datetime, timedelta
 class node_New_Melones_Reservoir_Storage_Value(WaterLPParameter):
 
     def _value(self, timestep, scenario_index):
+        min_elevation = 182.87
+        max_elevation = 341.05
         multiplier = self.model.parameters['melones_storageValueConstant'].value(timestep, scenario_index)
-        storage_value_numerator = self.model.parameters['melones_storage_value_numerator'].value(timestep, scenario_index)
         leading_multiplier = self.model.parameters['melones_storage_value_leading'].value(timestep, scenario_index)
-        return leading_multiplier * math.exp(multiplier * (storage_value_numerator / self.model.parameters["node/New Melones Lake/Elevation"].value(timestep, scenario_index)))
-
+        return -1 * leading_multiplier * math.exp((multiplier * (max_elevation - min_elevation) / self.model.parameters["node/New Melones Lake/Elevation"].value(timestep, scenario_index)))
 
     def value(self, timestep, scenario_index):
         return self._value(timestep, scenario_index)
