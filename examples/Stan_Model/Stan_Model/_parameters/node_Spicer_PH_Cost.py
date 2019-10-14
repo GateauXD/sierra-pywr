@@ -4,7 +4,7 @@ from parameters import WaterLPParameter
 from utilities.converter import convert
 
 
-class node_Spicer_Gap_PH_Cost_1(WaterLPParameter):
+class node_Spicer_Meadow_PH_Cost_1(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
@@ -13,7 +13,7 @@ class node_Spicer_Gap_PH_Cost_1(WaterLPParameter):
         totDemand = float(data['TotDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         maxDemand = float(data['MaxDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         minDemand = float(data['MinDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
-        minVal = self.model.parameters["node/Spicer Gap PH/Demand Constant"].value(timestep, scenario_index) * (
+        minVal = self.model.parameters["node/New Spicer Meadow PH/Demand Constant"].value(timestep, scenario_index) * (
                     totDemand / 768)  # 768 GWh is median daily energy demand for 2009
         maxVal = minVal * (maxDemand / minDemand)
         d = maxVal - minVal
@@ -27,7 +27,7 @@ class node_Spicer_Gap_PH_Cost_1(WaterLPParameter):
         return cls(model, **data)
 
 
-class node_Spicer_Gap_PH_Cost_2(WaterLPParameter):
+class node_Spicer_Meadow_PH_Cost_2(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
@@ -36,7 +36,7 @@ class node_Spicer_Gap_PH_Cost_2(WaterLPParameter):
         totDemand = float(data['TotDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         maxDemand = float(data['MaxDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         minDemand = float(data['MinDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
-        minVal = self.model.parameters["node/Spicer Gap PH/Demand Constant"].value(timestep, scenario_index) * (
+        minVal = self.model.parameters["node/New Spicer Meadow PH/Demand Constant"].value(timestep, scenario_index) * (
                 totDemand / 768)  # 768 GWh is median daily energy demand for 2009
         maxVal = minVal * (maxDemand / minDemand)
         d = maxVal - minVal
@@ -50,7 +50,7 @@ class node_Spicer_Gap_PH_Cost_2(WaterLPParameter):
         return cls(model, **data)
 
 
-class node_Spicer_Gap_PH_Cost_3(WaterLPParameter):
+class node_Spicer_Meadow_PH_Cost_3(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
@@ -59,7 +59,7 @@ class node_Spicer_Gap_PH_Cost_3(WaterLPParameter):
         totDemand = float(data['TotDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         maxDemand = float(data['MaxDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         minDemand = float(data['MinDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
-        minVal = self.model.parameters["node/Spicer Gap PH/Demand Constant"].value(timestep, scenario_index) * (
+        minVal = self.model.parameters["node/New Spicer Meadow PH/Demand Constant"].value(timestep, scenario_index) * (
                 totDemand / 768)  # 768 GWh is median daily energy demand for 2009
         maxVal = minVal * (maxDemand / minDemand)
         d = maxVal - minVal
@@ -73,7 +73,7 @@ class node_Spicer_Gap_PH_Cost_3(WaterLPParameter):
         return cls(model, **data)
 
 
-class node_Spicer_Gap_PH_Cost_4(WaterLPParameter):
+class node_Spicer_Meadow_PH_Cost_4(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
@@ -82,7 +82,7 @@ class node_Spicer_Gap_PH_Cost_4(WaterLPParameter):
         totDemand = float(data['TotDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         maxDemand = float(data['MaxDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
         minDemand = float(data['MinDemand'][str(timestep.month) + "/" + str(timestep.day) + "/" + str(timestep.year)])
-        minVal = self.model.parameters["node/Spicer Gap PH/Demand Constant"].value(timestep, scenario_index) * (
+        minVal = self.model.parameters["node/New Spicer Meadow PH/Demand Constant"].value(timestep, scenario_index) * (
                 totDemand / 768)  # 768 GWh is median daily energy demand for 2009
         maxVal = minVal * (maxDemand / minDemand)
         d = maxVal - minVal
@@ -96,9 +96,9 @@ class node_Spicer_Gap_PH_Cost_4(WaterLPParameter):
         return cls(model, **data)
 
 
-node_Spicer_Gap_PH_Cost_1.register()
-node_Spicer_Gap_PH_Cost_2.register()
-node_Spicer_Gap_PH_Cost_3.register()
-node_Spicer_Gap_PH_Cost_4.register()
+node_Spicer_Meadow_PH_Cost_1.register()
+node_Spicer_Meadow_PH_Cost_2.register()
+node_Spicer_Meadow_PH_Cost_3.register()
+node_Spicer_Meadow_PH_Cost_4.register()
 
-print(" [*] node_Spicer_Gap_PH_Cost successfully registered")
+print(" [*] node_Spicer_Meadow_PH_Cost successfully registered")

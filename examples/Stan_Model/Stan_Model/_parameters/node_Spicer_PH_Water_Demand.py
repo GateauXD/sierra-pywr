@@ -8,7 +8,7 @@ class node_Spicer_PH_Water_Demand(WaterLPParameter):
 
     def _value(self, timestep, scenario_index):
         kwargs = dict(timestep=timestep, scenario_index=scenario_index)
-        TC = self.model.parameters["node/Spicer Gap PH/Turbine Capacity"].value(timestep, scenario_index)
+        TC = self.model.parameters["node/New Spicer Meadow PH/Turbine Capacity"].value(timestep, scenario_index)
         qDemand = TC * 3600 * 6
         return qDemand
 

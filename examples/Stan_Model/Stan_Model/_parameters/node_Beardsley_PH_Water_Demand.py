@@ -3,7 +3,7 @@ from parameters import WaterLPParameter
 from utilities.converter import convert
 
 
-class node_Beardsley_Gap_PH_Water_Demand(WaterLPParameter):
+class node_Beardsley_PH_Water_Demand(WaterLPParameter):
     """"""
 
     def _value(self, timestep, scenario_index):
@@ -21,5 +21,5 @@ class node_Beardsley_Gap_PH_Water_Demand(WaterLPParameter):
         return cls(model, **data)
 
 
-node_Beardsley_Gap_PH_Water_Demand.register()
-print(" [*] node_Beardsley_Gap_PH_Water_Demand successfully registered")
+node_Beardsley_PH_Water_Demand.register()
+print(" [*] node_Beardsley_PH_Water_Demand successfully registered")

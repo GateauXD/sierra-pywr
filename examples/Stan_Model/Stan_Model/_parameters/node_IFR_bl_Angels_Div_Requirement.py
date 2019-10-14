@@ -1,5 +1,4 @@
-qimport
-datetime
+import datetime
 from parameters import WaterLPParameter
 
 from utilities.converter import convert
@@ -19,5 +18,5 @@ class node_IFR_bl_Angels_Div_Requirement(WaterLPParameter):
         return cls(model, **data)
 
 
-node_IFR_bl_Angels_Div_Cost.register()
+node_IFR_bl_Angels_Div_Requirement.register()
 print(" [*] node_IFR_bl_Donnells_Reservoir_Requirement successfully registered")

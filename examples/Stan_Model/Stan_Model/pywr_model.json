@@ -904,6 +904,7 @@
     {
       "name": "Utica Reservoir [node]",
       "type": "Storage",
+      "initial_volume": 65,
       "max_volume": 82.64
     },
     {
@@ -1984,20 +1985,28 @@
       ],
       "kind": "cubic"
     },
-    "Beardsley PH/Water Demand": {
+    "node/Beardsley PH/Water Demand": {
       "type": "node_Beardsley_PH_Water_Demand"
     },
     "node/Beardsley PH/Cost_1": {
-      "type": "node_Beardsley_PH_Cost_1"
+      "type": "node_Beardsley__PH_Cost_1"
     },
     "node/Beardsley PH/Cost_2": {
-      "type": "node_Beardsley_PH_Cost_2"
+      "type": "node_Beardsley__PH_Cost_2"
     },
     "node/Beardsley PH/Cost_3": {
-      "type": "node_Beardsley_PH_Cost_3"
+      "type": "node_Beardsley__PH_Cost_3"
     },
     "node/Beardsley PH/Cost_4": {
-      "type": "node_Beardsley_PH_Cost_4"
+      "type": "node_Beardsley__PH_Cost_4"
+    },
+    "node/Beardsley PH/Demand Constant": {
+      "type": "constant",
+      "value": 10
+    },
+    "node/Beardsley PH/Turbine Capacity": {
+      "type": "constant",
+      "value": 10
     },
     "node/BEAVER C DIV TO MCKAYS POINT RES NR ARNO_11295210/Observed Flow": {
       "type": "node_BEAVER_C_DIV_TO_MCKAYS_POINT_RES_NR_ARNO_11295210_Observed_Flow"
@@ -2414,16 +2423,24 @@
       "type": "node_Spicer_PH_Water_Demand"
     },
     "node/New Spicer Meadow PH/Cost_1": {
-      "type": "node_Spicer_PH_Cost_1"
+      "type": "node_Spicer_Meadow_PH_Cost_1"
     },
     "node/New Spicer Meadow PH/Cost_2": {
-      "type": "node_Spicer_PH_Cost_2"
+      "type": "node_Spicer_Meadow_PH_Cost_2"
     },
     "node/New Spicer Meadow PH/Cost_3": {
-      "type": "node_Spicer_PH_Cost_3"
+      "type": "node_Spicer_Meadow_PH_Cost_3"
     },
     "node/New Spicer Meadow PH/Cost_4": {
-      "type": "node_Spicer_PH_Cost_4"
+      "type": "node_Spicer_Meadow_PH_Cost_4"
+    },
+    "node/New Spicer Meadow PH/Demand Constant": {
+      "type": "constant",
+      "value": 10
+    },
+    "node/New Spicer Meadow PH/Turbine Capacity": {
+      "type": "constant",
+      "value": 6
     },
     "node/NF STANISLAUS DIV TU OL BL HOBART C_11293710/Observed Flow": {
       "type": "node_NF_STANISLAUS_DIV_TU_OL_BL_HOBART_C_11293710_Observed_Flow"
