@@ -2120,12 +2120,10 @@
       "type": "node_HOBART_C_AT_NF_DIV_TUNNL_OUTLT_NR_SPICER_11293700_Observed_Flow"
     },
     "node/IFR bl Angels Div/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Angels_Div_Cost"
     },
     "node/IFR bl Angels Div/Requirement": {
-      "type": "constant",
-      "value": 0.142
+      "type": "node_IFR_bl_Angels_Div_Requirement"
     },
     "node/IFR bl Donnells Reservoir/Violation Cost": {
       "type": "constant",
