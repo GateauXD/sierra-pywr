@@ -2135,71 +2135,58 @@
       "type": "node_IFR_bl_Angels_Div_Requirement"
     },
     "node/IFR bl Donnells Reservoir/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Donnells_Reservoir_Cost"
     },
     "node/IFR bl Donnells Reservoir/Requirement": {
       "type": "node_IFR_bl_Donnells_Reservoir_Requirement"
     },
     "node/IFR bl Hunters Reservoir/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Hunters_Reservoir_Cost"
     },
     "node/IFR bl Hunters Reservoir/Requirement": {
       "type": "node_IFR_bl_Hunters_Reservoir_Requirement"
     },
     "node/IFR bl Lyons Res/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Lyons_Res_Violation_Cost"
     },
     "node/IFR bl Lyons Res/Requirement": {
-      "type": "constant",
-      "value": 0.142
+      "type": "node_IFR_bl_Lyons_Res_Requirement"
     },
     "node/IFR bl McKays Point Div/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_McKays_Point_Div_Cost"
     },
     "node/IFR bl McKays Point Div/Requirement": {
-      "type": "constant",
-      "value": 0.4672
+      "type": "node_IFR_bl_McKays_Point_Div_Requirement"
     },
     "node/IFR bl New Spicer Meadow Reservoir/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_New_Spicer_Meadow_Reservoir_Cost"
     },
     "node/IFR bl New Spicer Meadow Reservoir/Requirement": {
-      "type": "constant",
-      "value": 0.4672
+      "type": "node_IFR_bl_New_Spicer_Meadow_Reservoir_Requirement"
     },
     "node/IFR bl Philadelphia Div/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Philadelphia_Div_Cost"
     },
     "node/IFR bl Philadelphia Div/Requirement": {
       "type": "node_IFR_bl_Philadelphia_Div_Requirement"
     },
     "node/IFR bl Relief Reservoir/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Relief_Reservoir_Cost"
     },
     "node/IFR bl Relief Reservoir/Requirement": {
       "type": "node_IFR_bl_Relief_Reservoir_Requirement"
     },
     "node/IFR bl Sand Bar Div/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Sand_Bar_Div_Cost"
     },
     "node/IFR bl Sand Bar Div/Requirement": {
       "type": "node_IFR_bl_Sand_Bar_Div_Requirement"
     },
     "node/IFR bl Utica Div/Violation Cost": {
-      "type": "constant",
-      "value": 10
+      "type": "node_IFR_bl_Utica_Div_Cost"
     },
     "node/IFR bl Utica Div/Requirement": {
-      "type": "constant",
-      "value": 0.142
+      "type": "node_IFR_bl_Utica_Div_Requirement"
     },
     "node/JW SOUTHERN PP A SND BAR DIV DAM NR LNG BRN CA/Observed Flow": {
       "type": "node_JW_SOUTHERN_PP_A_SND_BAR_DIV_DAM_NR_LNG_BRN_CA_Observed_Flow"
