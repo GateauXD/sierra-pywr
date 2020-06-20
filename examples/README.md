@@ -11,5 +11,5 @@ The goal of this project was to efficently calibrate hydrological networkx model
 
 ### Results:
 
-When we I was put onto this project claibration was done by hand and took a long time to get correct. A calibrated model of Merced's model is shown below. 
+When I was put onto this project claibration was done by hand and took a long time to get correct. A calibrated model of Merced's model is shown below. With our new calibration approach the model's accuracy improved by 48%
 ![Calibrated Results](https://raw.githubusercontent.com/GateauXD/waterlp-pywr2/master/examples/Merced_Model/Figures/Lake%20McClure%20Storage%20Value.png)
